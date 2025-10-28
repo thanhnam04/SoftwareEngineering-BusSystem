@@ -1,0 +1,16 @@
+@startuml
+title Activity Diagram: Quá trình phân công và hoàn thành chuyến đưa đón
+
+start
+:Quản lý phân công chuyến đi;
+:Hệ thống gán xe và tài xế;
+:Gửi thông báo cho tài xế;
+:Tài xế xác nhận nhận chuyến;
+:Xe bắt đầu di chuyển;
+:Theo dõi vị trí & trạng thái;
+:Đến điểm đón/trả;
+:Tài xế xác nhận hoàn tất chuyến;
+:Hệ thống lưu thông tin và cập nhật trạng thái;
+stop
+
+@enduml

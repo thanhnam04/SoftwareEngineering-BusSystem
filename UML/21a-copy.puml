@@ -1,0 +1,64 @@
+@startuml
+title Activity Diagram: Chi tiết quá trình phân công và hoàn thành chuyến đưa đón
+
+start
+:Quản lý phân công chuyến đi;
+note right: Quản lý kiểm tra yêu cầu chuyến đi từ phụ huynh hoặc hệ thống
+
+:Kiểm tra tình trạng xe và tài xế;
+if (Xe và tài xế khả dụng?) then (Có)
+    :Hệ thống gán xe và tài xế;
+    :Gửi thông báo cho tài xế;
+    note right: Thông báo bao gồm chi tiết chuyến đi (điểm đón, điểm trả, thời gian)
+
+    :Tài xế nhận thông báo;
+    if (Tài xế xác nhận nhận chuyến?) then (Có)
+        :Tài xế xác nhận nhận chuyến;
+        :Gửi xác nhận cho hệ thống;
+        :Kiểm tra tình trạng hành khách;
+        if (Hành khách sẵn sàng?) then (Có)
+            :Gửi thông báo cho hành khách;
+            :Xe bắt đầu di chuyển;
+            :Theo dõi vị trí & trạng thái;
+            note right: Theo dõi qua GPS, cập nhật trạng thái chuyến đi
+
+            :Đến điểm đón;
+            :Tài xế xác nhận đón hành khách;
+            :Tiếp tục di chuyển đến điểm trả;
+            :Đến điểm trả;
+            :Tài xế xác nhận hoàn tất chuyến;
+            :Hệ thống lưu thông tin và cập nhật trạng thái;
+            note right: Cập nhật trạng thái chuyến đi, lưu log, tính toán phí nếu cần
+        else (Không)
+            :Gửi thông báo chờ hành khách;
+            :Chờ hành khách sẵn sàng;
+            note right: Có thể có timeout hoặc hủy chuyến nếu quá lâu
+        endif
+    else (Không)
+        :Tài xế từ chối chuyến;
+        :Hệ thống tìm tài xế thay thế;
+        note right: Quay lại bước gán xe và tài xế
+    endif
+else (Không)
+    :Thông báo không có xe/tài xế khả dụng;
+    :Hủy hoặc dời lịch chuyến đi;
+    note right: Gửi thông báo cho phụ huynh, đề xuất thời gian khác
+endif
+
+:Theo dõi chuyến đi;
+if (Có vấn đề phát sinh?) then (Có)
+    :Xử lý vấn đề (đường tắc, tai nạn, v.v.);
+    note right: Gửi thông báo cho quản lý, hành khách, tài xế
+    :Cập nhật trạng thái chuyến đi;
+    if (Cần hủy chuyến?) then (Có)
+        :Hủy chuyến và thông báo;
+        stop
+    else (Không)
+        :Tiếp tục chuyến đi;
+    endif
+else (Không)
+    :Chuyến đi diễn ra bình thường;
+endif
+
+stop
+@enduml

@@ -1,0 +1,75 @@
+@startuml
+title Class Diagram: Các lớp tham gia vào quá trình phân công và hoàn thành chuyến đưa đón
+
+class QuanLy {
+    +id: int
+    +ten: string
+    +kiemTraYeuCauChuyenDi()
+    +phanCongChuyenDi()
+    +xuLyVanDe()
+}
+
+class HeThong {
+    +id: int
+    +ten: string
+    +ganXeVaTaiXe()
+    +guiThongBao()
+    +luuThongTin()
+    +capNhatTrangThai()
+    +timTaiXeThayThe()
+}
+
+class TaiXe {
+    +id: int
+    +ten: string
+    +trangThai: string
+    +xacNhanNhanChuyen()
+    +tuChoiChuyen()
+    +xacNhanHoanTat()
+    +capNhatViTri()
+}
+
+class PhuHuynh {
+    +id: int
+    +ten: string
+    +yeuCauChuyenDi()
+    +nhanThongBao()
+}
+
+class Xe {
+    +id: int
+    +bienSo: string
+    +trangThai: string
+    +batDauDiChuyen()
+    +denDiemDon()
+    +denDiemTra()
+}
+
+class ChuyenDi {
+    +id: int
+    +diemDon: string
+    +diemTra: string
+    +thoiGian: datetime
+    +trangThai: string
+    +theoDoiViTri()
+    +capNhatTrangThai()
+}
+
+QuanLy --> HeThong : sử dụng
+HeThong --> TaiXe : gán
+HeThong --> Xe : gán
+HeThong --> PhuHuynh : thông báo
+TaiXe --> Xe : lái
+TaiXe --> ChuyenDi : thực hiện
+PhuHuynh --> ChuyenDi : yêu cầu
+ChuyenDi --> Xe : sử dụng
+ChuyenDi --> TaiXe : thực hiện
+
+note right of QuanLy : Quản lý kiểm tra và phân công chuyến đi
+note right of HeThong : Hệ thống xử lý logic gán và theo dõi
+note right of TaiXe : Tài xế xác nhận và thực hiện chuyến đi
+note right of PhuHuynh : Phụ huynh yêu cầu và nhận thông báo
+note right of Xe : Xe được gán và di chuyển
+note right of ChuyenDi : Chuyến đi với các trạng thái và theo dõi
+
+@enduml
