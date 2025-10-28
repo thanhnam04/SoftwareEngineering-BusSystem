@@ -1,0 +1,304 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body, button, input, textarea, select {
+  font-family: 'Nunito', sans-serif;
+}
+
+
+body {
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header {
+    background: linear-gradient(135deg, #1e5799 0%, #207cca 100%);
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.panel-title {
+    color: #1e5799;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.panel-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.info-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-left: 4px solid #1e5799;
+}
+
+.info-card h4 {
+    color: #1e5799;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.info-card p {
+    margin-bottom: 0.5rem;
+    color: #666;
+}
+
+.bus-map {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    margin: 1rem 0;
+    border: 2px dashed #1e5799;
+}
+
+.btn {
+    background-color:#bee3dc;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+.btn:hover {
+  background: #1e5799;
+  color: white;
+  box-shadow:
+    0 6px 12px rgba(30, 87, 153, 0.35),
+    0 0 10px rgba(30, 87, 153, 0.2);
+  transform: translateY(-3px);
+}
+
+
+.btn-secondary {
+    background: #049578;
+    color: white;
+}
+
+.btn-primary {
+    background-color:#bee3dc;
+    width: 154px;
+}
+.btn-primary::after {
+  content: "Theo dõi tuyến xe buýt\A Nhận thông báo khi xe đến điểm đưa, đón và cảnh báo cho Phụ huynh.";
+  position: absolute;
+  top: 120%; /* nằm phía trên nút */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  white-space: pre;
+  transition: opacity 0.3s ease;
+}
+
+/* Khi hover thì hiện tooltip */
+.btn-primary:hover::after {
+  opacity: 1;
+}
+
+.btn-success {
+    background-color:#bee3dc;
+    width: 154px;
+}
+/* Tooltip cho nút thành công */
+.btn-success::after {
+  content: "Lịch trình, hành trình di chuyển hàng ngày,\A thông tin cho Phụ Huynh về học sinh.";
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  white-space: pre;
+  transition: opacity 0.3s ease;
+}
+
+.btn-success:hover::after {
+  opacity: 1;
+}
+
+.btn-info {
+    background-color:#bee3dc;
+    width: 154px;
+}
+/* Tooltip cho nút thông tin */
+.btn-info::after {
+  content: "Xem danh sách học sinh, tài xế xe buýt và tuyến đường.\A Lập lịch trình cho tài xế";
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  white-space: pre;
+  transition: opacity 0.3s ease;
+}
+
+.btn-info:hover::after {
+  opacity: 1;
+}
+
+.btn-warning {
+    background: #ffc107;
+    color: black;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-primary {
+    background-color:#bee3dc;
+    width: 154px;
+}
+.tab-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.student-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.notification-item {
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    border-left: 4px solid #28a745;
+    background: #f8f9fa;
+}
+
+.alert-item {
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    border-left: 4px solid #dc3545;
+    background: #f8f9fa;
+}
+
+@media (max-width: 768px) {
+    .panel-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .tab-buttons {
+        flex-direction: column;
+    }
+    
+    .student-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+
+/*
+BEGIN 
+Mô tả cho các ACTOR ở giao diện TỔNG QUÁT chưa log vào
+*/
+
+.Description-PH {
+    border: 0.5px solid #666;
+    border-radius: 10px;
+    padding: 8px 12px; /* thêm khoảng cách trong cho đẹp */
+    display: inline-block; /* để khối tự giãn theo nội dung */
+    max-width: 150px; /* tùy chọn: giới hạn độ rộng tối đa */
+    word-wrap: break-word; /* cho văn bản tự xuống dòng nếu quá dài */
+}
+
+
+.Description-TX { 
+    border: 0.5px solid #666;
+    border-radius: 10px;
+    padding: 8px 12px; /* thêm khoảng cách trong cho đẹp */
+    display: inline-block; /* để khối tự giãn theo nội dung */
+    max-width: 150px; /* tùy chọn: giới hạn độ rộng tối đa */
+    word-wrap: break-word;
+     /* cho văn bản tự xuống dòng nếu quá dài */ 
+}
+
+.Description-QL { 
+    border: 0.5px solid #666;
+    border-radius: 10px;
+    padding: 8px 12px; /* thêm khoảng cách trong cho đẹp */
+    display: inline-block; /* để khối tự giãn theo nội dung */
+    max-width: 150px; /* tùy chọn: giới hạn độ rộng tối đa */
+    word-wrap: break-word; /* cho văn bản tự xuống dòng nếu quá dài */
+}
+/*
+END
+*/
+
+/*
+Danh sách học sinh hiển thị
+*/
+.table th,
+.table td {
+  padding: 1px 24px !important; /* ép đồng nhất toàn bảng */
+  vertical-align: middle;        /* căn giữa theo chiều dọc */
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+}
