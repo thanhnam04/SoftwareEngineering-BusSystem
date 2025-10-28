@@ -1,0 +1,89 @@
+@startuml
+title Implementation Diagram - Bus Schedule & Tracking System
+
+skinparam nodesep 50
+skinparam ranksep 50
+
+together {
+node "Manager Workstation" as ManagerPC {
+    artifact "BusManager.html" as ManagerWeb
+    component "Schedule Interface" as ScheduleUI
+    component "Driver Management" as DriverUI
+    component "Route Management" as RouteUI
+    component "Message Interface" as MessageUI
+}
+}
+
+together {
+node "Driver Workstation" as DriverPC {
+    artifact "DriverPortal.html" as DriverWeb
+    component "Schedule Viewer" as ScheduleView
+    component "Student List" as StudentUI
+    component "Status Reporter" as StatusUI
+}
+}
+
+together {
+node "Parent Portal" as ParentPC {
+    artifact "ParentPortal.html" as ParentWeb
+    component "Bus Tracker" as TrackingUI
+    component "Notification Viewer" as NotifUI
+}
+}
+
+together {
+node "Web Server" as WebServer {
+    artifact "BusSystem.war" as WebApp
+    component "Schedule Manager" as ScheduleMgr
+    component "Route Manager" as RouteMgr
+    component "Driver Manager" as DriverMgr
+    component "Location Service" as LocationSvc
+    component "Message Service" as MsgService
+    component "Status Manager" as StatusMgr
+}
+}
+
+together {
+node "Database Server" as DBServer {
+    artifact "BusDB.sql" as Database
+    component "Student Table" as StudentTbl
+    component "Parent Table" as ParentTbl
+    component "Bus Table" as BusTbl
+    component "Driver Table" as DriverTbl
+    component "Route Table" as RouteTbl
+    component "Schedule Table" as ScheduleTbl
+    component "PickupStatus Table" as StatusTbl
+}
+}
+
+' Connections
+ManagerPC --> WebServer : HTTP/HTTPS
+DriverPC --> WebServer : HTTP/HTTPS
+ParentPC --> WebServer : HTTP/HTTPS
+WebServer --> DBServer : JDBC
+
+' Internal deployments
+ManagerWeb ..> ScheduleUI : <<deploy>>
+ManagerWeb ..> DriverUI : <<deploy>>
+ManagerWeb ..> RouteUI : <<deploy>>
+ManagerWeb ..> MessageUI : <<deploy>>
+DriverWeb ..> ScheduleView : <<deploy>>
+DriverWeb ..> StudentUI : <<deploy>>
+DriverWeb ..> StatusUI : <<deploy>>
+ParentWeb ..> TrackingUI : <<deploy>>
+ParentWeb ..> NotifUI : <<deploy>>
+WebApp ..> ScheduleMgr : <<deploy>>
+WebApp ..> RouteMgr : <<deploy>>
+WebApp ..> DriverMgr : <<deploy>>
+WebApp ..> LocationSvc : <<deploy>>
+WebApp ..> MsgService : <<deploy>>
+WebApp ..> StatusMgr : <<deploy>>
+Database ..> StudentTbl : <<deploy>>
+Database ..> ParentTbl : <<deploy>>
+Database ..> BusTbl : <<deploy>>
+Database ..> DriverTbl : <<deploy>>
+Database ..> RouteTbl : <<deploy>>
+Database ..> ScheduleTbl : <<deploy>>
+Database ..> StatusTbl : <<deploy>>
+
+@enduml
