@@ -404,3 +404,86 @@ const DriverDashboard = ({ data }) => {
 
 
 // TRẦN ĐỨC ANH  CODE Ở ĐÂY
+const ParentDashboard = ({ data }) => {
+    const childBus = data.buses.find(bus => bus.name === 'Xe 01');
+
+    // Dùng useEffect để khởi tạo bản đồ sau khi DOM đã render
+    React.useEffect(() => {
+        if (window.google && document.getElementById("map")) {
+            const sg = { lat: 10.762622, lng: 106.660172 };
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 14,
+                center: sg,
+                mapTypeControl: true,
+                zoomControl: true,
+                scaleControl: true,
+                streetViewControl: true,
+                fullscreenControl: true,
+                rotateControl: true,
+            });
+            new google.maps.Marker({
+                position: sg,
+                map: map,
+                title: "Đại học Sài Gòn",
+            });
+
+            // Thêm marker cho vị trí xe buýt
+            const busLocation = { lat: 10.765, lng: 106.665 }; // Vị trí mẫu cho xe buýt
+            new google.maps.Marker({
+                position: busLocation,
+                map: map,
+                title: "Vị trí xe buýt",
+                icon: {
+                    url: "data:image/svg+xml;charset=UTF-8,%3csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='20' cy='20' r='18' fill='%23000' stroke='%23fff' stroke-width='2'/%3e%3ctext x='20' y='25' text-anchor='middle' fill='%23fff' font-size='12'%3eBUS%3c/text%3e%3c/svg%3e",
+                    scaledSize: new google.maps.Size(40, 40)
+                }
+            });
+
+            // Vẽ đường đi mẫu
+            const routePath = [
+                { lat: 10.762622, lng: 106.660172 },
+                { lat: 10.765, lng: 106.665 },
+                { lat: 10.770, lng: 106.670 }
+            ];
+            const routePolyline = new google.maps.Polyline({
+                path: routePath,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+            });
+            routePolyline.setMap(map);
+        }
+    }, []); // chỉ chạy 1 lần sau khi render
+
+    return (
+        <div>
+            <h3 className="panel-title">Bảng điều khiển Phụ huynh</h3>
+
+            <div className="info-card">
+                <h4>Xe của bé</h4>
+                <p>Xe 01 - Tuyến A - Tài xế: Nguyễn Văn A</p>
+                <p>Trạng thái: Đang di chuyển</p>
+            </div>
+
+            {/* Bản đồ thật */}
+            <div className="bus-map" id="map" style={{ height: "400px" }}></div>
+
+            <div className="info-card">
+                <h4>Thông báo và Cảnh báo</h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    {data.notifications.map(notification => (
+                        <div key={notification.id} className="notification-item">
+                            <p>{notification.message} - {notification.time}</p>
+                        </div>
+                    ))}
+                    {data.alerts.map(alert => (
+                        <div key={alert.id} className="alert-item">
+                            <p>{alert.message} - {alert.time}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
