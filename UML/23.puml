@@ -1,0 +1,93 @@
+@startuml
+title Class Diagram - Bus Schedule & Tracking System
+
+class Student{
+    - studentID: int
+    - parentID: int
+    - routeID: int
+    - name: String
+    - pickupPoint: String
+    - dropoffPoint: String
+}
+
+class Parent{
+    - parentID: int
+    - name: String
+    - contactNumber: String
+    - email: String
+    + trackBusLocation()
+}
+
+class Bus{
+    - busID: int
+    - driverID: int
+    - routeID: int
+    - plateNumber: String
+    - capacity: int
+    - currentLocation: String
+    + updateLocation()
+}
+
+class Driver{
+    - driverID: int
+    - name: String
+    - contactNumber: String
+    - licenseNumber: String
+    + viewDailySchedule()
+    + viewStudentList()
+    + reportPickupStatus()
+    + reportDropoffStatus()
+    + sendEmergencyAlert()
+}
+
+class BusManager{
+    - managerID: int
+    - name: String
+    - contactNumber: String
+    + createSchedule()
+    + updateSchedule()
+    + assignDriver()
+    + assignBus()
+    + sendMessage()
+}
+
+class Route{
+    - routeID: int
+    - routeName: String
+    - startPoint: String
+    - endPoint: String
+}
+
+class Schedule{
+    - scheduleID: int
+    - routeID: int
+    - driverID: int
+    - date: Date
+    - startTime: Time
+    - endTime: Time
+}
+
+class PickupStatus{
+    - statusID: int
+    - studentID: int
+    - driverID: int
+    - timestamp: DateTime
+    - status: String
+    - location: String
+}
+
+' Relationships
+Parent ||--o{ Student : "has children"
+Student }o--|| Route : "assigned to"
+Driver ||--|| Bus : "drives"
+Bus }o--|| Route : "follows"
+Route ||--o{ Schedule : "has schedule"
+Driver ||--o{ Schedule : "assigned to"
+Driver ||--o{ PickupStatus : "reports"
+Student ||--o{ PickupStatus : "has status"
+BusManager ||--o{ Driver : "manages"
+BusManager ||--o{ Bus : "manages"
+BusManager ||--o{ Route : "manages"
+BusManager ||--o{ Schedule : "creates"
+
+@enduml

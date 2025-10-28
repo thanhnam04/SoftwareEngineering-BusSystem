@@ -1,0 +1,18 @@
+@startuml
+title Theo dõi vị trí xe buýt theo thời gian thực
+
+actor "Phụ huynh" as Parent
+actor "Tài xế" as Driver
+participant "Hệ thống quản lý xe buýt" as System
+database "CSDL vị trí xe" as DB
+
+Driver -> System: Gửi tọa độ GPS
+System -> DB: Lưu hoặc cập nhật vị trí xe
+note right: Quá trình này lặp lại định kỳ (mỗi 3 giây)
+Parent -> System: Yêu cầu xem vị trí xe của con
+System -> DB: Lấy vị trí hiện tại của xe
+DB --> System: Trả dữ liệu tọa độ
+System --> Parent: Gửi thông tin vị trí xe (hiển thị trên ứng dụng)
+System --> Parent: Gửi thông báo vị trí mới (nếu xe di chuyển)
+note right: Phụ huynh thấy xe di chuyển theo thời gian thực
+@endumlP
