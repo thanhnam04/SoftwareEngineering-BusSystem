@@ -1,0 +1,58 @@
+@startuml
+left to right direction
+title Sơ đồ use case quản lý xe buýt
+actor "Quản lý xe buýt" as QL
+rectangle "Bus Schedule & Tracking" {
+  (Xem danh sách tổng quan) as UC1
+  (Tạo và cập nhật lịch trình xe) as UC2
+  (Phân công tài xế và xe buýt) as UC3
+  (Gửi tin nhắn) as UC4
+  (Cập nhật vị trí xe buýt) as UC5
+
+  (Hiển thị danh sách học sinh) as UC1a
+  (Hiển thị danh sách tài xế) as UC1b
+  (Hiển thị danh sách xe buýt) as UC1c
+  (Hiển thị danh sách tuyến đường) as UC1d
+  
+  (Tạo lịch trình tuần) as UC2a
+  (Tạo lịch trình tháng) as UC2b
+  (Cập nhật lịch trình) as UC2c
+  
+  (Phân công tài xế cho tuyến) as UC3a
+  (Phân công xe buýt cho tuyến) as UC3b
+  
+  (Gửi tin nhắn cho tài xế) as UC4a
+  (Gửi tin nhắn cho phụ huynh) as UC4b
+  
+  (Theo dõi vị trí real-time) as UC5a
+}
+
+' Phân biệt rõ ràng
+' Chức năng có thể phân tách: Dùng use case con (UC2 → UC2a, UC2b)
+' Ràng buộc kỹ thuật: Dùng note (UC5 → note về độ trễ)
+
+QL --> UC1
+QL --> UC2
+QL --> UC3
+QL --> UC4
+QL --> UC5
+
+UC1 ..> UC1a : <<include>>
+UC1 ..> UC1b : <<include>>
+UC1 ..> UC1c : <<include>>
+UC1 ..> UC1d : <<include>>
+
+UC2 ..> UC2a : <<include>>
+UC2 ..> UC2b : <<include>>
+UC2 ..> UC2c : <<include>>
+
+UC3 ..> UC3a : <<include>>
+UC3 ..> UC3b : <<include>>
+
+UC4 ..> UC4a : <<include>>
+UC4 ..> UC4b : <<include>>
+
+UC5 ..> UC5a : <<include>>
+
+note right of UC5a : Độ trễ tối đa 3 giây
+@enduml
