@@ -1,0 +1,17 @@
+@startuml
+left to right direction
+title Sơ đồ use case phụ huynh
+
+actor "Phụ huynh" as PH
+
+rectangle "Bus Schedule & Tracking" {
+  (Theo dõi vị trí xe buýt con mình đang đi) as UC1
+  (Nhận thông báo khi xe đến gần) as UC2
+  (Nhận cảnh báo nếu xe bị trễ) as UC3
+}
+
+PH --> UC1
+PH --> UC2
+PH --> UC3
+
+@enduml
