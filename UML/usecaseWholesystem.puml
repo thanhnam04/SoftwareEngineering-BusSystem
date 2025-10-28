@@ -1,0 +1,35 @@
+@startuml
+left to right direction
+title Sơ đồ use case toàn hệ thống
+
+actor "Tài xế" as TX
+actor "Quản lý xe buýt" as QL
+actor "Phụ huynh" as PH
+
+rectangle "Bus Schedule & Tracking" {
+  (Xem lịch làm việc) as UC1
+  (Xem danh sách điểm đón) as UC2
+  (Báo cáo tình trạng đón/trả) as UC3
+  (Gửi thông báo sự cố) as UC4
+  (Xem danh sách tổng quan) as UC5
+  (Tạo và cập nhật lịch trình) as UC6
+  (Phân công) as UC7
+  (Gửi tin nhắn) as UC8
+  (Theo dõi vị trí) as UC9
+  (Nhận thông báo) as UC10
+}
+
+TX --> UC1
+TX --> UC2
+TX --> UC3
+TX --> UC4
+
+QL --> UC5
+QL --> UC6
+QL --> UC7
+QL --> UC8
+QL --> UC9
+
+PH --> UC9
+PH --> UC10
+@enduml

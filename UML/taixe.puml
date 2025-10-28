@@ -1,0 +1,31 @@
+@startuml
+left to right direction
+title Sơ đồ use case tài xế xe buýt
+
+actor "Tài xế" as TX
+
+rectangle "Bus Schedule & Tracking" {
+  (Xem lịch làm việc hàng ngày) as UC1
+  (Xem danh sách học sinh cần đón và điểm đón) as UC2
+  (Báo cáo tình trạng đã đón/trả học sinh) as UC3
+  (Gửi cảnh báo nếu xảy ra sự cố) as UC4
+
+  (Hiển thị danh sách học sinh cần đón) as UC2a
+  (Hiển thị điểm đón) as UC2b
+  
+  (Báo cáo đã đón học sinh) as UC3a
+  (Báo cáo đã trả học sinh) as UC3b
+}
+
+TX --> UC1
+TX --> UC2
+TX --> UC3
+TX --> UC4
+
+UC2 ..> UC2a : <<include>>
+UC2 ..> UC2b : <<include>>
+
+UC3 ..> UC3a : <<include>>
+UC3 ..> UC3b : <<include>>
+
+@enduml
