@@ -244,6 +244,35 @@ const ManagerDashboard = ({ data }) => {
                                 </tr>
                             </tbody>
                         </table>
+                                                <table className="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <td>Tên phụ huynh</td>
+                                    <td>{data.parents.find(p => p.id === 3)?.name}</td>
+                                </tr>
+                                <tr>
+                                    <td>Số con</td>
+                                    <td>{data.parents.find(p => p.id === 3)?.children}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tên của con</td>
+                                    <td>
+                                    {(() => {
+                                        const parent = data.parents.find(p => p.id === 3);
+                                        const phone = parent?.phone;
+                                        const children = data.students.filter(s => s.parentPhone === phone);
+                                        return children.length > 0
+                                        ? children.map(child => child.name).join(', ')
+                                        : 'Không tìm thấy học sinh';
+                                    })()}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Số điện thoại</td>
+                                    <td>{data.parents.find(p => p.id === 3)?.phone}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div className="info-card">
                         <h4>Thông tin học sinh - Xe</h4>
