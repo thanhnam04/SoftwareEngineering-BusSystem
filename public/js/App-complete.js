@@ -178,24 +178,23 @@ const ManagerDashboard = ({ data }) => {
                     <div className="info-card">
                         <h4>Tổng quan hệ thống</h4>
                         <table className="table table-striped">
-                              <tbody>
-                                <tr>
-                                <td>Số xe buýt</td>
-                                <td>{data.buses.length}</td>
-                                </tr>
-                                <tr>
-                                <td>Số học sinh</td>
-                                <td>{data.students.length}</td>
-                                </tr>
-                                <tr>
-                                <td>Số tài xế</td>
-                                <td>{data.drivers.length}</td>
-                                </tr>
-                                <tr>
-                                <td>Số tuyến đường</td>
-                                <td>{data.routes.length}</td>
-                                </tr>
+                            <thead>
+                            <tr>
+                                <th>Số xe buýt</th>
+                                <th>Số học sinh</th>
+                                <th>Số tài xế</th>
+                                <th>Số tuyến đường</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>{data.buses.length}</th>
+                                <th>{data.students.length}</th>
+                                <th>{data.drivers.length}</th>
+                                <th>{data.routes.length}</th>
+                            </tr>
                             </tbody>
+
                         </table>
                     </div>
                     <div className="info-card">
@@ -247,35 +246,37 @@ const ManagerDashboard = ({ data }) => {
                         </table>
                     </div>
                     <div className="info-card">
-                        <h4>Xe buýt đang hoạt động</h4>
-                        {data.buses.filter(bus => bus.status === 'Đang hoạt động').map(bus => (
-                            <div key={bus.id} className="student-item">
-                                <div>
-                                    <strong>{bus.name}</strong> - {bus.route} - Tài xế: {bus.driver}
-                                </div>
-                                <button onClick={() => alert(`Cập nhật vị trí cho xe ${bus.id}`)} className="btn btn-secondary">Cập nhật vị trí</button>
-                            </div>
-                        ))}
+                        <h4>Thông tin học sinh - Xe</h4>
                     </div>
                 </div>
+                
             )}
 
             {activeTab === 'lists' && (
-                <div>
+ <div style={{ display: 'flex', gap: '20px' }}>
                     <div className="info-card">
                         <h4>Danh sách Học sinh</h4>
                         <table className="table table-striped">
                             <thead>
                               <tr>
-                                <th style={{ padding: '12px 24px' }}>Tên học sinh</th>
-                                <th style={{ padding: '12px 24px' }}>Lớp</th>
-                                <th style={{ padding: '12px 24px' }}>Xe buýt</th>
-                                <th style={{ padding: '12px 24px' }}>Điểm đón</th>
+                                <th style={{ padding: '12px 12px' }}>Tên học sinh</th>
+                                <th style={{ padding: '12px 12px' }}>Lớp</th>
+                                <th style={{ padding: '12px 12px' }}>Xe buýt</th>
+                                <th style={{ padding: '12px 12px' }}>Điểm đón</th>
                                 </tr>
 
                             </thead>
                             <tbody>
-                                {data.students.map(student => (
+                                {[...data.students].sort((a, b) => {
+                                    const gradeA = a.grade.replace('Lớp ', '');
+                                    const gradeB = b.grade.replace('Lớp ', '');
+                                    const numA = parseInt(gradeA);
+                                    const numB = parseInt(gradeB);
+                                    if (numA !== numB) return numA - numB;
+                                    const letterA = gradeA.slice(-1);
+                                    const letterB = gradeB.slice(-1);
+                                    return letterA.localeCompare(letterB);
+                                }).map(student => (
                                     <tr key={student.id}>
                                         <td>{student.name}</td>
                                         <td>{student.grade}</td>
@@ -286,15 +287,15 @@ const ManagerDashboard = ({ data }) => {
                             </tbody>
                         </table>
                     </div>
-                    <div className="info-card">
+                    <div className="info-card" style={{ flex: 1 }}>
                         <h4>Danh sách Tài xế</h4>
                         <table className="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Tên tài xế</th>
-                                    <th>SĐT</th>
-                                    <th>Xe buýt</th>
-                                    <th>Trạng thái</th>
+                                    <th style={{ padding: '12px 12px' }}>Tên tài xế</th>
+                                    <th style={{ padding: '12px 12px' }}>SĐT</th>
+                                    <th style={{ padding: '12px 12px' }}>Xe buýt</th>
+                                    <th style={{ padding: '12px 12px' }}>Trạng thái</th>
                                 </tr>
                             </thead>
                             <tbody>
