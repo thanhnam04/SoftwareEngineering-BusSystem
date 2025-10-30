@@ -1,6 +1,8 @@
 const { useState } = React;
 
 
+
+// NGUYỄN THÀNH NAM - PHẠM KIM CHUNG - TRẦN ĐỨC ANH - BÙI TẤN PHÁT
 const mockData = {
     buses: [
         { id: 1, name: '01', route: 'Tuyến A', driver: 'Nguyễn Thành Nam', status: 'Đang hoạt động', location: '12.345, 106.789' },
@@ -63,10 +65,10 @@ const mockData = {
                     { id: 15, name: 'Phạm Hải Minh',        grade: 'Lớp 1B', bus: 'Xe 01', pickup: 'Điểm A1', status: 'Đã đón',   parentPhone: '0901-777-888' },
     ],
     drivers: [
-        { id: 1, name: 'Nguyễn Thành Nam', phone: '0123-456-789', bus: 'Xe 01', status: 'Đang làm việc' },
-        { id: 2, name: 'Trần Đức Anh', phone: '0987-654-321', bus: 'Xe 02', status: 'Đang làm việc' },
-        { id: 3, name: 'Bùi Tấn Phát', phone: '0912-345-678', bus: 'Xe 03', status: 'Nghỉ phép' },
-        { id: 4, name: 'Phạm Kim Chung', phone: '0912-345-953', bus: 'Xe 04', status: 'Đang làm việc' }
+        { id: 1, name: 'Nguyễn Thành Nam', phone: '0123456789', bus: 'Xe 01', status: 'Đang làm việc' },
+        { id: 2, name: 'Trần Đức Anh', phone: '0987654321', bus: 'Xe 02', status: 'Đang làm việc' },
+        { id: 3, name: 'Bùi Tấn Phát', phone: '0912345678', bus: 'Xe 03', status: 'Nghỉ phép' },
+        { id: 4, name: 'Phạm Kim Chung', phone: '0912345953', bus: 'Xe 04', status: 'Đang làm việc' }
     ],
     routes: [
         { id: 1, name: 'Tuyến A', stops: ['Điểm A1', 'Điểm A2', 'Điểm A3'], distance: '15km', duration: '45 phút' },
@@ -104,14 +106,16 @@ const mockData = {
             { id: 20, name: 'Lê Quốc Việt',       phone: '0933-555-666', children: 2 }
     ],
 };
-//nam ngu
 const accounts = [
     { username: 'manager', password: '123', role: 'manager' },
     { username: 'driver', password: '123', role: 'driver' },
     { username: 'parent', password: '123', role: 'parent' }
 ];
 
-//NGUYỄN THÀNH NAM - PHẠM KIM CHUNG CODE Ở ĐÂY
+// NGUYỄN THÀNH NAM - PHẠM KIM CHUNG - TRẦN ĐỨC ANH - BÙI TẤN PHÁT
+
+
+//NGUYỄN THÀNH NAM - PHẠM KIM CHUNG
 const ManagerDashboard = ({ data }) => {
     const [activeTab, setActiveTab] = useState('overview');
     const [message, setMessage] = useState('');
@@ -178,23 +182,24 @@ const ManagerDashboard = ({ data }) => {
                     <div className="info-card">
                         <h4>Tổng quan hệ thống</h4>
                         <table className="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>Số xe buýt</th>
-                                <th>Số học sinh</th>
-                                <th>Số tài xế</th>
-                                <th>Số tuyến đường</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th>{data.buses.length}</th>
-                                <th>{data.students.length}</th>
-                                <th>{data.drivers.length}</th>
-                                <th>{data.routes.length}</th>
-                            </tr>
+                              <tbody>
+                                <tr>
+                                <td>Số xe buýt</td>
+                                <td>{data.buses.length}</td>
+                                </tr>
+                                <tr>
+                                <td>Số học sinh</td>
+                                <td>{data.students.length}</td>
+                                </tr>
+                                <tr>
+                                <td>Số tài xế</td>
+                                <td>{data.drivers.length}</td>
+                                </tr>
+                                <tr>
+                                <td>Số tuyến đường</td>
+                                <td>{data.routes.length}</td>
+                                </tr>
                             </tbody>
-
                         </table>
                     </div>
                     <div className="info-card">
@@ -212,100 +217,130 @@ const ManagerDashboard = ({ data }) => {
             )}
 
             {activeTab === 'overviewparent' && (
+                // <div className="panel-content">
+                //     <div className="info-card">
+                //         <h4>Tổng quan phụ huynh</h4><h4>Tài xế </h4>
+                        
+                //         <table className="table table-striped">
+                //             <tbody>
+                //                 <tr>
+                //                     <td>Tên phụ huynh</td>
+                //                     <td>{data.parents.find(p => p.id === 2)?.name}</td>
+                //                 </tr>
+                //                 <tr>
+                //                     <td>Số con </td>
+                //                     <td>{data.parents.find(p => p.id === 2)?.children}</td>
+                //                 </tr>
+                //                 <tr>
+                //                 <td>Tên của con </td>
+                //                 <td>
+                //                     {(() => {
+                //                     const parent = data.parents.find(p => p.id === 2);
+                //                     const phone = parent?.phone;
+                //                     const children = data.students.filter(s => s.parentPhone === phone);
+                //                     return children.length > 0
+                //                         ? children.map(child => child.name).join(', ')
+                //                         : 'Không tìm thấy học sinh';
+                //                     })()}
+                //                 </td>
+                //                 </tr>
+                //                 <tr>
+                //                     <td>Số điện thoại </td>
+                //                     <td>{data.parents.find(p => p.id === 2)?.phone}</td>
+                //                 </tr>
+                //             </tbody>
+                //         </table>
+                //     </div>
+                //     <div className="info-card">
+                //         <h4>Xe buýt đang hoạt động</h4>
+                //         {data.buses.filter(bus => bus.status === 'Đang hoạt động').map(bus => (
+                //             <div key={bus.id} className="student-item">
+                //                 <div>
+                //                     <strong>{bus.name}</strong> - {bus.route} - Tài xế: {bus.driver}
+                //                 </div>
+                //                 <button onClick={() => alert(`Cập nhật vị trí cho xe ${bus.id}`)} className="btn btn-secondary">Cập nhật vị trí</button>
+                //             </div>
+                //         ))}
+                //     </div>
+                // </div>
                 <div className="panel-content">
-                    <div className="info-card">
-                        <h4>Tổng quan phụ huynh</h4>
-                        <table className="table table-striped">
+                    <div className="info-card" style={{ display: 'flex', gap: '40px'}}>
+                        
+                        {/* Cột 1: Tổng quan phụ huynh */}
+                        <div className="parent-card">
+                        <h4 className="parent-title">Tổng quan phụ huynh</h4>
+                        <table className="parent-table">
                             <tbody>
-                                <tr>
-                                    <td>Tên phụ huynh</td>
-                                    <td>{data.parents.find(p => p.id === 2)?.name}</td>
-                                </tr>
-                                <tr>
-                                    <td>Số con </td>
-                                    <td>{data.parents.find(p => p.id === 2)?.children}</td>
-                                </tr>
-                                <tr>
-                                <td>Tên của con </td>
+                            <tr>
+                                <td>Tên phụ huynh</td>
+                                <td>{data.parents.find(p => p.id === 2)?.name}</td>
+                            </tr>
+                            <tr>
+                                <td>Số con</td>
+                                <td>{data.parents.find(p => p.id === 2)?.children}</td>
+                            </tr>
+                            <tr>
+                                <td>Tên của con</td>
                                 <td>
-                                    {(() => {
+                                {(() => {
                                     const parent = data.parents.find(p => p.id === 2);
                                     const phone = parent?.phone;
                                     const children = data.students.filter(s => s.parentPhone === phone);
                                     return children.length > 0
-                                        ? children.map(child => child.name).join(', ')
-                                        : 'Không tìm thấy học sinh';
-                                    })()}
+                                    ? children.map(child => child.name).join(', ')
+                                    : 'Không tìm thấy học sinh';
+                                })()}
                                 </td>
-                                </tr>
-                                <tr>
-                                    <td>Số điện thoại </td>
-                                    <td>{data.parents.find(p => p.id === 2)?.phone}</td>
-                                </tr>
+                            </tr>
+                            <tr>
+                                <td>Số điện thoại</td>
+                                <td>{data.parents.find(p => p.id === 2)?.phone}</td>
+                            </tr>
                             </tbody>
                         </table>
-                                                <table className="table table-striped">
+                        </div>
+
+                        {/* Cột 2: Tài xế */}
+                        <div className="driver-card">
+                        <h4 className="driver-title">Tài xế</h4>
+                        <table className="driver-table">
                             <tbody>
-                                <tr>
-                                    <td>Tên phụ huynh</td>
-                                    <td>{data.parents.find(p => p.id === 3)?.name}</td>
-                                </tr>
-                                <tr>
-                                    <td>Số con</td>
-                                    <td>{data.parents.find(p => p.id === 3)?.children}</td>
-                                </tr>
-                                <tr>
-                                    <td>Tên của con</td>
-                                    <td>
-                                    {(() => {
-                                        const parent = data.parents.find(p => p.id === 3);
-                                        const phone = parent?.phone;
-                                        const children = data.students.filter(s => s.parentPhone === phone);
-                                        return children.length > 0
-                                        ? children.map(child => child.name).join(', ')
-                                        : 'Không tìm thấy học sinh';
-                                    })()}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Số điện thoại</td>
-                                    <td>{data.parents.find(p => p.id === 3)?.phone}</td>
-                                </tr>
+                            <tr>
+                                <td>Tên tài xế</td>
+                                <td>{data.drivers.find(d => d.id === 1)?.name}</td>
+                            </tr>
+                            <tr>
+                                <td>Số xe</td>
+                                <td>{data.drivers.find(d => d.id === 1)?.bus}</td>
+                            </tr>
+                            <tr>
+                                <td>Số điện thoại</td>
+                                <td>{data.drivers.find(d => d.id === 1)?.phone}</td>
+                            </tr>
                             </tbody>
                         </table>
+                        </div>
+
                     </div>
-                    <div className="info-card">
-                        <h4>Thông tin học sinh - Xe</h4>
                     </div>
-                </div>
-                
             )}
 
             {activeTab === 'lists' && (
- <div style={{ display: 'flex', gap: '20px' }}>
+                <div style={{ display: 'flex', gap: '20px' }}>
                     <div className="info-card">
                         <h4>Danh sách Học sinh</h4>
                         <table className="table table-striped">
                             <thead>
                               <tr>
-                                <th style={{ padding: '12px 12px' }}>Tên học sinh</th>
-                                <th style={{ padding: '12px 12px' }}>Lớp</th>
-                                <th style={{ padding: '12px 12px' }}>Xe buýt</th>
-                                <th style={{ padding: '12px 12px' }}>Điểm đón</th>
+                                <th style={{ padding: '12px 24px' }}>Tên học sinh</th>
+                                <th style={{ padding: '12px 24px' }}>Lớp</th>
+                                <th style={{ padding: '12px 24px' }}>Xe buýt</th>
+                                <th style={{ padding: '12px 24px' }}>Điểm đón</th>
                                 </tr>
 
                             </thead>
                             <tbody>
-                                {[...data.students].sort((a, b) => {
-                                    const gradeA = a.grade.replace('Lớp ', '');
-                                    const gradeB = b.grade.replace('Lớp ', '');
-                                    const numA = parseInt(gradeA);
-                                    const numB = parseInt(gradeB);
-                                    if (numA !== numB) return numA - numB;
-                                    const letterA = gradeA.slice(-1);
-                                    const letterB = gradeB.slice(-1);
-                                    return letterA.localeCompare(letterB);
-                                }).map(student => (
+                                {data.students.map(student => (
                                     <tr key={student.id}>
                                         <td>{student.name}</td>
                                         <td>{student.grade}</td>
@@ -321,10 +356,10 @@ const ManagerDashboard = ({ data }) => {
                         <table className="table table-striped">
                             <thead>
                                 <tr>
-                                    <th style={{ padding: '12px 12px' }}>Tên tài xế</th>
-                                    <th style={{ padding: '12px 12px' }}>SĐT</th>
-                                    <th style={{ padding: '12px 12px' }}>Xe buýt</th>
-                                    <th style={{ padding: '12px 12px' }}>Trạng thái</th>
+                                    <th>Tên tài xế</th>
+                                    <th>SĐT</th>
+                                    <th>Xe buýt</th>
+                                    <th>Trạng thái</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -386,10 +421,10 @@ const ManagerDashboard = ({ data }) => {
         </div>
     );
 };
+//NGUYỄN THÀNH NAM - PHẠM KIM CHUNG
 
 
-//BÙI TẤN PHÁT CODE Ở ĐÂY
-
+// BÙI TẤN PHÁT
 const DriverDashboard = ({ data }) => {
     const driverStudents = data.students.filter(student => student.bus === 'Xe 01');
 
@@ -431,9 +466,10 @@ const DriverDashboard = ({ data }) => {
         </div>
     );
 };
+// BÙI TẤN PHÁT
 
 
-// TRẦN ĐỨC ANH  CODE Ở ĐÂY
+// TRẦN ĐỨC ANH
 const ParentDashboard = ({ data }) => {
     const childBus = data.buses.find(bus => bus.name === 'Xe 01');
 
@@ -517,6 +553,8 @@ const ParentDashboard = ({ data }) => {
         </div>
     );
 };
+
+// TRẦN ĐỨC ANH
 
 function App() {
     const [currentView, setCurrentView] = useState('landing');

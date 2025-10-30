@@ -302,3 +302,84 @@ Danh sách học sinh hiển thị
   font-family: 'Nunito', sans-serif;
   font-size: 15px;
 }
+
+/* DRIVER TITLE */
+
+.driver-title {
+  font-weight: 600;
+  color: #0a4e90;               /* xanh dương nhạt như ảnh */
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.driver-table {
+  width: auto;
+  border-collapse: collapse;     /* các cột thẳng hàng */
+}
+
+.driver-table td {
+  padding: 6px 18px 6px 0;      /* căn đều giữa cột */
+  vertical-align: middle;
+  font-size: 15px;
+  color: #333;
+}
+
+.driver-table tr td:first-child {
+  font-weight: 500;
+  color: #444;
+  white-space: nowrap;           /* không xuống dòng nhãn */
+}
+
+.driver-table tr td:last-child {
+  font-weight: 400;
+  text-align: left;
+}
+/* DRIVER TITLE */
+
+/* TỔNG QUAN PHỤ HUYNH */
+/* --- PHỤ HUYNH --- */
+.parent-card,
+.driver-card {
+  width: fit-content;
+  background-color: #fff;
+  padding: 16px 20px;
+  border-radius: 10px;
+    /* ✅ Viền rõ hơn */
+  border: 1.5px solid #ccc; /* hoặc #999 nếu muốn đậm hơn */
+
+  /* ✅ Bóng đổ đậm hơn */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: 'Nunito', sans-serif;
+}
+
+.parent-title {
+  font-weight: 600;
+  color: #0a4e90;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.parent-table {
+  width: auto;
+  border-collapse: collapse;
+}
+
+.parent-table td {
+  padding: 6px 18px 6px 0;
+  vertical-align: middle;
+  font-size: 15px;
+  color: #333;
+}
+
+.parent-table tr td:first-child {
+  font-weight: 500;
+  color: #444;
+  white-space: nowrap;
+}
+
+.parent-table tr td:last-child {
+  font-weight: 400;
+  text-align: left;
+}
+
+/* TỔNG QUAN PHỤ HUYNH */
