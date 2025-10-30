@@ -354,38 +354,88 @@ const ManagerDashboard = ({ data }) => {
 
 
                     
-                    {activeTab === 'listsParent' && (
+                        {activeTab === 'listsParent' && (
                         <div className="info-card" style={{ flex: 1 }}>
                             <h4>Danh sách Phụ huynh</h4>
+
+                            {/* Dropdown chọn lớp */}
+                            <div style={{ marginBottom: '12px' }}>
+                            <label>
+                                <b>Chọn lớp: </b>
+                                <select
+                                value={selectedClass}
+                                onChange={e => setSelectedClass(e.target.value)}
+                                style={{
+                                    padding: '6px 10px',
+                                    marginLeft: '8px',
+                                    borderRadius: '6px',
+                                }}
+                                >
+                                <option value="all">Tất cả</option>
+                                <option value="Lớp 1A">Lớp 1A</option>
+                                <option value="Lớp 1B">Lớp 1B</option>
+                                <option value="Lớp 2A">Lớp 2A</option>
+                                <option value="Lớp 2B">Lớp 2B</option>
+                                <option value="Lớp 2C">Lớp 2C</option>
+                                <option value="Lớp 3A">Lớp 3A</option>
+                                <option value="Lớp 3B">Lớp 3B</option>
+                                <option value="Lớp 3C">Lớp 3C</option>
+                                </select>
+                            </label>
+                            </div>
+
+                            {/* Bảng danh sách phụ huynh */}
                             <table className="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Tên Phụ huynh</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Số con</th>
-                                        <th>Tên con</th>
+                            <thead>
+                                <tr>
+                                <th>Tên Phụ huynh</th>
+                                <th>Số điện thoại</th>
+                                <th>Số con</th>
+                                <th>Tên con</th>
+                                <th>Lớp của con</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {data.parents.flatMap(parent => {
+                                // Tìm danh sách con của phụ huynh
+                                const children = data.students.filter(
+                                    s => s.parentPhone === parent.phone
+                                );
+
+                                // Lọc con theo lớp đang chọn
+                                const filteredChildren = children.filter(child => {
+                                    if (selectedClass === 'all') return true;
+                                    return (
+                                    child.grade.trim().toLowerCase() ===
+                                    selectedClass.trim().toLowerCase()
+                                    );
+                                });
+
+                                // Nếu phụ huynh không có con nào thuộc lớp đang chọn thì bỏ qua
+                                if (filteredChildren.length === 0) return [];
+
+                                // Render mỗi con là 1 dòng
+                                return filteredChildren.map((child, index) => (
+                                    <tr key={`${parent.phone}-${child.name}`}>
+                                    {/* Chỉ hiển thị thông tin phụ huynh ở dòng đầu */}
+                                    {index === 0 && (
+                                        <>
+                                        <td rowSpan={filteredChildren.length}>{parent.name}</td>
+                                        <td rowSpan={filteredChildren.length}>{parent.phone}</td>
+                                        <td rowSpan={filteredChildren.length}>{children.length}</td>
+                                        </>
+                                    )}
+                                    <td>{child.name}</td>
+                                    <td>{child.grade}</td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    {data.parents.map(parent => (
-                                        <tr key={parent.id}>
-                                            <td>{parent.name}</td>
-                                            <td>{parent.phone}</td>
-                                            <td>{parent.children}</td>
-                                            <td>
-                                                {(() => {
-                                                    const children = data.students.filter(s => s.parentPhone === parent.phone);
-                                                    return children.length > 0
-                                                        ? children.map(child => child.name).join(', ')
-                                                        : 'Không có học sinh';
-                                                })()}
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
+                                ));
+                                })}
+                            </tbody>
                             </table>
                         </div>
-                    )}
+                        )}
+
 
                     {activeTab === 'listsDriver' && (
                         <div className="info-card" style={{ flex: 1 }}>
