@@ -1,6 +1,7 @@
 const { useState } = React;
 
 
+
 // NGUYỄN THÀNH NAM - PHẠM KIM CHUNG - TRẦN ĐỨC ANH - BÙI TẤN PHÁT
 const mockData = {
     buses: [
@@ -52,7 +53,7 @@ const mockData = {
                     { id: 27, name: 'Lê Thị Yến',           grade: 'Lớp 3C', bus: 'Xe 01', pickup: 'Điểm A2', status: 'Chưa đón', parentPhone: '0933-555-666' },
 
                     // ---- thêm 10 học sinh mới ----
-                    { id: 28, name: 'Phạm Văn Long',        grade: 'Lớp 1C', bus: 'Xe 02', pickup: 'Điểm B4', status: 'Đã đón',   parentPhone: '0912-345-678' },
+                    { id: 28, name: 'Phạm Văn Long',        grade: 'Lớp 1C', bus: 'Xe 02', pickup: 'Điểm B4', status: 'Đã đón',   parentPhone: '0901-777-888' },
                     { id: 29, name: 'Võ Thị Hương',         grade: 'Lớp 2A', bus: 'Xe 03', pickup: 'Điểm C2', status: 'Chưa đón', parentPhone: '0973-444-555' },
                     { id: 30, name: 'Trần Văn Hòa',         grade: 'Lớp 3B', bus: 'Xe 04', pickup: 'Điểm D3', status: 'Đã đón',   parentPhone: '0919-123-456' },
                     { id: 31, name: 'Ngô Thị Linh',         grade: 'Lớp 2C', bus: 'Xe 01', pickup: 'Điểm A4', status: 'Đã đón',   parentPhone: '0988-321-654' },
@@ -83,22 +84,22 @@ const mockData = {
         { id: 1, type: 'delay', message: 'Xe 01 bị trễ 10 phút do tắc đường', time: '7:50 AM' }
     ],
     parents: [
-            { id: 1,  name: 'Nguyễn Văn An',      phone: '0123-456-789', children: 1 },
+            { id: 1,  name: 'Nguyễn Văn An',      phone: '0123-456-789', children: 2 },
             { id: 2,  name: 'Trần Thị Bích',      phone: '0987-654-321', children: 2 },
             { id: 3,  name: 'Lê Văn Cường',       phone: '0912-345-678', children: 1 },
             { id: 4,  name: 'Phạm Thị Dung',      phone: '0934-567-890', children: 2 },
-            { id: 5,  name: 'Võ Minh Đức',        phone: '0978-112-233', children: 1 },
+            { id: 5,  name: 'Võ Minh Đức',        phone: '0978-112-233', children: 2 },
             { id: 6,  name: 'Đỗ Thị Hồng',        phone: '0903-445-667', children: 2 },
-            { id: 7,  name: 'Bùi Quang Huy',      phone: '0966-778-899', children: 1 },
-            { id: 8,  name: 'Ngô Thị Kim',        phone: '0944-332-211', children: 1 },
+            { id: 7,  name: 'Bùi Quang Huy',      phone: '0966-778-899', children: 2 },
+            { id: 8,  name: 'Ngô Thị Kim',        phone: '0944-332-211', children: 2 },
             { id: 9,  name: 'Huỳnh Văn Lâm',      phone: '0982-765-432', children: 2 },
-            { id: 10, name: 'Đặng Thị Lan',       phone: '0918-654-210', children: 1 },
-            { id: 11, name: 'Nguyễn Thị Mai',     phone: '0909-221-334', children: 1 },
+            { id: 10, name: 'Đặng Thị Lan',       phone: '0918-654-210', children: 2 },
+            { id: 11, name: 'Nguyễn Thị Mai',     phone: '0909-221-334', children: 2 },
             { id: 12, name: 'Trương Quốc Nam',    phone: '0938-776-655', children: 2 },
-            { id: 13, name: 'Phan Thị Ngọc',      phone: '0949-889-778', children: 1 },
-            { id: 14, name: 'Hoàng Văn Phúc',     phone: '0973-225-446', children: 1 },
+            { id: 13, name: 'Phan Thị Ngọc',      phone: '0949-889-778', children: 2 },
+            { id: 14, name: 'Hoàng Văn Phúc',     phone: '0973-225-446', children: 2 },
             { id: 15, name: 'Lưu Thị Quỳnh',      phone: '0988-554-433', children: 2 },
-            { id: 16, name: 'Đoàn Văn Sơn',       phone: '0922-667-889', children: 1 },
+            { id: 16, name: 'Đoàn Văn Sơn',       phone: '0922-667-889', children: 2 },
             { id: 17, name: 'Mai Thị Tâm',        phone: '0907-998-877', children: 2 },
             { id: 18, name: 'Nguyễn Thành Trung', phone: '0964-111-222', children: 2 },
             { id: 19, name: 'Phạm Thị Vân',       phone: '0910-333-444', children: 2 },
@@ -286,87 +287,131 @@ const ManagerDashboard = ({ data }) => {
                         </div>
                     )}
 
-                        {activeTab === 'listsParent' && (
-                            <div className="info-card" style={{ flex: 1 }}>
-                                <h4>Danh sách Phụ huynh</h4>
+                    {activeTab === 'lists' && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                            <div className="info-card">
+                                <h4>Danh sách Học sinh</h4>
 
                                 {/* Dropdown chọn lớp */}
                                 <div style={{ marginBottom: '12px' }}>
-                                <label>
-                                    <b>Chọn lớp: </b>
-                                    <select
-                                    value={selectedClass}
-                                    onChange={e => setSelectedClass(e.target.value)}
-                                    style={{
-                                        padding: '6px 10px',
-                                        marginLeft: '8px',
-                                        borderRadius: '6px',
-                                    }}
-                                    >
-                                    <option value="all">Tất cả</option>
-                                    <option value="Lớp 1A">Lớp 1A</option>
-                                    <option value="Lớp 1B">Lớp 1B</option>
-                                    <option value="Lớp 2A">Lớp 2A</option>
-                                    <option value="Lớp 2B">Lớp 2B</option>
-                                    <option value="Lớp 2C">Lớp 2C</option>
-                                    <option value="Lớp 3A">Lớp 3A</option>
-                                    <option value="Lớp 3B">Lớp 3B</option>
-                                    <option value="Lớp 3C">Lớp 3C</option>
-                                    </select>
-                                </label>
+                                    <label>
+                                        <b>Chọn lớp: </b>
+                                        <select
+                                            value={selectedClass}
+                                            onChange={e => setSelectedClass(e.target.value)}
+                                            style={{
+                                                padding: '6px 10px',
+                                                marginLeft: '8px',
+                                                borderRadius: '6px'
+                                            }}
+                                        >
+                                            <option value="all">Tất cả</option>
+                                            <option value="Lớp 1A">Lớp 1A</option>
+                                            <option value="Lớp 1B">Lớp 1B</option>
+                                            <option value="Lớp 2A">Lớp 2A</option>
+                                            <option value="Lớp 2B">Lớp 2B</option>
+                                            <option value="Lớp 2C">Lớp 2C</option>
+                                            <option value="Lớp 3A">Lớp 3A</option>
+                                            <option value="Lớp 3B">Lớp 3B</option>
+                                            <option value="Lớp 3C">Lớp 3C</option>
+                                        </select>
+                                    </label>
                                 </div>
 
-                                {/* Bảng danh sách phụ huynh */}
-                                <table className="table table-striped">
+                        {/* Bảng danh sách học sinh */}
+                        <table className="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style={{ padding: '12px 24px' }}>Tên học sinh</th>
+                                    <th style={{ padding: '12px 24px' }}>Lớp</th>
+                                    <th style={{ padding: '12px 24px' }}>Xe buýt</th>
+                                    <th style={{ padding: '12px 24px' }}>Điểm đón</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {data.students.filter(s => {
+                                                    if (selectedClass === 'all') return true;
+
+                                                    // Chuẩn hóa chuỗi để không bị lệch do chữ hoa/thường hoặc khoảng trắng
+                                                    const studentGrade = (s.grade || '').trim().toLowerCase();
+                                                    const selected = selectedClass.trim().toLowerCase();
+
+                                                    return studentGrade === selected;
+                                                })
+                                                .map(student => (
+                                                    <tr key={student.id}>
+                                                    <td>{student.name}</td>
+                                                    <td>{student.grade}</td>
+                                                    <td>{student.bus}</td>
+                                                    <td>{student.pickup}</td>
+                                                    </tr>
+                                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            )}
+
+
+                    
+                    {activeTab === 'listsParent' && (
+                        <div className="info-card" style={{ flex: 1 }}>
+                            <h4>Danh sách Phụ huynh</h4>
+                            <table className="table table-striped">
                                 <thead>
                                     <tr>
-                                    <th>Tên Phụ huynh</th>
-                                    <th>Số điện thoại</th>
-                                    <th>Số con</th>
-                                    <th>Tên con</th>
-                                    <th>Lớp của con</th>
+                                        <th>Tên Phụ huynh</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Số con</th>
+                                        <th>Tên con</th>
                                     </tr>
                                 </thead>
-
                                 <tbody>
-                                    {data.parents.flatMap(parent => {
-                                    // Tìm danh sách con của phụ huynh
-                                    const children = data.students.filter(
-                                        s => s.parentPhone === parent.phone
-                                    );
-
-                                    // Lọc con theo lớp đang chọn
-                                    const filteredChildren = children.filter(child => {
-                                        if (selectedClass === 'all') return true;
-                                        return (
-                                        child.grade.trim().toLowerCase() ===
-                                        selectedClass.trim().toLowerCase()
-                                        );
-                                    });
-
-                                    // Nếu phụ huynh không có con nào thuộc lớp đang chọn thì bỏ qua
-                                    if (filteredChildren.length === 0) return [];
-
-                                    // Render mỗi con là 1 dòng
-                                    return filteredChildren.map((child, index) => (
-                                        <tr key={`${parent.phone}-${child.name}`}>
-                                        {/* Chỉ hiển thị thông tin phụ huynh ở dòng đầu */}
-                                        {index === 0 && (
-                                            <>
-                                            <td rowSpan={filteredChildren.length}>{parent.name}</td>
-                                            <td rowSpan={filteredChildren.length}>{parent.phone}</td>
-                                            <td rowSpan={filteredChildren.length}>{children.length}</td>
-                                            </>
-                                        )}
-                                        <td>{child.name}</td>
-                                        <td>{child.grade}</td>
+                                    {data.parents.map(parent => (
+                                        <tr key={parent.id}>
+                                            <td>{parent.name}</td>
+                                            <td>{parent.phone}</td>
+                                            <td>{parent.children}</td>
+                                            <td>
+                                                {(() => {
+                                                    const children = data.students.filter(s => s.parentPhone === parent.phone);
+                                                    return children.length > 0
+                                                        ? children.map(child => child.name).join(', ')
+                                                        : 'Không có học sinh';
+                                                })()}
+                                            </td>
                                         </tr>
-                                    ));
-                                    })}
+                                    ))}
                                 </tbody>
-                                </table>
-                            </div>
-                            )}
+                            </table>
+                        </div>
+                    )}
+
+                    {activeTab === 'listsDriver' && (
+                        <div className="info-card" style={{ flex: 1 }}>
+                            <h4>Danh sách Tài xế</h4>
+                            <table className="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Tên tài xế</th>
+                                        <th>SĐT</th>
+                                        <th>Xe buýt</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data.drivers.map(driver => (
+                                        <tr key={driver.id}>
+                                            <td>{driver.name}</td>
+                                            <td>{driver.phone}</td>
+                                            <td>{driver.bus}</td>
+                                            <td>{driver.status}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
 
                     {activeTab === 'manage' && (
                         <div>
