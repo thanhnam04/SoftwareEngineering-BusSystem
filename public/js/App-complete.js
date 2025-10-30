@@ -210,7 +210,7 @@ const ManagerDashboard = ({ data }) => {
                                         <div>
                                             <strong>{bus.name}</strong> - {bus.route} - Tài xế: {bus.driver}
                                         </div>
-                                        <button onClick={() => alert(`Cập nhật vị trí cho xe ${bus.id}`)} className="btn btn-secondary">Cập nhật vị trí</button>
+                                        <button onClick={() => alert(`Cập nhật vị trí cho xe ${bus.id}`)} className="btn btn-secondary"> <i class="bi bi-pin-map-fill"></i> Cập nhật vị trí</button>
                                     </div>
                                 ))}
                             </div>
