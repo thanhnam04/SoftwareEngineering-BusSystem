@@ -107,67 +107,37 @@ header {
     color: white;
 }
 
-.btn-primary {
-    background-color:#bee3dc;
-    width: 154px;
-}
-.btn-primary::after {
-  content: "Theo dõi tuyến xe buýt\A Nhận thông báo khi xe đến điểm đưa, đón và cảnh báo cho Phụ huynh.";
-  position: absolute;
-  top: 120%; /* nằm phía trên nút */
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #333;
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 13px;
-  opacity: 0;
-  pointer-events: none;
-  white-space: pre;
-  transition: opacity 0.3s ease;
+/* Áp dụng chung cho cả 3 nút */
+.btn-primary, .btn-success, .btn-info {
+  background-color: #bee3dc;
+  width: 160px;           /* cùng chiều rộng */
+  height: 80px;           /* cùng chiều cao */
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column; /* căn icon và text theo chiều dọc */
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-family: 'Nunito', sans-serif;
+  position: relative;     /* cần cho tooltip */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Khi hover thì hiện tooltip */
-.btn-primary:hover::after {
-  opacity: 1;
+.btn-primary:hover,
+.btn-success:hover,
+.btn-info:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
-.btn-success {
-    background-color:#bee3dc;
-    width: 154px;
-}
-/* Tooltip cho nút thành công */
-.btn-success::after {
-  content: "Lịch trình, hành trình di chuyển hàng ngày,\A thông tin cho Phụ Huynh về học sinh.";
-  position: absolute;
-  top: 120%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #333;
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 13px;
-  opacity: 0;
-  pointer-events: none;
-  white-space: pre;
-  transition: opacity 0.3s ease;
-}
-
-.btn-success:hover::after {
-  opacity: 1;
-}
-
-.btn-info {
-    background-color:#bee3dc;
-    width: 154px;
-}
-/* Tooltip cho nút thông tin */
+/* Tooltip chung */
+.btn-primary::after,
+.btn-success::after,
 .btn-info::after {
-  content: "Xem danh sách học sinh, tài xế xe buýt và tuyến đường.\A Lập lịch trình cho tài xế";
   position: absolute;
-  top: 120%;
+  top: 110%;
   left: 50%;
   transform: translateX(-50%);
   background-color: #333;
@@ -179,11 +149,28 @@ header {
   pointer-events: none;
   white-space: pre;
   transition: opacity 0.3s ease;
+  z-index: 10;
 }
 
+.btn-primary:hover::after,
+.btn-success:hover::after,
 .btn-info:hover::after {
   opacity: 1;
 }
+
+/* Nội dung tooltip riêng cho từng nút */
+.btn-primary::after {
+  content: "Theo dõi tuyến xe buýt\A Nhận thông báo khi xe đến điểm đưa, đón và cảnh báo cho Phụ huynh.";
+}
+
+.btn-success::after {
+  content: "Lịch trình, hành trình di chuyển hàng ngày,\A thông tin cho Phụ Huynh về học sinh.";
+}
+
+.btn-info::after {
+  content: "Xem danh sách học sinh, tài xế xe buýt và tuyến đường.\A Lập lịch trình cho tài xế";
+}
+
 
 .btn-warning {
     background: #ffc107;

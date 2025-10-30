@@ -167,257 +167,250 @@ const ManagerDashboard = ({ data }) => {
     return (
         <div>
             <h3 className="panel-title">Bảng điều khiển Quản lý</h3>
-            <div className="tab-buttons">
-                <button onClick={() => setActiveTab('overview')} className={`btn  ${activeTab === 'btn-secondary'}`}>Tổng quan</button>
-                <button onClick={() => setActiveTab('lists')} className={`btn ${activeTab === 'lists' &'btn-secondary'}`}>Danh sách</button>
-                <button onClick={() => setActiveTab('manage')} className={`btn ${activeTab === 'manage' &'btn-secondary'}`}>Quản lý</button>
-                <button onClick={() => setActiveTab('messages')} className={`btn ${activeTab === 'messages' & 'btn-secondary'}`}>Tin nhắn</button>
-                <button onClick={() => setActiveTab('overviewparent')} className={`btn ${activeTab === 'overviewparent' & 'btn-secondary'}`}>Phụ huynh</button>
-
-            </div>
-            
-
-            {activeTab === 'overview' && (
-                <div className="panel-content">
-                    <div className="info-card">
-                        <h4>Tổng quan hệ thống</h4>
-                        <table className="table table-striped">
-                              <tbody>
-                                <tr>
-                                <td>Số xe buýt</td>
-                                <td>{data.buses.length}</td>
-                                </tr>
-                                <tr>
-                                <td>Số học sinh</td>
-                                <td>{data.students.length}</td>
-                                </tr>
-                                <tr>
-                                <td>Số tài xế</td>
-                                <td>{data.drivers.length}</td>
-                                </tr>
-                                <tr>
-                                <td>Số tuyến đường</td>
-                                <td>{data.routes.length}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div className="info-card">
-                        <h4>Xe buýt đang hoạt động</h4>
-                        {data.buses.filter(bus => bus.status === 'Đang hoạt động').map(bus => (
-                            <div key={bus.id} className="student-item">
-                                <div>
-                                    <strong>{bus.name}</strong> - {bus.route} - Tài xế: {bus.driver}
-                                </div>
-                                <button onClick={() => alert(`Cập nhật vị trí cho xe ${bus.id}`)} className="btn btn-secondary">Cập nhật vị trí</button>
+            <div style={{ display: 'flex' }}>
+                <div className="tab-buttons" style={{ display: 'flex', flexDirection: 'column', width: '200px', padding: '1rem', borderRight: '1px solid #ddd' }}>
+                    <button onClick={() => setActiveTab('overview')} className={`btn ${activeTab === 'overview' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem' }}><i className="bi bi-house-door"></i> Tổng quan</button>
+                    <button onClick={() => setActiveTab('lists')} className={`btn ${activeTab === 'lists' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem' }}><i className="bi bi-list-ul"></i> Quản lý học sinh</button>
+                    <button onClick={() => setActiveTab('listsParent')} className={`btn ${activeTab === 'listsParent' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem' }}><i className="bi bi-list-ul"></i> Quản lý PH</button>
+                    <button onClick={() => setActiveTab('listsDriver')} className={`btn ${activeTab === 'listsDriver' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem' }}><i className="bi bi-list-ul"></i> Quản lý tài xế</button>
+                    <button onClick={() => setActiveTab('manage')} className={`btn ${activeTab === 'manage' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem' }}><i className="bi bi-gear"></i>Lịch trình tài xế</button>
+                    <button onClick={() => setActiveTab('messages')} className={`btn ${activeTab === 'messages' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem' }}><i className="bi bi-chat-dots"></i> Tin nhắn</button>
+                    <button onClick={() => setActiveTab('overviewparent')} className={`btn ${activeTab === 'overviewparent' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem' }}><i className="bi bi-people"></i> Phụ huynh</button>
+                </div>
+                <div className="panel-content" style={{ flex: 1, padding: '1rem' }}>
+                    {activeTab === 'overview' && (
+                        <div>
+                            <div className="info-card">
+                                <h4>Tổng quan hệ thống</h4>
+                                <table className="table table-striped">
+                                      <tbody>
+                                        <tr>
+                                        <td>Số xe buýt</td>
+                                        <td>{data.buses.length}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Số học sinh</td>
+                                        <td>{data.students.length}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Số tài xế</td>
+                                        <td>{data.drivers.length}</td>
+                                        </tr>
+                                        <tr>
+                                        <td>Số tuyến đường</td>
+                                        <td>{data.routes.length}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            {activeTab === 'overviewparent' && (
-                // <div className="panel-content">
-                //     <div className="info-card">
-                //         <h4>Tổng quan phụ huynh</h4><h4>Tài xế </h4>
-                        
-                //         <table className="table table-striped">
-                //             <tbody>
-                //                 <tr>
-                //                     <td>Tên phụ huynh</td>
-                //                     <td>{data.parents.find(p => p.id === 2)?.name}</td>
-                //                 </tr>
-                //                 <tr>
-                //                     <td>Số con </td>
-                //                     <td>{data.parents.find(p => p.id === 2)?.children}</td>
-                //                 </tr>
-                //                 <tr>
-                //                 <td>Tên của con </td>
-                //                 <td>
-                //                     {(() => {
-                //                     const parent = data.parents.find(p => p.id === 2);
-                //                     const phone = parent?.phone;
-                //                     const children = data.students.filter(s => s.parentPhone === phone);
-                //                     return children.length > 0
-                //                         ? children.map(child => child.name).join(', ')
-                //                         : 'Không tìm thấy học sinh';
-                //                     })()}
-                //                 </td>
-                //                 </tr>
-                //                 <tr>
-                //                     <td>Số điện thoại </td>
-                //                     <td>{data.parents.find(p => p.id === 2)?.phone}</td>
-                //                 </tr>
-                //             </tbody>
-                //         </table>
-                //     </div>
-                //     <div className="info-card">
-                //         <h4>Xe buýt đang hoạt động</h4>
-                //         {data.buses.filter(bus => bus.status === 'Đang hoạt động').map(bus => (
-                //             <div key={bus.id} className="student-item">
-                //                 <div>
-                //                     <strong>{bus.name}</strong> - {bus.route} - Tài xế: {bus.driver}
-                //                 </div>
-                //                 <button onClick={() => alert(`Cập nhật vị trí cho xe ${bus.id}`)} className="btn btn-secondary">Cập nhật vị trí</button>
-                //             </div>
-                //         ))}
-                //     </div>
-                // </div>
-                <div className="panel-content">
-                    <div className="info-card" style={{ display: 'flex', gap: '40px'}}>
-                        
-                        {/* Cột 1: Tổng quan phụ huynh */}
-                        <div className="parent-card">
-                        <h4 className="parent-title">Tổng quan phụ huynh</h4>
-                        <table className="parent-table">
-                            <tbody>
-                            <tr>
-                                <td>Tên phụ huynh</td>
-                                <td>{data.parents.find(p => p.id === 2)?.name}</td>
-                            </tr>
-                            <tr>
-                                <td>Số con</td>
-                                <td>{data.parents.find(p => p.id === 2)?.children}</td>
-                            </tr>
-                            <tr>
-                                <td>Tên của con</td>
-                                <td>
-                                {(() => {
-                                    const parent = data.parents.find(p => p.id === 2);
-                                    const phone = parent?.phone;
-                                    const children = data.students.filter(s => s.parentPhone === phone);
-                                    return children.length > 0
-                                    ? children.map(child => child.name).join(', ')
-                                    : 'Không tìm thấy học sinh';
-                                })()}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Số điện thoại</td>
-                                <td>{data.parents.find(p => p.id === 2)?.phone}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        </div>
-
-                        {/* Cột 2: Tài xế */}
-                        <div className="driver-card">
-                        <h4 className="driver-title">Tài xế</h4>
-                        <table className="driver-table">
-                            <tbody>
-                            <tr>
-                                <td>Tên tài xế</td>
-                                <td>{data.drivers.find(d => d.id === 1)?.name}</td>
-                            </tr>
-                            <tr>
-                                <td>Số xe</td>
-                                <td>{data.drivers.find(d => d.id === 1)?.bus}</td>
-                            </tr>
-                            <tr>
-                                <td>Số điện thoại</td>
-                                <td>{data.drivers.find(d => d.id === 1)?.phone}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        </div>
-
-                    </div>
-                    </div>
-            )}
-
-            {activeTab === 'lists' && (
-                <div style={{ display: 'flex', gap: '20px' }}>
-                    <div className="info-card">
-                        <h4>Danh sách Học sinh</h4>
-                        <table className="table table-striped">
-                            <thead>
-                              <tr>
-                                <th style={{ padding: '12px 24px' }}>Tên học sinh</th>
-                                <th style={{ padding: '12px 24px' }}>Lớp</th>
-                                <th style={{ padding: '12px 24px' }}>Xe buýt</th>
-                                <th style={{ padding: '12px 24px' }}>Điểm đón</th>
-                                </tr>
-
-                            </thead>
-                            <tbody>
-                                {data.students.map(student => (
-                                    <tr key={student.id}>
-                                        <td>{student.name}</td>
-                                        <td>{student.grade}</td>
-                                        <td>{student.bus}</td>
-                                        <td>{student.pickup}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div className="info-card" style={{ flex: 1 }}>
-                        <h4>Danh sách Tài xế</h4>
-                        <table className="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Tên tài xế</th>
-                                    <th>SĐT</th>
-                                    <th>Xe buýt</th>
-                                    <th>Trạng thái</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {data.drivers.map(driver => (
-                                    <tr key={driver.id}>
-                                        <td>{driver.name}</td>
-                                        <td>{driver.phone}</td>
-                                        <td>{driver.bus}</td>
-                                        <td>{driver.status}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            )}
-
-            {activeTab === 'manage' && (
-                <div className="panel-content">
-                    <div className="info-card">
-                        <h4>Tạo/Cập nhật Lịch trình</h4>
-                        <button onClick={generateWeeklySchedule} className="btn btn-secondary" style={{marginRight: '0.5rem'}}>Tạo lịch trình tuần</button>
-                        <button onClick={generateMonthlySchedule} className="btn btn-secondary">Tạo lịch trình tháng</button>
-                    </div>
-                    {schedule && (
-                        <div className="info-card" style={{marginTop: '1rem'}}>
-                            <h4>{schedule.type === 'weekly' ? 'Lịch trình Tuần' : `Lịch trình Tháng ${schedule.month}`}</h4>
-                            {schedule.type === 'weekly' ? (
-                                schedule.data.map(daySchedule => (
-                                    <div key={daySchedule.day}>
-                                        <h5>{daySchedule.day}</h5>
-                                        {daySchedule.buses.map(bus => (
-                                            <p key={bus.name}>{bus.name} - {bus.route} - Tài xế: {bus.driver}</p>
-                                        ))}
+                            <div className="info-card">
+                                <h4>Xe buýt đang hoạt động</h4>
+                                {data.buses.filter(bus => bus.status === 'Đang hoạt động').map(bus => (
+                                    <div key={bus.id} className="student-item">
+                                        <div>
+                                            <strong>{bus.name}</strong> - {bus.route} - Tài xế: {bus.driver}
+                                        </div>
+                                        <button onClick={() => alert(`Cập nhật vị trí cho xe ${bus.id}`)} className="btn btn-secondary">Cập nhật vị trí</button>
                                     </div>
-                                ))
-                            ) : (
-                                schedule.data.map(busSchedule => (
-                                    <p key={busSchedule.bus}>{busSchedule.bus} - {busSchedule.route} - Tài xế: {busSchedule.driver} - {busSchedule.days} ngày</p>
-                                ))
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === 'overviewparent' && (
+                        <div>
+                            <div className="info-card" style={{ display: 'flex', gap: '40px'}}>
+                                
+                                {/* Cột 1: Tổng quan phụ huynh */}
+                                <div className="parent-card">
+                                <h4 className="parent-title">Tổng quan phụ huynh</h4>
+                                <table className="parent-table">
+                                    <tbody>
+                                    <tr>
+                                        <td>Tên phụ huynh</td>
+                                        <td>{data.parents.find(p => p.id === 2)?.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Số con</td>
+                                        <td>{data.parents.find(p => p.id === 2)?.children}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tên của con</td>
+                                        <td>
+                                        {(() => {
+                                            const parent = data.parents.find(p => p.id === 2);
+                                            const phone = parent?.phone;
+                                            const children = data.students.filter(s => s.parentPhone === phone);
+                                            return children.length > 0
+                                            ? children.map(child => child.name).join(', ')
+                                            : 'Không tìm thấy học sinh';
+                                        })()}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Số điện thoại</td>
+                                        <td>{data.parents.find(p => p.id === 2)?.phone}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+
+                                {/* Cột 2: Tài xế */}
+                                <div className="driver-card">
+                                <h4 className="driver-title">Tài xế</h4>
+                                <table className="driver-table">
+                                    <tbody>
+                                    <tr>
+                                        <td>Tên tài xế</td>
+                                        <td>{data.drivers.find(d => d.id === 1)?.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Số xe</td>
+                                        <td>{data.drivers.find(d => d.id === 1)?.bus}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Số điện thoại</td>
+                                        <td>{data.drivers.find(d => d.id === 1)?.phone}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === 'lists' && (
+                        <div style={{ display: 'flex', gap: '20px' }}>
+                            <div className="info-card">
+                                <h4>Danh sách Học sinh</h4>
+                                <table className="table table-striped">
+                                    <thead>
+                                      <tr>
+                                        <th style={{ padding: '12px 24px' }}>Tên học sinh</th>
+                                        <th style={{ padding: '12px 24px' }}>Lớp</th>
+                                        <th style={{ padding: '12px 24px' }}>Xe buýt</th>
+                                        <th style={{ padding: '12px 24px' }}>Điểm đón</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        {data.students.map(student => (
+                                            <tr key={student.id}>
+                                                <td>{student.name}</td>
+                                                <td>{student.grade}</td>
+                                                <td>{student.bus}</td>
+                                                <td>{student.pickup}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {activeTab === 'listsParent' && (
+                        <div className="info-card" style={{ flex: 1 }}>
+                            <h4>Danh sách Phụ huynh</h4>
+                            <table className="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Tên Phụ huynh</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Số con</th>
+                                        <th>Tên con</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data.parents.map(parent => (
+                                        <tr key={parent.id}>
+                                            <td>{parent.name}</td>
+                                            <td>{parent.phone}</td>
+                                            <td>{parent.children}</td>
+                                            <td>
+                                                {(() => {
+                                                    const children = data.students.filter(s => s.parentPhone === parent.phone);
+                                                    return children.length > 0
+                                                        ? children.map(child => child.name).join(', ')
+                                                        : 'Không có học sinh';
+                                                })()}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+
+                    {activeTab === 'listsDriver' && (
+                        <div className="info-card" style={{ flex: 1 }}>
+                            <h4>Danh sách Tài xế</h4>
+                            <table className="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Tên tài xế</th>
+                                        <th>SĐT</th>
+                                        <th>Xe buýt</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data.drivers.map(driver => (
+                                        <tr key={driver.id}>
+                                            <td>{driver.name}</td>
+                                            <td>{driver.phone}</td>
+                                            <td>{driver.bus}</td>
+                                            <td>{driver.status}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+
+                    {activeTab === 'manage' && (
+                        <div>
+                            <div className="info-card">
+                                <h4>Tạo/Cập nhật Lịch trình</h4>
+                                <button onClick={generateWeeklySchedule} className="btn btn-secondary" style={{marginRight: '0.5rem'}}>Tạo lịch trình tuần</button>
+                                <button onClick={generateMonthlySchedule} className="btn btn-secondary">Tạo lịch trình tháng</button>
+                            </div>
+                            {schedule && (
+                                <div className="info-card" style={{marginTop: '1rem'}}>
+                                    <h4>{schedule.type === 'weekly' ? 'Lịch trình Tuần' : `Lịch trình Tháng ${schedule.month}`}</h4>
+                                    {schedule.type === 'weekly' ? (
+                                        schedule.data.map(daySchedule => (
+                                            <div key={daySchedule.day}>
+                                                <h5>{daySchedule.day}</h5>
+                                                {daySchedule.buses.map(bus => (
+                                                    <p key={bus.name}>{bus.name} - {bus.route} - Tài xế: {bus.driver}</p>
+                                                ))}
+                                            </div>
+                                        ))
+                                    ) : (
+                                        schedule.data.map(busSchedule => (
+                                            <p key={busSchedule.bus}>{busSchedule.bus} - {busSchedule.route} - Tài xế: {busSchedule.driver} - {busSchedule.days} ngày</p>
+                                        ))
+                                    )}
+                                </div>
                             )}
                         </div>
                     )}
-                </div>
-            )}
 
-            {activeTab === 'messages' && (
-                <div className="info-card">
-                    <h4>Gửi Tin nhắn</h4>
-                    <select value={selectedRecipient} onChange={(e) => setSelectedRecipient(e.target.value)} className="form-control" style={{marginBottom: '0.5rem'}}>
-                        <option value="">Chọn người nhận</option>
-                        <option value="Tài xế">Tài xế</option>
-                        <option value="Phụ huynh">Phụ huynh</option>
-                    </select>
-                    <textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Nhập tin nhắn..." className="form-control" style={{marginBottom: '0.5rem', minHeight: '100px'}}></textarea>
-                    <button onClick={sendMessage} className="btn btn-danger">Gửi tin nhắn</button>
+                    {activeTab === 'messages' && (
+                        <div className="info-card">
+                            <h4>Gửi Tin nhắn</h4>
+                            <select value={selectedRecipient} onChange={(e) => setSelectedRecipient(e.target.value)} className="form-control" style={{marginBottom: '0.5rem'}}>
+                                <option value="">Chọn người nhận</option>
+                                <option value="Tài xế">Tài xế</option>
+                                <option value="Phụ huynh">Phụ huynh</option>
+                            </select>
+                            <textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Nhập tin nhắn..." className="form-control" style={{marginBottom: '0.5rem', minHeight: '100px'}}></textarea>
+                            <button onClick={sendMessage} className="btn btn-danger">Gửi tin nhắn</button>
+                        </div>
+                    )}
                 </div>
-            )}
+            </div>
         </div>
     );
 };
@@ -475,50 +468,30 @@ const ParentDashboard = ({ data }) => {
 
     // Dùng useEffect để khởi tạo bản đồ sau khi DOM đã render
     React.useEffect(() => {
-        if (window.google && document.getElementById("map")) {
-            const sg = { lat: 10.762622, lng: 106.660172 };
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 14,
-                center: sg,
-                mapTypeControl: true,
-                zoomControl: true,
-                scaleControl: true,
-                streetViewControl: true,
-                fullscreenControl: true,
-                rotateControl: true,
-            });
-            new google.maps.Marker({
-                position: sg,
-                map: map,
-                title: "Đại học Sài Gòn",
-            });
+        if (window.L && document.getElementById("map")) {
+            const sg = [10.762622, 106.660172];
+            const map = L.map('map').setView(sg, 14);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // L.marker(sg).addTo(map)
+            //     .bindPopup('Đại học Sài Gòn')
+            //     .openPopup();
 
             // Thêm marker cho vị trí xe buýt
-            const busLocation = { lat: 10.765, lng: 106.665 }; // Vị trí mẫu cho xe buýt
-            new google.maps.Marker({
-                position: busLocation,
-                map: map,
-                title: "Vị trí xe buýt",
-                icon: {
-                    url: "data:image/svg+xml;charset=UTF-8,%3csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='20' cy='20' r='18' fill='%23000' stroke='%23fff' stroke-width='2'/%3e%3ctext x='20' y='25' text-anchor='middle' fill='%23fff' font-size='12'%3eBUS%3c/text%3e%3c/svg%3e",
-                    scaledSize: new google.maps.Size(40, 40)
-                }
-            });
+            const busLocation = [10.765, 106.665]; // Vị trí mẫu cho xe buýt
+            L.marker(busLocation).addTo(map)
+                .bindPopup('Vị trí xe buýt');
 
             // Vẽ đường đi mẫu
-            const routePath = [
-                { lat: 10.762622, lng: 106.660172 },
-                { lat: 10.765, lng: 106.665 },
-                { lat: 10.770, lng: 106.670 }
-            ];
-            const routePolyline = new google.maps.Polyline({
-                path: routePath,
-                geodesic: true,
-                strokeColor: '#FF0000',
-                strokeOpacity: 1.0,
-                strokeWeight: 2
-            });
-            routePolyline.setMap(map);
+            // const routePath = [
+            //     [10.762622, 106.660172],
+            //     [10.765, 106.665],
+            //     [10.770, 106.670]
+            // ];
+            // L.polyline(routePath, {color: 'red'}).addTo(map);
         }
     }, []); // chỉ chạy 1 lần sau khi render
 
@@ -634,9 +607,9 @@ function App() {
   "• Theo dõi vị trí xe của con theo thời gian thực\n" +
   "• Nhận thông báo khi xe đến gần điểm đón\n" +
   "• Nhận cảnh báo nếu xe trễ hoặc có sự cố\n\n" +
-  "💡 Hệ thống hỗ trợ thời gian thực cho tối đa 300 xe, có thể mở rộng cho web và mobile.")}>Tính năng</button>
-                            <button className="btn btn-link" style={{ fontSize: '1.2rem', padding: '0.25rem 0.5rem' }} onClick={() => alert('Nguyễn Thành Nam - nnam62673@gmail.com')}>Liên hệ</button>
-                            <button className="btn btn-link" style={{ fontSize: '1.2rem', padding: '0.25rem 0.5rem' }} onClick={handleAboutClick}>Về chúng tôi</button>
+  "💡 Hệ thống hỗ trợ thời gian thực cho tối đa 300 xe, có thể mở rộng cho web và mobile.")}><i class="bi bi-menu-down"></i> Tính năng</button>
+                            <button className="btn btn-link" style={{ fontSize: '1.2rem', padding: '0.25rem 0.5rem' }} onClick={() => alert('Nguyễn Thành Nam - nnam62673@gmail.com')}> <i class="bi bi-arrows-angle-contract"></i> Liên hệ</button>
+                            <button className="btn btn-link" style={{ fontSize: '1.2rem', padding: '0.25rem 0.5rem' }} onClick={handleAboutClick}> <i class="bi bi-person-vcard"></i> Về chúng tôi</button>
                         </div>
                         <h1 style={{ color: '#1e5799', marginBottom: '2rem', fontSize: '3rem' }}>SSB 1.0</h1>
                         <h1 style={{ marginBottom: '2rem', color: '#555', padding :'0.75rem 0rem', }}>Hệ thống theo dõi xe buýt trường học thông minh</h1>
@@ -644,7 +617,7 @@ function App() {
                         <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem', justifyContent: 'center', marginBottom: '1rem' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                 <button onClick={() => handleRoleSelect('parent')} className="btn btn-primary" style={{ padding: '0.75rem 1.2rem', fontSize: '1.5rem',width:'170px' }}>
-                                    Phụ huynh
+                                    <i className="bi bi-people"></i> Phụ huynh
                                 </button>
                                 {/* <div style={{ fontSize: '0.9rem', color: '#666', marginTop: '0.5rem', textAlign: 'center', padding: '0.75rem 0.5rem',fontSize: '1rem' }}>
                                     <p class="Description-PH">Theo dõi tuyến xe buýt.<br></br>
@@ -653,7 +626,7 @@ function App() {
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                 <button onClick={() => handleRoleSelect('driver')} className="btn btn-success" style={{ padding: '0.75rem 1.5rem', fontSize: '1.5rem' }}>
-                                    Tài xế
+                                    <i className="bi bi-bus-front"></i> Tài xế
                                 </button>
                                 {/* <div style={{ fontSize: '0.9rem', color: '#666', marginTop: '0.5rem', textAlign: 'center', padding: '0.75rem 1.5rem',fontSize: '1rem',width: '150px' }}>
                                     <p class="Description-TX">Lịch trình, hành trình di chuyển hàng ngày, thông tin cho Phụ Huynh về học sinh.</p>
@@ -661,7 +634,7 @@ function App() {
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                 <button onClick={() => handleRoleSelect('manager')} className="btn btn-info" style={{ padding: '0.75rem 1.4rem', fontSize: '1.5rem' }}>
-                                    Quản lý
+                                    <i className="bi bi-person-fill-gear"></i> Quản lý
                                 </button>
                                 {/* <div style={{ fontSize: '0.9rem', color: '#666', marginTop: '0.5rem', textAlign: 'center', padding: '0.75rem 1.1rem',fontSize: '1rem' }}>
                                     <p class="Description-QL">Xem danh sách học sinh, tài xế xe buýt và tuyến đường.</p>
@@ -858,7 +831,7 @@ function App() {
                             color: '#1e5799'
                         }}
                     >
-                        Đăng xuất
+                       <i class="bi bi-box-arrow-left"></i> Đăng xuất
                     </button>
                 </div>
             </header>
