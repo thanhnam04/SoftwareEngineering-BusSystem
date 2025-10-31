@@ -65,10 +65,10 @@ const mockData = {
                     { id: 37, name: 'Phạm Hải Minh',        grade: 'Lớp 1B', bus: 'Xe 01', pickup: 'Điểm A1', status: 'Đã đón',   parentPhone: '0901-777-888' },
     ],
     drivers: [
-        { id: 1, name: 'Nguyễn Thành Nam', phone: '0123456789', bus: 'Xe 01', status: 'Đang làm việc' },
-        { id: 2, name: 'Trần Đức Anh', phone: '0987654321', bus: 'Xe 02', status: 'Đang làm việc' },
-        { id: 3, name: 'Bùi Tấn Phát', phone: '0912345678', bus: 'Xe 03', status: 'Nghỉ phép' },
-        { id: 4, name: 'Phạm Kim Chung', phone: '0912345953', bus: 'Xe 04', status: 'Đang làm việc' }
+        { id: 1, name: 'Nguyễn Thành Nam', phone: '0123456789', bus: 'Xe 01', status: 'Đang làm việc', plate: '51B-123.45'},
+        { id: 2, name: 'Trần Đức Anh', phone: '0987654321', bus: 'Xe 02', status: 'Đang làm việc', plate:'53B-678.90' },
+        { id: 3, name: 'Bùi Tấn Phát', phone: '0912345678', bus: 'Xe 03', status: 'Nghỉ phép',plate:'56B-012.34' },
+        { id: 4, name: 'Phạm Kim Chung', phone: '0912345953', bus: 'Xe 04', status: 'Đang làm việc', plate:'59B-556.77' }
     ],
     routes: [
         { id: 1, name: 'Tuyến A', stops: ['Điểm A1', 'Điểm A2', 'Điểm A3'], distance: '15km', duration: '45 phút' },
@@ -448,6 +448,7 @@ const ManagerDashboard = ({ data }) => {
                                         <th>SĐT</th>
                                         <th>Xe buýt</th>
                                         <th>Trạng thái</th>
+                                        <th>Biển số</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -457,6 +458,7 @@ const ManagerDashboard = ({ data }) => {
                                             <td>{driver.phone}</td>
                                             <td>{driver.bus}</td>
                                             <td>{driver.status}</td>
+                                            <td>{driver.plate}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -597,7 +599,7 @@ const ParentDashboard = ({ data }) => {
 
             <div className="info-card">
                 <h4>Xe của bé</h4>
-                <p>Xe 01 - Tuyến A - Tài xế: Nguyễn Văn A</p>
+                <p>Xe 01 - Tuyến A - Tài xế: Nguyễn Thành Nam</p>
                 <p>Trạng thái: Đang di chuyển</p>
             </div>
 
@@ -605,19 +607,22 @@ const ParentDashboard = ({ data }) => {
             <div className="bus-map" id="map" style={{ height: "400px" }}></div>
 
             <div className="info-card">
-                <h4>Thông báo và Cảnh báo</h4>
+                <h4> <i class="bi bi-bell-fill"></i> Thông báo</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     {data.notifications.map(notification => (
                         <div key={notification.id} className="notification-item">
                             <p>{notification.message} - {notification.time}</p>
                         </div>
                     ))}
-                    {data.alerts.map(alert => (
-                        <div key={alert.id} className="alert-item">
-                            <p>{alert.message} - {alert.time}</p>
-                        </div>
-                    ))}
                 </div>
+            </div>
+            <div className="info-card">
+               <h4> <i class="bi bi-exclamation-square-fill"></i> Cảnh báo</h4>
+                    {data.alerts.map(alert => (
+                    <div key={alert.id} className="alert-item">
+                        <p>{alert.message} - {alert.time}</p>
+                    </div>
+                     ))} 
             </div>
         </div>
     );
