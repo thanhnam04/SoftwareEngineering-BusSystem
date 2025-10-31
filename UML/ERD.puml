@@ -1,0 +1,91 @@
+@startuml ERD
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define primary_key(x) <b>x</b>
+!define foreign_key(x) <i>x</i>
+
+Table(Bus, "Bus") {
+  primary_key(id) : INTEGER
+  name : VARCHAR(50)
+  foreign_key(route_id) : INTEGER
+  foreign_key(driver_id) : INTEGER
+  status : VARCHAR(20)
+  location : VARCHAR(100)
+}
+
+Table(Driver, "Driver") {
+  primary_key(id) : INTEGER
+  name : VARCHAR(100)
+  phone : VARCHAR(15)
+  foreign_key(bus_id) : INTEGER
+  status : VARCHAR(20)
+}
+
+Table(Student, "Student") {
+  primary_key(id) : INTEGER
+  name : VARCHAR(100)
+  grade : VARCHAR(10)
+  foreign_key(bus_id) : INTEGER
+  pickup : VARCHAR(50)
+  status : VARCHAR(20)
+  foreign_key(parent_phone) : VARCHAR(15)
+}
+
+Table(Parent, "Parent") {
+  primary_key(id) : INTEGER
+  name : VARCHAR(100)
+  phone : VARCHAR(15)
+  children : INTEGER
+}
+
+Table(Route, "Route") {
+  primary_key(id) : INTEGER
+  name : VARCHAR(50)
+  stops : TEXT
+  distance : VARCHAR(20)
+  duration : VARCHAR(20)
+}
+
+Table(Notification, "Notification") {
+  primary_key(id) : INTEGER
+  type : VARCHAR(20)
+  message : TEXT
+  time : VARCHAR(20)
+  foreign_key(bus_id) : INTEGER
+  foreign_key(student_id) : INTEGER
+}
+
+
+
+Table(Alert, "Alert") {
+  primary_key(id) : INTEGER
+  type : VARCHAR(20)
+  message : TEXT
+  time : VARCHAR(20)
+  foreign_key(bus_id) : INTEGER
+}
+
+Table(Account, "Account") {
+  primary_key(username) : VARCHAR(50)
+  password : VARCHAR(50)
+  role : VARCHAR(20)
+}
+
+Table(Manager, "Manager") {
+  primary_key(id) : INTEGER
+  name : VARCHAR(100)
+  foreign_key(account_username) : VARCHAR(50)
+}
+
+' Relationships
+Driver ||--|| Bus : drives
+Bus ||--o{ Student : transports
+Parent ||--o{ Student : has
+Route ||--o{ Bus : assigned to
+Bus ||--o{ Notification : generates
+Bus ||--o{ Alert : generates
+Student ||--o{ Notification : related to
+Account ||--o{ Driver : has
+Account ||--o{ Parent : has
+Account ||--o{ Manager : has
+
+@enduml
