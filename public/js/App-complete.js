@@ -108,7 +108,8 @@ const mockData = {
 };
 const accounts = [
     { username: 'manager', password: '123', role: 'manager' },
-    { username: 'driver', password: '123', role: 'driver' },
+    { username: 'driver1', password: '123', role: 'driver' },
+    { username: 'driver2', password: '456', role: 'driver' },
     { username: 'parent', password: '123', role: 'parent' }
 ];
 
@@ -537,10 +538,10 @@ const DriverDashboard = ({ data }) => {
                             </div>
                             <div>
                                 {student.status === 'Chưa đón' && (
-                                    <button onClick={() => alert(`Đã báo cáo đón học sinh ${student.id}`)} className="btn btn-secondary">Báo cáo đón</button>
+                                    <button onClick={() => alert(`Đã báo cáo đón học sinh ${student.name}`)} className="btn btn-secondary">Báo cáo đón</button>
                                 )}
                                 {student.status === 'Đã đón' && (
-                                    <button onClick={() => alert(`Đã báo cáo trả học sinh ${student.id}`)} className="btn btn-secondary">Báo cáo trả</button>
+                                    <button onClick={() => alert(`Đã báo cáo trả học sinh ${student.name}`)} className="btn btn-secondary">Báo cáo trả</button>
                                 )}
                             </div>
                         </div>
