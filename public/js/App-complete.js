@@ -190,7 +190,7 @@ const ManagerDashboard = ({ data }) => {
                             <div className="info-card">
                                 <h4>Tổng quan hệ thống</h4>
                                 <table className="table table-striped">
-                                      <tbody>
+                                        <tbody>
                                         <tr>
                                         <td>Số xe buýt</td>
                                         <td>{data.buses.length}</td>
