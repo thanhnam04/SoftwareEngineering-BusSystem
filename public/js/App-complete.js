@@ -108,8 +108,7 @@ const mockData = {
 };
 const accounts = [
     { username: 'manager', password: '123', role: 'manager' },
-    { username: 'driver1', password: '123', role: 'driver' },
-    { username: 'driver2', password: '456', role: 'driver' },
+    { username: 'driver', password: '123', role: 'driver' },
     { username: 'parent', password: '123', role: 'parent' }
 ];
 
