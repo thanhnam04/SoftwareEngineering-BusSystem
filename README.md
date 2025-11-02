@@ -1,15 +1,13 @@
 # Smart School Bus Tracking System (SSB 1.0) - Public Folder Documentation
 
-  NGUYỄN THÀNH NAM, PHẠM KIM CHUNG: COMPONENT MANAGERDASHBOARD
-    - Làm giao diện thân thiện dễ dùng và tiện lợi.
+NGUYỄN THÀNH NAM, PHẠM KIM CHUNG: COMPONENT MANAGERDASHBOARD - Làm giao diện thân thiện dễ dùng và tiện lợi.
 
-  TRẦN ĐỨC ANH: COMPONENT PARENTDASHBOARD
-    - Làm giao diện thân thiện dễ dùng và tiện lợi.
+TRẦN ĐỨC ANH: COMPONENT PARENTDASHBOARD - Làm giao diện thân thiện dễ dùng và tiện lợi.
 
-  BÙI TẤN PHÁT: COMPONENT DRIVERDASHBOARD
-    - Làm giao diện thân thiện dễ dùng và tiện lợi.
+BÙI TẤN PHÁT: COMPONENT DRIVERDASHBOARD - Làm giao diện thân thiện dễ dùng và tiện lợi.
 
 ## Phân chia UML code
+
 Nguyễn Thành Nam
 
 21.puml
@@ -29,14 +27,14 @@ Bùi Tấn Phát
 taixe.puml
 usecaseWholesystem.puml
 
-
-
 ## Tổng quan Dự án
+
 Dự án **Smart School Bus Tracking System (SSB 1.0)** là một hệ thống theo dõi xe buýt trường học thông minh được xây dựng bằng React. Hệ thống hỗ trợ ba vai trò chính: Quản lý, Tài xế và Phụ huynh, với các chức năng như theo dõi vị trí xe buýt thời gian thực, quản lý lịch trình, gửi thông báo và cảnh báo.
 
 Thư mục `public` chứa các tệp tĩnh và mã nguồn frontend của ứng dụng web. Có React và dùng text/babel để biên dịch JSX sang JS
 
 ## Cấu trúc Thư mục
+
 ```
 public/
 ├── index-complete.html          # Tệp HTML chính (phiên bản hoàn chỉnh)
@@ -61,7 +59,9 @@ public/
 ## Mô tả Chi tiết Các Tệp
 
 ### 1. Tệp HTML
+
 #### `index-complete.html`
+
 - **Mục đích**: Tệp HTML chính cho phiên bản hoàn chỉnh của ứng dụng.
 - **Nội dung chính**:
   - Tiêu đề: "Smart School Bus Tracking System - SSB 1.0"
@@ -72,6 +72,7 @@ public/
 - **Điểm nổi bật**: Sử dụng React để render toàn bộ ứng dụng vào div có id="root".
 
 #### `index-completed.html`
+
 - **Mục đích**: Tệp HTML đơn giản hơn, chứa mã React inline.
 - **Nội dung chính**:
   - Tiêu đề tương tự
@@ -81,7 +82,9 @@ public/
 - **Điểm nổi bật**: Phiên bản cơ bản với mã nguồn inline, dễ chỉnh sửa nhưng ít tổ chức.
 
 ### 2. Tệp CSS
+
 #### `css/index-complete.css`
+
 - **Mục đích**: Stylesheet cho phiên bản hoàn chỉnh.
 - **Các phần chính**:
   - Reset CSS và font chữ (Nunito từ Google Fonts)
@@ -91,11 +94,11 @@ public/
   - Responsive design với media queries
   - Styles đặc biệt cho Description-PH, Description-TX, Description-QL (mô tả vai trò)
 - **Lớp CSS quan trọng**:
+
   - `.info-card`: Card chứa thông tin từ quản lí và đăng nhập tư cách quản lí
   - `.tab-buttons`: Nút chuyển tab
   - `.student-item`: Item học sinh
   - `.notification-item`, `.alert-item`: Thông báo và cảnh báo
-
 
 - **Lớp CSS quan trọng**:
   - `.bus-map`: Container cho bản đồ
@@ -103,7 +106,9 @@ public/
   - `.panel-content`: Layout grid cho nội dung panel
 
 ### 3. Tệp JavaScript (React Components)
+
 #### `js/App-complete.js`
+
 - **Mục đích**: Ứng dụng React chính cho phiên bản hoàn chỉnh.
 - **Cấu trúc**:
   - Import React hooks: `useState`
@@ -124,37 +129,46 @@ public/
   - Dashboard theo vai trò sau đăng nhập
 
 #### `js/DriverDashboard.js`
+
 - **Mục đích**: Component riêng cho bảng điều khiển Tài xế.
 - **Nội dung**: (Tệp này có thể là phiên bản tách riêng, nhưng trong App-complete.js đã tích hợp)
 
 #### `js/ManagerDashboard.js`
+
 - **Mục đích**: Component riêng cho bảng điều khiển Quản lý.
 - **Nội dung**: (Tương tự, có thể là phiên bản tách)
 
 #### `js/ParentDashboard.js`
+
 - **Mục đích**: Component riêng cho bảng điều khiển Phụ huynh.
 - **Nội dung**: (Tương tự)
 
 ### 4. Thư mục Khác
+
 #### `component/frontend.tsx`
+
 - **Mục đích**: Component React được viết bằng TypeScript.
 - **Nội dung**: Có thể là phiên bản TypeScript của một component frontend.
 
 #### `img/BackgroundSSB.png`
+
 - **Mục đích**: Hình nền cho hệ thống SSB.
 - **Sử dụng**: Có thể dùng trong CSS hoặc làm background.
 
 #### `js/phuluc.js`
+
 - **Mục đích**: Tệp JavaScript bổ sung.
 - **Nội dung**: Có thể chứa các hàm hoặc mã hỗ trợ bổ sung cho ứng dụng.
 
 #### `src/components/`
+
 - **Mục đích**: Thư mục để chứa các React components tách riêng.
 - **Trạng thái**: Hiện tại trống, có thể mở rộng để tổ chức code tốt hơn.
 
 ## Các Component và Hàm Chính
 
 ### Component ManagerDashboard
+
 - **Vị trí**: Trong `js/App-complete.js`
 - **Tabs**:
   - Tổng quan: Hiển thị số liệu thống kê, danh sách xe hoạt động
@@ -167,6 +181,7 @@ public/
   - `generateMonthlySchedule()`: Tạo lịch tháng - hiện tại nhóm em dùng tạo thủ công vì không liên kết BE
 
 ### Component DriverDashboard
+
 - **Vị trí**: Trong `js/App-complete.js`
 - **Nội dung**:
   - Lịch làm việc hôm nay
@@ -177,6 +192,7 @@ public/
   - Sử dụng `driverStudents` (lọc học sinh theo xe)
 
 ### Component ParentDashboard
+
 - **Vị trí**: Trong `js/App-complete.js`
 - **Nội dung**:
   - Thông tin xe của bé
@@ -186,6 +202,7 @@ public/
   - `useEffect` để khởi tạo bản đồ sau render
 
 ### Component App (Chính)
+
 - **State**:
   - `currentView`: 'landing', 'login', 'about'
   - `selectedRole`: 'parent', 'driver', 'manager'
@@ -199,19 +216,20 @@ public/
   - `handleLogin(e)`: Xử lý form đăng nhập
 
 ## Cách Chạy Ứng dụng
+
 1. Mở `index-complete.html` trong trình duyệt web.
 2. Chọn vai trò (Phụ huynh, Tài xế, Quản lý).
 3. Đăng nhập với tài khoản mẫu:
    - Quản lý: manager / 123
    - Tài xế: driver / 123
    - Phụ huynh: parent / 123
-4.  Tính năng theo vai trò.
-
+4. Tính năng theo vai trò.
 
 ## Nhóm Phát triển
+
 - Nguyễn Thành Nam (3122480034)
 - Trần Đức Anh (3122480001)
 - Phạm Kim Chung (3122480006)
 - Bùi Tấn Phát (3122480042)
 
-Phiên bản: 1.0 | Năm: HK1 - Year4 - 2025
+Phiên bản: 4.0 | Năm: HK1 - Year4 - 2025
