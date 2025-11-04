@@ -131,7 +131,10 @@ const ManagerDashboard = ({ data }) => {
             alert(`Tin nhắn đã gửi đến ${selectedRecipient}: ${message}`);
             setMessage('');
             setSelectedRecipient('');
-        }
+        } else {
+        // Hiển thị lỗi nếu thiếu thông tin
+        alert('Vui lòng nhập tin nhắn và chọn người nhận!');
+    }
     };
 
     const generateWeeklySchedule = () => {
