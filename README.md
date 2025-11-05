@@ -233,3 +233,18 @@ public/
 - Bùi Tấn Phát (3122480042)
 
 Phiên bản: 4.0 | Năm: HK1 - Year4 - 2025
+
+## Phân chia Manager
+
+### Chung
+
+- sendMessenger
+- lists
+- listsParent
+- message
+
+### Nam
+
+- overview
+- manage
+- overviewparent

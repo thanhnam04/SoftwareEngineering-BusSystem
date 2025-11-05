@@ -126,6 +126,7 @@ const ManagerDashboard = ({ data }) => {
         return saved ? JSON.parse(saved) : [];
     });
 
+    // Chung
     const sendMessage = () => {
         if (message && selectedRecipient) {
             alert(`Tin nhắn đã gửi đến ${selectedRecipient}: ${message}`);
