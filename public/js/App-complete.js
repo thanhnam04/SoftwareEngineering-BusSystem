@@ -140,14 +140,37 @@ const ManagerDashboard = ({ data }) => {
 
     const generateWeeklySchedule = () => {
         const days = ['Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
-        const weeklySchedule = days.map(day => ({
-            day,
-            buses: data.buses.map(bus => ({
-                name: bus.name,
-                route: bus.route,
-                driver: bus.driver
-            }))
-        }));
+        const workingDrivers = [
+            { name: 'Nguyễn Thành Nam', bus: 'Xe 01' },
+            { name: 'Trần Đức Anh', bus: 'Xe 02' },
+            { name: 'Phạm Kim Chung', bus: 'Xe 04' }
+        ];
+
+        const weeklySchedule = days.map((day, index) => {
+            // Rotate drivers: shift the array by index
+            const rotatedDrivers = [...workingDrivers.slice(index), ...workingDrivers.slice(0, index)];
+
+            const buses = data.buses.map(bus => {
+                if (bus.name === 'Xe 03') {
+                    // Xe 03 has no driver (on leave)
+                    return {
+                        name: bus.name,
+                        route: bus.route,
+                        driver: 'Không có tài xế (Nghỉ phép)'
+                    };
+                }
+                // Assign rotated driver to Xe 01, Xe 02, Xe 04
+                const assignedDriver = rotatedDrivers.find(d => d.bus === bus.name);
+                return {
+                    name: bus.name,
+                    route: bus.route,
+                    driver: assignedDriver ? assignedDriver.name : bus.driver
+                };
+            });
+
+            return { day, buses };
+        });
+
         setSchedule({ type: 'weekly', data: weeklySchedule });
     };
 
@@ -180,13 +203,19 @@ const ManagerDashboard = ({ data }) => {
             <h3 className="panel-title">Bảng điều khiển Quản lý</h3>
             <div style={{ display: 'flex' }}>
                 <div className="tab-buttons" style={{ display: 'flex', flexDirection: 'column', width: '200px', padding: '1rem', borderRight: '1px solid #ddd' }}>
-                    <button onClick={() => setActiveTab('overview')} className={`btn ${activeTab === 'overview' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem' }}><i className="bi bi-house-door"></i> Tổng quan</button>
-                    <button onClick={() => setActiveTab('lists')} className={`btn ${activeTab === 'lists' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem' }}><i className="bi bi-list-ul"></i> Quản lý học sinh</button>
-                    <button onClick={() => setActiveTab('listsParent')} className={`btn ${activeTab === 'listsParent' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem' }}><i className="bi bi-list-ul"></i> Quản lý PH</button>
-                    <button onClick={() => setActiveTab('listsDriver')} className={`btn ${activeTab === 'listsDriver' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem' }}><i className="bi bi-list-ul"></i> Quản lý tài xế</button>
-                    <button onClick={() => setActiveTab('manage')} className={`btn ${activeTab === 'manage' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem' }}><i className="bi bi-gear"></i>Lịch trình tài xế</button>
-                    <button onClick={() => setActiveTab('messages')} className={`btn ${activeTab === 'messages' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem' }}><i className="bi bi-chat-dots"></i> Tin nhắn</button>
-                    <button onClick={() => setActiveTab('overviewparent')} className={`btn ${activeTab === 'overviewparent' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem' }}><i className="bi bi-people"></i> Phụ huynh</button>
+                    <button onClick={() => setActiveTab('overview')} className={`btn d-flex align-items-center gap-2 ${activeTab === 'overview' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem', textAlign: 'left' }}><i className="bi bi-house-door"></i> Tổng quan</button>
+
+                    <button onClick={() => setActiveTab('lists')} className={`btn d-flex align-items-center gap-2 ${activeTab === 'lists' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem', textAlign: 'left' }}><i className="bi bi-list-ul"></i> Quản lý học sinh</button>
+
+                    <button onClick={() => setActiveTab('listsParent')} className={`btn d-flex align-items-center gap-2 ${activeTab === 'listsParent' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem', textAlign: 'left' }}><i className="bi bi-list-ul"></i> Quản lý PH</button>
+
+                    <button onClick={() => setActiveTab('listsDriver')} className={`btn d-flex align-items-center gap-2 ${activeTab === 'listsDriver' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem', textAlign: 'left' }}><i className="bi bi-list-ul"></i> Quản lý tài xế</button>
+
+                    <button onClick={() => setActiveTab('manage')} className={`btn d-flex align-items-center gap-2 ${activeTab === 'manage' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem', textAlign: 'left' }}><i className="bi bi-gear"></i> Lịch trình tài xế</button>
+
+                    <button onClick={() => setActiveTab('messages')} className={`btn d-flex align-items-center gap-2 ${activeTab === 'messages' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem', textAlign: 'left' }}><i className="bi bi-chat-dots"></i> Tin nhắn</button>
+
+                    <button onClick={() => setActiveTab('overviewparent')} className={`btn d-flex align-items-center gap-2 ${activeTab === 'overviewparent' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem', textAlign: 'left' }}><i className="bi bi-people"></i> Phụ huynh</button>
                 </div>
                 <div className="panel-content" style={{ flex: 1, padding: '1rem' }}>
                     {activeTab === 'overview' && (
@@ -592,10 +621,10 @@ const ManagerDashboard = ({ data }) => {
                                     <h4>{schedule.type === 'weekly' ? 'Lịch trình Tuần' : `Lịch trình Tháng ${schedule.month}`}</h4>
                                     {schedule.type === 'weekly' ? (
                                         schedule.data.map(daySchedule => (
-                                            <div key={daySchedule.day}>
+                                            <div key={daySchedule.day} style={{ border: '1px solid #ddd', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
                                                 <h5>{daySchedule.day}</h5>
                                                 {daySchedule.buses.map(bus => (
-                                                    <p key={bus.name}>{bus.name} - {bus.route} - Tài xế: {bus.driver}</p>
+                                                    <p key={bus.name}>{bus.name} - {bus.route} - Tài xế: {bus.driver} - Thời gian đón: 6:30 AM - 8:15 AM</p>
                                                 ))}
                                             </div>
                                         ))

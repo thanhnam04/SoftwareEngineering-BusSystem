@@ -1,4 +1,0 @@
-- [ ] Modify ManagerDashboard in public/js/App-complete.js to split student table into separate tables for each class (1A,1B,1C,2A,2B,2C,3A,3B,3C)
-- [ ] For each grade, filter students and render a table with columns: Tên học sinh, Xe buýt, Điểm đón
-- [ ] Update header to "Danh sách Học sinh theo Lớp"
-- [ ] Stack tables vertically within the info-card
