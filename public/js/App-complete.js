@@ -139,12 +139,7 @@ const ManagerDashboard = ({ data }) => {
     };
 
     const generateWeeklySchedule = () => {
-        const days = ['Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
-        const workingDrivers = [
-            { name: 'Nguyễn Thành Nam', bus: 'Xe 01' },
-            { name: 'Trần Đức Anh', bus: 'Xe 02' },
-            { name: 'Phạm Kim Chung', bus: 'Xe 04' }
-        ];
+        setShowTimetable(true);
 
         const weeklySchedule = days.map((day, index) => {
             // Rotate drivers: shift the array by index
@@ -175,6 +170,7 @@ const ManagerDashboard = ({ data }) => {
     };
 
     const generateMonthlySchedule = () => {
+        setShowTimetable(true);
         const currentMonth = new Date().toLocaleString('vi-VN', { month: 'long', year: 'numeric' });
         const monthlySchedule = data.buses.map(bus => ({
             bus: bus.name,
@@ -192,7 +188,8 @@ const ManagerDashboard = ({ data }) => {
 
     const [selectedClass, setSelectedClass] = useState('all');
 
-    
+    const [showTimetable, setShowTimetable] = useState(false);
+
     const filteredStudents = selectedClass === 'all'
         ? data.students
         : data.students.filter(s => s.grade.trim() === selectedClass.trim());
@@ -609,34 +606,210 @@ const ManagerDashboard = ({ data }) => {
                         </div>
                     )}
 
-                    {activeTab === 'manage' && (
-                        <div>
-                            <div className="info-card">
-                                <h4>Tạo/Cập nhật Lịch trình</h4>
-                                <button onClick={generateWeeklySchedule} className="btn btn-secondary" style={{marginRight: '0.5rem'}}>Tạo lịch trình tuần</button>
-                                <button onClick={generateMonthlySchedule} className="btn btn-secondary">Tạo lịch trình tháng</button>
-                            </div>
-                            {schedule && (
-                                <div className="info-card" style={{marginTop: '1rem'}}>
-                                    <h4>{schedule.type === 'weekly' ? 'Lịch trình Tuần' : `Lịch trình Tháng ${schedule.month}`}</h4>
-                                    {schedule.type === 'weekly' ? (
-                                        schedule.data.map(daySchedule => (
-                                            <div key={daySchedule.day} style={{ border: '1px solid #ddd', padding: '10px', marginBottom: '10px', borderRadius: '5px' }}>
-                                                <h5>{daySchedule.day}</h5>
-                                                {daySchedule.buses.map(bus => (
-                                                    <p key={bus.name}>{bus.name} - {bus.route} - Tài xế: {bus.driver} - Thời gian đón: 6:30 AM - 8:15 AM</p>
-                                                ))}
-                                            </div>
-                                        ))
-                                    ) : (
-                                        schedule.data.map(busSchedule => (
-                                            <p key={busSchedule.bus}>{busSchedule.bus} - {busSchedule.route} - Tài xế: {busSchedule.driver} - {busSchedule.days} ngày</p>
-                                        ))
-                                    )}
+                        {activeTab === 'manage' && (
+                            <div>
+                                <div className="info-card">
+                                    <h4>Tạo/Cập nhật Lịch trình</h4>
+                                    <button onClick={generateWeeklySchedule} className="btn btn-secondary" style={{marginRight: '0.5rem'}}>Tạo lịch trình tuần</button>
+                                    <button onClick={generateMonthlySchedule} className="btn btn-secondary">Tạo lịch trình tháng</button>
                                 </div>
-                            )}
-                        </div>
-                    )}
+                                
+                                {/* Bảng thời khóa biểu */}
+                                {showTimetable && ( 
+                                <div className="info-card" style={{marginTop: '1rem'}}>
+                                    <div className="timetable-container">
+                                        <div className="timetable-header">
+                                            <h3>Lịch trình tài xế</h3>
+                                        </div>
+                                        
+                                        <div className="timetable-navigation">
+                                            <button className="timetable-nav-btn">← Tuần trước</button>
+                                            <button className="timetable-nav-btn">Tuần sau →</button>
+                                        </div>
+                                        
+                                        <table className="timetable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Giờ làm việc</th>
+                                                    <th>Thứ 2</th>
+                                                    <th>Thứ 3</th>
+                                                    <th>Thứ 4</th>
+                                                    <th>Thứ 5</th>
+                                                    <th>Thứ 6</th>
+                                                    <th>Thứ 7</th>
+                                                    <th>Chủ Nhật</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td className="timetable-time">07:00</td>
+                                                    <td>
+                                                        <div className="timetable-subject-info">
+                                                            <strong>Xe:</strong> 01<br/>
+                                                            <strong>Tên tài xế:</strong> Nguyễn Thành Nam<br/>
+                                                            <strong>Tuyến đường:</strong> A
+                                                        </div>
+                                                    </td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="timetable-time">07:50</td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="timetable-time">09:00</td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="timetable-time">09:50</td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="timetable-time">10:40</td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="timetable-time">13:00</td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td>
+                                                        <div className="timetable-subject">Phân tích thiết kế hệ thống thông tin (841048)</div>
+                                                        <div className="timetable-subject-info">
+                                                            <strong>Nhóm:</strong> 01<br/>
+                                                            <strong>Phòng:</strong> C.A102-Phòng học<br/>
+                                                            <strong>GV:</strong> Lê Nhị Lâm Thúy
+                                                        </div>
+                                                    </td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td>
+                                                        <div className="timetable-subject">Công nghệ phần mềm (841047)</div>
+                                                        <div className="timetable-subject-info">
+                                                            <strong>Nhóm:</strong> 11<br/>
+                                                            <strong>Phòng:</strong> C.B103-Phòng học<br/>
+                                                            <strong>GV:</strong> Tư Lãng Phiêu
+                                                        </div>
+                                                    </td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="timetable-time">13:50</td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td>
+                                                        <div className="timetable-subject">Phân tích thiết kế hệ thống thông tin (841048)</div>
+                                                        <div className="timetable-subject-info">
+                                                            <strong>Nhóm:</strong> 01<br/>
+                                                            <strong>Phòng:</strong> C.A102-Phòng học<br/>
+                                                            <strong>GV:</strong> Lê Nhị Lâm Thúy
+                                                        </div>
+                                                    </td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td>
+                                                        <div className="timetable-subject">Công nghệ phần mềm (841047)</div>
+                                                        <div className="timetable-subject-info">
+                                                            <strong>Nhóm:</strong> 11<br/>
+                                                            <strong>Phòng:</strong> C.B103-Phòng học<br/>
+                                                            <strong>GV:</strong> Tư Lãng Phiêu
+                                                        </div>
+                                                    </td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="timetable-time">15:00</td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td>
+                                                        <div className="timetable-subject">Phân tích thiết kế hệ thống thông tin (841048)</div>
+                                                        <div className="timetable-subject-info">
+                                                            <strong>Nhóm:</strong> 01<br/>
+                                                            <strong>Phòng:</strong> C.A102-Phòng học<br/>
+                                                            <strong>GV:</strong> Lê Nhị Lâm Thúy
+                                                        </div>
+                                                    </td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td>
+                                                        <div className="timetable-subject">Công nghệ phần mềm (841047)</div>
+                                                        <div className="timetable-subject-info">
+                                                            <strong>Nhóm:</strong> 11<br/>
+                                                            <strong>Phòng:</strong> C.B103-Phòng học<br/>
+                                                            <strong>GV:</strong> Tư Lãng Phiêu
+                                                        </div>
+                                                    </td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="timetable-time">15:50</td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td>
+                                                        <div className="timetable-subject">Phân tích thiết kế hệ thống thông tin (841048)</div>
+                                                        <div className="timetable-subject-info">
+                                                            <strong>Nhóm:</strong> 01<br/>
+                                                            <strong>Phòng:</strong> C.A102-Phòng học<br/>
+                                                            <strong>GV:</strong> Lê Nhị Lâm Thúy
+                                                        </div>
+                                                    </td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td>
+                                                        <div className="timetable-subject">Công nghệ phần mềm (841047)</div>
+                                                        <div className="timetable-subject-info">
+                                                            <strong>Nhóm:</strong> 11<br/>
+                                                            <strong>Phòng:</strong> C.B103-Phòng học<br/>
+                                                            <strong>GV:</strong> Tư Lãng Phiêu
+                                                        </div>
+                                                    </td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="timetable-time">16:40</td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                    <td className="timetable-empty"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>)}
+                            </div>
+                        )}
 
                     {activeTab === 'messages' && (
                         <div className="info-card">
