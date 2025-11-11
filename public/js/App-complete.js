@@ -1144,7 +1144,7 @@ function App() {
             <header>
                 <div className="container header-content">
                     <div className="logo">SSB 4.0</div>
-                    <button
+                        <button
                         onClick={() => {
                             setLoggedIn(false);
                             setCurrentView('landing');
@@ -1155,12 +1155,32 @@ function App() {
                         }}
                         className="Logout"
                         style={{
-                            background: 'white',
-                            color: '#1e5799'
+                            background: 'linear-gradient(135deg, #6dd5fa, #1e5799)',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '12px',
+                            padding: '10px 18px',
+                            fontSize: '16px',
+                            fontWeight: '600',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            cursor: 'pointer',
+                            transition: 'all 0.3s ease',
+                            boxShadow: '0 4px 12px rgba(30, 87, 153, 0.3)',
                         }}
-                    >
-                       <i class="bi bi-box-arrow-left"></i> Đăng xuất
-                    </button>
+                        onMouseEnter={(e) => {
+                            e.target.style.transform = 'translateY(-2px)';
+                            e.target.style.boxShadow = '0 6px 14px rgba(30, 87, 153, 0.45)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.transform = 'translateY(0)';
+                            e.target.style.boxShadow = '0 4px 12px rgba(30, 87, 153, 0.3)';
+                        }}
+                        >
+                        <i className="bi bi-box-arrow-left"></i> Đăng xuất
+                        </button>
+
                 </div>
             </header>
 
