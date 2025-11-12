@@ -238,13 +238,13 @@ Phiên bản: 4.0 | Năm: HK1 - Year4 - 2025
 
 ### Chung
 
-- sendMessenger
-- lists
-- listsParent
-- message
+- lists (Quản lý học sinh )
+- listsParent ( Quản lý PH )
+- messages (Tin nhắn )
+- manage ( Lịch trình tài xế )
 
 ### Nam
 
-- overview
-- manage
-- overviewparent
+- overview ( Tổng quan )
+- listsDriver ( Quản lý tài xế )
+- overviewparent ( Phụ huynh )

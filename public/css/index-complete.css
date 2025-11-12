@@ -529,3 +529,95 @@ Danh sách học sinh hiển thị
 }
 
 
+/*Quản lý tài xế*/
+.driver-list-container {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
+}
+
+.driver-list-container:hover {
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+}
+
+.driver-list-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e5799;
+    margin-bottom: 16px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.driver-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.driver-table thead {
+    background-color: #1e5799;
+    color: white;
+}
+
+.driver-table th, .driver-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.driver-table tbody tr:hover {
+    background-color: #f6faff;
+    transition: 0.25s;
+}
+
+.driver-table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+/* Trạng thái tài xế */
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-badge.active {
+    background-color: #d1f7d6;
+    color: #2d8a3f;
+}
+
+.status-badge.inactive {
+    background-color: #fde0e0;
+    color: #b32020;
+}
+/*Quản lý tài xế*/
+
+/*Quản lý phụ huynh - có reuse của Quản lý tài xế*/
+/* Bộ lọc chọn lớp */
+.class-filter {
+    margin-bottom: 16px;
+    text-align: right;
+}
+
+.class-select {
+    padding: 6px 10px;
+    margin-left: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.class-select:hover {
+    border-color: #1e5799;
+}

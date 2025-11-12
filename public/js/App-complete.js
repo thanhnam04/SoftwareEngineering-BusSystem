@@ -428,183 +428,176 @@ const ManagerDashboard = ({ data }) => {
 
 
 
-                    {activeTab === 'lists' && (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                            <div className="info-card">
-                                <h4>Danh sách Học sinh</h4>
+                            {activeTab === 'lists' && (
+                                <div className="driver-list-container">
+                                    <h4 className="driver-list-title">Danh sách Học sinh</h4>
 
-                                {/* Dropdown chọn lớp */}
-                                <div style={{ marginBottom: '12px' }}>
-                                    <label>
-                                        <b>Chọn lớp: </b>
-                                        <select
-                                            value={selectedClass}
-                                            onChange={e => setSelectedClass(e.target.value)}
-                                            style={{
-                                                padding: '6px 10px',
-                                                marginLeft: '8px',
-                                                borderRadius: '6px'
-                                            }}
-                                        >
-                                            <option value="all">Tất cả</option>
-                                            <option value="Lớp 1A">Lớp 1A</option>
-                                            <option value="Lớp 1B">Lớp 1B</option>
-                                            <option value="Lớp 2A">Lớp 2A</option>
-                                            <option value="Lớp 2B">Lớp 2B</option>
-                                            <option value="Lớp 2C">Lớp 2C</option>
-                                            <option value="Lớp 3A">Lớp 3A</option>
-                                            <option value="Lớp 3B">Lớp 3B</option>
-                                            <option value="Lớp 3C">Lớp 3C</option>
-                                        </select>
-                                    </label>
-                                </div>
+                                    {/* Dropdown chọn lớp */}
+                                    <div className="class-filter">
+                                        <label>
+                                            <b>Chọn lớp: </b>
+                                            <select
+                                                value={selectedClass}
+                                                onChange={e => setSelectedClass(e.target.value)}
+                                                className="class-select"
+                                            >
+                                                <option value="all">Tất cả</option>
+                                                <option value="Lớp 1A">Lớp 1A</option>
+                                                <option value="Lớp 1B">Lớp 1B</option>
+                                                <option value="Lớp 2A">Lớp 2A</option>
+                                                <option value="Lớp 2B">Lớp 2B</option>
+                                                <option value="Lớp 2C">Lớp 2C</option>
+                                                <option value="Lớp 3A">Lớp 3A</option>
+                                                <option value="Lớp 3B">Lớp 3B</option>
+                                                <option value="Lớp 3C">Lớp 3C</option>
+                                            </select>
+                                        </label>
+                                    </div>
 
-                        {/* Bảng danh sách học sinh */}
-                        <table className="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th style={{ padding: '12px 24px' }}>Tên học sinh</th>
-                                    <th style={{ padding: '12px 24px' }}>Lớp</th>
-                                    <th style={{ padding: '12px 24px' }}>Xe buýt</th>
-                                    <th style={{ padding: '12px 24px' }}>Điểm đón</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {data.students.filter(s => {
+                                    {/* Bảng danh sách học sinh */}                                     <p style={{ textAlign: 'center', color: '#666', marginTop: '-8px' }}>
+                                            Hiện có {filteredStudents.length} học sinh
+                                    </p>
+                                    <table className="driver-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Tên học sinh</th>
+                                                <th>Lớp</th>
+                                                <th>Xe buýt</th>
+                                                <th>Điểm đón</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {data.students
+                                                .filter(s => {
                                                     if (selectedClass === 'all') return true;
 
-                                                    // Chuẩn hóa chuỗi để không bị lệch do chữ hoa/thường hoặc khoảng trắng
                                                     const studentGrade = (s.grade || '').trim().toLowerCase();
                                                     const selected = selectedClass.trim().toLowerCase();
-
                                                     return studentGrade === selected;
                                                 })
                                                 .map(student => (
                                                     <tr key={student.id}>
-                                                    <td>{student.name}</td>
-                                                    <td>{student.grade}</td>
-                                                    <td>{student.bus}</td>
-                                                    <td>{student.pickup}</td>
+                                                        <td>{student.name}</td>
+                                                        <td>{student.grade}</td>
+                                                        <td>{student.bus}</td>
+                                                        <td>{student.pickup}</td>
                                                     </tr>
                                                 ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            )}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+
 
 
                     
-                        {activeTab === 'listsParent' && (
-                        <div className="info-card" style={{ flex: 1 }}>
-                            <h4>Danh sách Phụ huynh</h4>
+                            {activeTab === 'listsParent' && (
+                                <div className="info-card driver-list-container">
+                                    <h4 className="driver-list-title">Danh sách Phụ huynh</h4>
 
-                            {/* Dropdown chọn lớp */}
-                            <div style={{ marginBottom: '12px' }}>
-                            <label>
-                                <b>Chọn lớp: </b>
-                                <select
-                                value={selectedClass}
-                                onChange={e => setSelectedClass(e.target.value)}
-                                style={{
-                                    padding: '6px 10px',
-                                    marginLeft: '8px',
-                                    borderRadius: '6px',
-                                }}
-                                >
-                                <option value="all">Tất cả</option>
-                                <option value="Lớp 1A">Lớp 1A</option>
-                                <option value="Lớp 1B">Lớp 1B</option>
-                                <option value="Lớp 2A">Lớp 2A</option>
-                                <option value="Lớp 2B">Lớp 2B</option>
-                                <option value="Lớp 2C">Lớp 2C</option>
-                                <option value="Lớp 3A">Lớp 3A</option>
-                                <option value="Lớp 3B">Lớp 3B</option>
-                                <option value="Lớp 3C">Lớp 3C</option>
-                                </select>
-                            </label>
-                            </div>
+                                    {/* Dropdown chọn lớp */}
+                                    <div className="class-filter">
+                                        <label>
+                                            <b>Chọn lớp: </b>
+                                            <select
+                                                value={selectedClass}
+                                                onChange={e => setSelectedClass(e.target.value)}
+                                                className="class-select"
+                                            >
+                                                <option value="all">Tất cả</option>
+                                                <option value="Lớp 1A">Lớp 1A</option>
+                                                <option value="Lớp 1B">Lớp 1B</option>
+                                                <option value="Lớp 2A">Lớp 2A</option>
+                                                <option value="Lớp 2B">Lớp 2B</option>
+                                                <option value="Lớp 2C">Lớp 2C</option>
+                                                <option value="Lớp 3A">Lớp 3A</option>
+                                                <option value="Lớp 3B">Lớp 3B</option>
+                                                <option value="Lớp 3C">Lớp 3C</option>
+                                            </select>
+                                        </label>
+                                    </div>
 
-                            {/* Bảng danh sách phụ huynh */}
-                            <table className="table table-striped">
-                            <thead>
-                                <tr>
-                                <th>Tên Phụ huynh</th>
-                                <th>Số điện thoại</th>
-                                <th>Số con</th>
-                                <th>Tên con</th>
-                                <th>Lớp của con</th>
-                                </tr>
-                            </thead>
+                                    {/* Bảng danh sách phụ huynh */}
+                                    <table className="driver-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Tên Phụ huynh</th>
+                                                <th>Số điện thoại</th>
+                                                <th>Số con</th>
+                                                <th>Tên con</th>
+                                                <th>Lớp của con</th>
+                                            </tr>
+                                        </thead>
 
-                            <tbody>
-                                {data.parents.flatMap(parent => {
-                                // Tìm danh sách con của phụ huynh
-                                const children = data.students.filter(
-                                    s => s.parentPhone === parent.phone
-                                );
+                                        <tbody>
+                                            {data.parents.flatMap(parent => {
+                                                const children = data.students.filter(
+                                                    s => s.parentPhone === parent.phone
+                                                );
 
-                                // Lọc con theo lớp đang chọn
-                                const filteredChildren = children.filter(child => {
-                                    if (selectedClass === 'all') return true;
-                                    return (
-                                    child.grade.trim().toLowerCase() ===
-                                    selectedClass.trim().toLowerCase()
-                                    );
-                                });
+                                                const filteredChildren = children.filter(child => {
+                                                    if (selectedClass === 'all') return true;
+                                                    return (
+                                                        child.grade.trim().toLowerCase() ===
+                                                        selectedClass.trim().toLowerCase()
+                                                    );
+                                                });
 
-                                // Nếu phụ huynh không có con nào thuộc lớp đang chọn thì bỏ qua
-                                if (filteredChildren.length === 0) return [];
+                                                if (filteredChildren.length === 0) return [];
 
-                                // Render mỗi con là 1 dòng
-                                return filteredChildren.map((child, index) => (
-                                    <tr key={`${parent.phone}-${child.name}`}>
-                                    {/* Chỉ hiển thị thông tin phụ huynh ở dòng đầu */}
-                                    {index === 0 && (
-                                        <>
-                                        <td rowSpan={filteredChildren.length}>{parent.name}</td>
-                                        <td rowSpan={filteredChildren.length}>{parent.phone}</td>
-                                        <td rowSpan={filteredChildren.length}>{children.length}</td>
-                                        </>
-                                    )}
-                                    <td>{child.name}</td>
-                                    <td>{child.grade}</td>
-                                    </tr>
-                                ));
-                                })}
-                            </tbody>
-                            </table>
-                        </div>
-                        )}
+                                                return filteredChildren.map((child, index) => (
+                                                    <tr key={`${parent.phone}-${child.name}`}>
+                                                        {index === 0 && (
+                                                            <>
+                                                                <td rowSpan={filteredChildren.length}>{parent.name}</td>
+                                                                <td rowSpan={filteredChildren.length}>{parent.phone}</td>
+                                                                <td rowSpan={filteredChildren.length}>{children.length}</td>
+                                                            </>
+                                                        )}
+                                                        <td>{child.name}</td>
+                                                        <td>{child.grade}</td>
+                                                    </tr>
+                                                ));
+                                            })}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
 
 
-                    {activeTab === 'listsDriver' && (
-                        <div className="info-card" style={{ flex: 1 }}>
-                            <h4>Danh sách Tài xế</h4>
-                            <table className="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Tên tài xế</th>
-                                        <th>SĐT</th>
-                                        <th>Xe buýt</th>
-                                        <th>Trạng thái</th>
-                                        <th>Biển số</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {data.drivers.map(driver => (
-                                        <tr key={driver.id}>
-                                            <td>{driver.name}</td>
-                                            <td>{driver.phone}</td>
-                                            <td>{driver.bus}</td>
-                                            <td>{driver.status}</td>
-                                            <td>{driver.plate}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    )}
+
+                            {activeTab === 'listsDriver' && (
+                                <div className="info-card driver-list-container">
+                                    <h4 className="driver-list-title">Danh sách Tài xế</h4>
+                                    <table className="driver-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Tên tài xế</th>
+                                                <th>SĐT</th>
+                                                <th>Xe buýt</th>
+                                                <th>Trạng thái</th>
+                                                <th>Biển số</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {data.drivers.map(driver => (
+                                                <tr key={driver.id}>
+                                                    <td>{driver.name}</td>
+                                                    <td>{driver.phone}</td>
+                                                    <td>{driver.bus}</td>
+                                                    <td>
+                                                        <span className={`status-badge ${driver.status === 'Đang hoạt động' ? 'active' : 'inactive'}`}>
+                                                            {driver.status}
+                                                        </span>
+                                                    </td>
+                                                    <td>{driver.plate}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+
 
                         {activeTab === 'manage' && (
                             <div>
@@ -640,171 +633,151 @@ const ManagerDashboard = ({ data }) => {
                                                     <th>Chủ Nhật</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td className="timetable-time">07:00</td>
-                                                    <td>
-                                                        <div className="timetable-subject-info">
-                                                            <strong>Xe:</strong> 01<br/>
-                                                            <strong>Tên tài xế:</strong> Nguyễn Thành Nam<br/>
-                                                            <strong>Tuyến đường:</strong> A
-                                                        </div>
-                                                    </td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="timetable-time">07:50</td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="timetable-time">09:00</td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="timetable-time">09:50</td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="timetable-time">10:40</td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="timetable-time">13:00</td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td>
-                                                        <div className="timetable-subject">Phân tích thiết kế hệ thống thông tin (841048)</div>
-                                                        <div className="timetable-subject-info">
-                                                            <strong>Nhóm:</strong> 01<br/>
-                                                            <strong>Phòng:</strong> C.A102-Phòng học<br/>
-                                                            <strong>GV:</strong> Lê Nhị Lâm Thúy
-                                                        </div>
-                                                    </td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td>
-                                                        <div className="timetable-subject">Công nghệ phần mềm (841047)</div>
-                                                        <div className="timetable-subject-info">
-                                                            <strong>Nhóm:</strong> 11<br/>
-                                                            <strong>Phòng:</strong> C.B103-Phòng học<br/>
-                                                            <strong>GV:</strong> Tư Lãng Phiêu
-                                                        </div>
-                                                    </td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="timetable-time">13:50</td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td>
-                                                        <div className="timetable-subject">Phân tích thiết kế hệ thống thông tin (841048)</div>
-                                                        <div className="timetable-subject-info">
-                                                            <strong>Nhóm:</strong> 01<br/>
-                                                            <strong>Phòng:</strong> C.A102-Phòng học<br/>
-                                                            <strong>GV:</strong> Lê Nhị Lâm Thúy
-                                                        </div>
-                                                    </td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td>
-                                                        <div className="timetable-subject">Công nghệ phần mềm (841047)</div>
-                                                        <div className="timetable-subject-info">
-                                                            <strong>Nhóm:</strong> 11<br/>
-                                                            <strong>Phòng:</strong> C.B103-Phòng học<br/>
-                                                            <strong>GV:</strong> Tư Lãng Phiêu
-                                                        </div>
-                                                    </td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="timetable-time">15:00</td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td>
-                                                        <div className="timetable-subject">Phân tích thiết kế hệ thống thông tin (841048)</div>
-                                                        <div className="timetable-subject-info">
-                                                            <strong>Nhóm:</strong> 01<br/>
-                                                            <strong>Phòng:</strong> C.A102-Phòng học<br/>
-                                                            <strong>GV:</strong> Lê Nhị Lâm Thúy
-                                                        </div>
-                                                    </td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td>
-                                                        <div className="timetable-subject">Công nghệ phần mềm (841047)</div>
-                                                        <div className="timetable-subject-info">
-                                                            <strong>Nhóm:</strong> 11<br/>
-                                                            <strong>Phòng:</strong> C.B103-Phòng học<br/>
-                                                            <strong>GV:</strong> Tư Lãng Phiêu
-                                                        </div>
-                                                    </td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="timetable-time">15:50</td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td>
-                                                        <div className="timetable-subject">Phân tích thiết kế hệ thống thông tin (841048)</div>
-                                                        <div className="timetable-subject-info">
-                                                            <strong>Nhóm:</strong> 01<br/>
-                                                            <strong>Phòng:</strong> C.A102-Phòng học<br/>
-                                                            <strong>GV:</strong> Lê Nhị Lâm Thúy
-                                                        </div>
-                                                    </td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td>
-                                                        <div className="timetable-subject">Công nghệ phần mềm (841047)</div>
-                                                        <div className="timetable-subject-info">
-                                                            <strong>Nhóm:</strong> 11<br/>
-                                                            <strong>Phòng:</strong> C.B103-Phòng học<br/>
-                                                            <strong>GV:</strong> Tư Lãng Phiêu
-                                                        </div>
-                                                    </td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="timetable-time">16:40</td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                    <td className="timetable-empty"></td>
-                                                </tr>
-                                            </tbody>
+                                                <tbody>
+                                                    {/* ===== BUỔI SÁNG ===== */}
+                                                    <tr>
+                                                        <td colSpan="8" style={{ textAlign: 'center', fontWeight: 'bold', backgroundColor: '#f2f2f2' }}>
+                                                            BUỔI SÁNG
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td className="timetable-time">07:00</td>
+                                                        <td>
+                                                            <div className="timetable-subject-info">
+                                                                <strong>Xe:</strong> 01<br/>
+                                                                <strong>Tên tài xế:</strong> Nguyễn Thành Nam<br/>
+                                                                <strong>Tuyến đường:</strong> A
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="timetable-subject-info">
+                                                                <strong>Xe:</strong> 02<br/>
+                                                                <strong>Tên tài xế:</strong> Trần Đức Anh<br/>
+                                                                <strong>Tuyến đường:</strong> B
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="timetable-subject-info">
+                                                                <strong>Xe:</strong> 03<br/>
+                                                                <strong>Tên tài xế:</strong> Phạm Kim Chung<br/>
+                                                                <strong>Tuyến đường:</strong> C
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="timetable-subject-info">
+                                                                <strong>Xe:</strong> 04<br/>
+                                                                <strong>Tên tài xế:</strong> Bùi Tấn Phát<br/>
+                                                                <strong>Tuyến đường:</strong> D
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="timetable-subject-info">
+                                                                <strong>Xe:</strong> 04<br/>
+                                                                <strong>Tên tài xế:</strong> Bùi Tấn Phát<br/>
+                                                                <strong>Tuyến đường:</strong> D
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="timetable-subject-info">
+                                                                <strong>Xe:</strong> 03<br/>
+                                                                <strong>Tên tài xế:</strong> Phạm Kim Chung<br/>
+                                                                <strong>Tuyến đường:</strong> C
+                                                            </div>
+                                                        </td>
+                                                        <td className="timetable-empty"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td className="timetable-time">07:50</td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td className="timetable-time">09:00</td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td className="timetable-time">09:50</td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td className="timetable-time">10:40</td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                    </tr>
+
+                                                    {/* ===== BUỔI CHIỀU ===== */}
+                                                    <tr>
+                                                        <td colSpan="8" style={{ textAlign: 'center', fontWeight: 'bold', backgroundColor: '#f2f2f2' }}>
+                                                            BUỔI CHIỀU
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td className="timetable-time">13:15</td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td className="timetable-time">14:05</td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td className="timetable-time">15:05</td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td className="timetable-time">16:20</td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                        <td className="timetable-empty"></td>
+                                                    </tr>
+                                                </tbody>
+
                                         </table>
                                     </div>
                                 </div>)}
