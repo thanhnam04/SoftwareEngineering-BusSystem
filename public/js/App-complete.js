@@ -179,7 +179,7 @@ const ManagerDashboard = ({ data }) => {
             bus: bus.name,
             route: bus.route,
             driver: bus.driver,
-            days: 30 // Assuming 30 days for simplicity
+            days: 30 // Nhóm test 30 ngày - 1 tháng demo
         }));
         const newSchedule = { type: 'monthly', month: currentMonth, data: monthlySchedule, id: Date.now() };
         setSchedule(newSchedule);
@@ -528,6 +528,7 @@ const ManagerDashboard = ({ data }) => {
                                         </thead>
 
                                         <tbody>
+                                            {/*flatmap như map nhưng if phụ huynh nhiều con thì flatmap gom lại thành 1 mảng chứa các con  */}
                                             {data.parents.flatMap(parent => {
                                                 const children = data.students.filter(
                                                     s => s.parentPhone === parent.phone
