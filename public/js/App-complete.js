@@ -127,6 +127,15 @@ const ManagerDashboard = ({ data }) => {
     });
 
     // Chung
+
+    const [selectedClass, setSelectedClass] = useState('all');
+
+    const [showTimetable, setShowTimetable] = useState(false);
+
+    const filteredStudents = selectedClass === 'all'
+        ? data.students
+        : data.students.filter(s => s.grade.trim() === selectedClass.trim());
+
     const sendMessage = () => {
         if (message && selectedRecipient) {
             alert(`Tin nhắn đã gửi đến ${selectedRecipient}: ${message}`);
@@ -186,14 +195,6 @@ const ManagerDashboard = ({ data }) => {
         alert('Lịch trình tháng đã được tạo và lưu thành công!');
     };
 
-    const [selectedClass, setSelectedClass] = useState('all');
-
-    const [showTimetable, setShowTimetable] = useState(false);
-
-    const filteredStudents = selectedClass === 'all'
-        ? data.students
-        : data.students.filter(s => s.grade.trim() === selectedClass.trim());
-    
 
     return (
         <div>
