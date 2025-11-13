@@ -127,7 +127,11 @@ const ManagerDashboard = ({ data }) => {
     });
 
     // Chung
+// <<<<<<< HEAD
 
+// =======
+    const days = ['Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy', 'Chủ Nhật'];
+// >>>>>>> d4c7cc2b543671353d8874d7f0a41ab429bde690
     const [selectedClass, setSelectedClass] = useState('all');
 
     const [showTimetable, setShowTimetable] = useState(false);
@@ -135,7 +139,10 @@ const ManagerDashboard = ({ data }) => {
     const filteredStudents = selectedClass === 'all'
         ? data.students
         : data.students.filter(s => s.grade.trim() === selectedClass.trim());
+// <<<<<<< HEAD
 
+// =======
+// >>>>>>> d4c7cc2b543671353d8874d7f0a41ab429bde690
     const sendMessage = () => {
         if (message && selectedRecipient) {
             alert(`Tin nhắn đã gửi đến ${selectedRecipient}: ${message}`);
@@ -148,34 +155,21 @@ const ManagerDashboard = ({ data }) => {
     };
 
     const generateWeeklySchedule = () => {
-        setShowTimetable(true);
+    setShowTimetable(true);
 
-        const weeklySchedule = days.map((day, index) => {
-            // Rotate drivers: shift the array by index
-            const rotatedDrivers = [...workingDrivers.slice(index), ...workingDrivers.slice(0, index)];
-
-            const buses = data.buses.map(bus => {
-                if (bus.name === 'Xe 03') {
-                    // Xe 03 has no driver (on leave)
-                    return {
-                        name: bus.name,
-                        route: bus.route,
-                        driver: 'Không có tài xế (Nghỉ phép)'
-                    };
-                }
-                // Assign rotated driver to Xe 01, Xe 02, Xe 04
-                const assignedDriver = rotatedDrivers.find(d => d.bus === bus.name);
-                return {
-                    name: bus.name,
-                    route: bus.route,
-                    driver: assignedDriver ? assignedDriver.name : bus.driver
-                };
-            });
-
-            return { day, buses };
+    const weeklySchedule = days.map((day) => {
+        const buses = data.buses.map(bus => {
+            return {
+                name: bus.name,
+                route: bus.route,
+                driver: bus.driver
+            };
         });
 
-        setSchedule({ type: 'weekly', data: weeklySchedule });
+        return { day, buses };
+    });
+
+    setSchedule({ type: 'weekly', data: weeklySchedule });
     };
 
     const generateMonthlySchedule = () => {
@@ -195,7 +189,10 @@ const ManagerDashboard = ({ data }) => {
         alert('Lịch trình tháng đã được tạo và lưu thành công!');
     };
 
+// <<<<<<< HEAD
 
+// =======
+// >>>>>>> d4c7cc2b543671353d8874d7f0a41ab429bde690
     return (
         <div>
             <h3 className="panel-title">Bảng điều khiển Quản lý</h3>
@@ -609,11 +606,11 @@ const ManagerDashboard = ({ data }) => {
                                 </div>
                                 
                                 {/* Bảng thời khóa biểu */}
-                                {showTimetable && ( 
+                                {showTimetable && schedule && ( 
                                 <div className="info-card" style={{marginTop: '1rem'}}>
                                     <div className="timetable-container">
                                         <div className="timetable-header">
-                                            <h3>Lịch trình tài xế</h3>
+                                            <h3>Lịch trình tài xế - {schedule.type === 'weekly' ? 'Tuần' : 'Tháng ' + schedule.month}</h3>
                                         </div>
                                         
                                         <div className="timetable-navigation">
@@ -625,160 +622,152 @@ const ManagerDashboard = ({ data }) => {
                                             <thead>
                                                 <tr>
                                                     <th>Giờ làm việc</th>
-                                                    <th>Thứ 2</th>
-                                                    <th>Thứ 3</th>
-                                                    <th>Thứ 4</th>
-                                                    <th>Thứ 5</th>
-                                                    <th>Thứ 6</th>
-                                                    <th>Thứ 7</th>
-                                                    <th>Chủ Nhật</th>
+                                                    {schedule.data?.map((daySchedule, index) => (
+                                                        <th key={index}>{daySchedule.day}</th>
+                                                    ))}
                                                 </tr>
                                             </thead>
                                                 <tbody>
                                                     {/* ===== BUỔI SÁNG ===== */}
                                                     <tr>
-                                                        <td colSpan="8" style={{ textAlign: 'center', fontWeight: 'bold', backgroundColor: '#f2f2f2' }}>
+                                                        <td colSpan={schedule.data ? schedule.data.length + 1 : 8}
+                                                            style={{ textAlign: 'center', fontWeight: 'bold', backgroundColor: '#f2f2f2' }}>
                                                             BUỔI SÁNG
                                                         </td>
                                                     </tr>
 
+                                                    {/* Khung giờ 07:00 - Hiển thị tất cả xe */}
                                                     <tr>
                                                         <td className="timetable-time">07:00</td>
-                                                        <td>
-                                                            <div className="timetable-subject-info">
-                                                                <strong>Xe:</strong> 01<br/>
-                                                                <strong>Tên tài xế:</strong> Nguyễn Thành Nam<br/>
-                                                                <strong>Tuyến đường:</strong> A
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className="timetable-subject-info">
-                                                                <strong>Xe:</strong> 02<br/>
-                                                                <strong>Tên tài xế:</strong> Trần Đức Anh<br/>
-                                                                <strong>Tuyến đường:</strong> B
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className="timetable-subject-info">
-                                                                <strong>Xe:</strong> 03<br/>
-                                                                <strong>Tên tài xế:</strong> Phạm Kim Chung<br/>
-                                                                <strong>Tuyến đường:</strong> C
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className="timetable-subject-info">
-                                                                <strong>Xe:</strong> 04<br/>
-                                                                <strong>Tên tài xế:</strong> Bùi Tấn Phát<br/>
-                                                                <strong>Tuyến đường:</strong> D
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className="timetable-subject-info">
-                                                                <strong>Xe:</strong> 04<br/>
-                                                                <strong>Tên tài xế:</strong> Bùi Tấn Phát<br/>
-                                                                <strong>Tuyến đường:</strong> D
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div className="timetable-subject-info">
-                                                                <strong>Xe:</strong> 03<br/>
-                                                                <strong>Tên tài xế:</strong> Phạm Kim Chung<br/>
-                                                                <strong>Tuyến đường:</strong> C
-                                                            </div>
-                                                        </td>
-                                                        <td className="timetable-empty"></td>
+                                                        {schedule.data?.map((daySchedule, dayIndex) => (
+                                                            <td key={dayIndex}>
+                                                                {daySchedule.buses.map((bus, busIndex) => (
+                                                                    <div key={busIndex} className="timetable-subject-info">
+                                                                        <strong>Xe:</strong> {bus.name}<br/>
+                                                                        <strong>Tài xế:</strong> {bus.driver}<br/>
+                                                                        <strong>Tuyến:</strong> {bus.route}
+                                                                    </div>
+                                                                ))}
+                                                            </td>
+                                                        ))}
                                                     </tr>
-
+                                                    {/* Khung giờ 07:50 - Có thể hiển thị chuyến khác hoặc để trống */}
                                                     <tr>
                                                         <td className="timetable-time">07:50</td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
+                                                        {schedule.data?.map((daySchedule, dayIndex) => (
+                                                            <td key={dayIndex}>
+                                                                {daySchedule.buses.filter(bus => bus.name === 'Xe 02').map((bus, busIndex) => (
+                                                                    <div key={busIndex} className="timetable-subject-info">
+                                                                        <strong>Xe:</strong> {bus.name}<br/>
+                                                                        <strong>Tài xế:</strong> {bus.driver}<br/>
+                                                                        <strong>Tuyến:</strong> {bus.route}
+                                                                    </div>
+                                                                ))}
+                                                            </td>
+                                                        ))}
                                                     </tr>
+                                                    {/* Khung giờ 09:00 */}
                                                     <tr>
                                                         <td className="timetable-time">09:00</td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
+                                                        {schedule.data?.map((daySchedule, dayIndex) => (
+                                                            <td key={dayIndex}>
+                                                                {daySchedule.buses.filter(bus => bus.name === 'Xe 03').map((bus, busIndex) => (
+                                                                    <div key={busIndex} className="timetable-subject-info">
+                                                                        <strong>Xe:</strong> {bus.name}<br/>
+                                                                        <strong>Tài xế:</strong> {bus.driver}<br/>
+                                                                        <strong>Tuyến:</strong> {bus.route}
+                                                                    </div>
+                                                                ))}
+                                                            </td>
+                                                        ))}
                                                     </tr>
+                                                    {/* Khung giờ 09:50 - Để trống */}
                                                     <tr>
                                                         <td className="timetable-time">09:50</td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                    </tr>
+                                                        {schedule.data?.map((daySchedule, index) => (
+                                                            <td key={index} className="timetable-empty">
+                                                                {/* Không có chuyến */}
+                                                            </td>
+                                                        ))}
+                                                    </tr>   
+                                                    {/* Khung giờ 10:40 */}
                                                     <tr>
                                                         <td className="timetable-time">10:40</td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
+                                                        {schedule.data?.map((daySchedule, dayIndex) => (
+                                                            <td key={dayIndex}>
+                                                                {daySchedule.buses.filter(bus => bus.name === 'Xe 04').map((bus, busIndex) => (
+                                                                    <div key={busIndex} className="timetable-subject-info">
+                                                                        <strong>Xe:</strong> {bus.name}<br/>
+                                                                        <strong>Tài xế:</strong> {bus.driver}<br/>
+                                                                        <strong>Tuyến:</strong> {bus.route}
+                                                                    </div>
+                                                                ))}
+                                                            </td>
+                                                        ))}
                                                     </tr>
-
                                                     {/* ===== BUỔI CHIỀU ===== */}
                                                     <tr>
-                                                        <td colSpan="8" style={{ textAlign: 'center', fontWeight: 'bold', backgroundColor: '#f2f2f2' }}>
+                                                        <td colSpan={schedule.data ? schedule.data.length + 1 : 8} 
+                                                            style={{ textAlign: 'center', fontWeight: 'bold', backgroundColor: '#f2f2f2' }}>
                                                             BUỔI CHIỀU
                                                         </td>
                                                     </tr>
 
+                                                    {/* Khung giờ 13:15 */}
                                                     <tr>
                                                         <td className="timetable-time">13:15</td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
+                                                        {schedule.data?.map((daySchedule, dayIndex) => (
+                                                            <td key={dayIndex}>
+                                                                {daySchedule.buses.filter(bus => bus.name === 'Xe 01').map((bus, busIndex) => (
+                                                                    <div key={busIndex} className="timetable-subject-info">
+                                                                        <strong>Xe:</strong> {bus.name}<br/>
+                                                                        <strong>Tài xế:</strong> {bus.driver}<br/>
+                                                                        <strong>Tuyến:</strong> {bus.route}
+                                                                    </div>
+                                                                ))}
+                                                            </td>
+                                                        ))}
                                                     </tr>
+                                                    {/* Khung giờ 14:05 - Để trống */}
                                                     <tr>
                                                         <td className="timetable-time">14:05</td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
+                                                        {schedule.data?.map((daySchedule, index) => (
+                                                            <td key={index} className="timetable-empty">
+                                                                {/* Không có chuyến */}
+                                                            </td>
+                                                        ))}
                                                     </tr>
+                                                    {/* Khung giờ 15:05 */}
                                                     <tr>
                                                         <td className="timetable-time">15:05</td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
+                                                        {schedule.data?.map((daySchedule, dayIndex) => (
+                                                            <td key={dayIndex}>
+                                                                {daySchedule.buses.filter(bus => bus.name === 'Xe 02').map((bus, busIndex) => (
+                                                                    <div key={busIndex} className="timetable-subject-info">
+                                                                        <strong>Xe:</strong> {bus.name}<br/>
+                                                                        <strong>Tài xế:</strong> {bus.driver}<br/>
+                                                                        <strong>Tuyến:</strong> {bus.route}
+                                                                    </div>
+                                                                ))}
+                                                            </td>
+                                                        ))}
                                                     </tr>
+                                                    {/* Khung giờ 16:20 - Chuyến cuối ngày */}
                                                     <tr>
                                                         <td className="timetable-time">16:20</td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
-                                                        <td className="timetable-empty"></td>
+                                                        {schedule.data?.map((daySchedule, dayIndex) => (
+                                                            <td key={dayIndex}>
+                                                                {daySchedule.buses.filter(bus => bus.name === 'Xe 03' || bus.name === 'Xe 04').map((bus, busIndex) => (
+                                                                    <div key={busIndex} className="timetable-subject-info">
+                                                                        <strong>Xe:</strong> {bus.name}<br/>
+                                                                        <strong>Tài xế:</strong> {bus.driver}<br/>
+                                                                        <strong>Tuyến:</strong> {bus.route}
+                                                                    </div>
+                                                                ))}
+                                                            </td>
+                                                        ))}
                                                     </tr>
                                                 </tbody>
-
                                         </table>
                                     </div>
                                 </div>)}
