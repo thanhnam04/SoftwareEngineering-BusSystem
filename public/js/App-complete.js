@@ -136,6 +136,8 @@ const ManagerDashboard = ({ data }) => {
 
     const [showTimetable, setShowTimetable] = useState(false);
 
+    const [searchTerm, setSearchTerm] = useState('');
+
     const filteredStudents = selectedClass === 'all'
         ? data.students
         : data.students.filter(s => s.grade.trim() === selectedClass.trim());
@@ -493,25 +495,17 @@ const ManagerDashboard = ({ data }) => {
                                 <div className="info-card driver-list-container">
                                     <h4 className="driver-list-title">Danh sách Phụ huynh</h4>
 
-                                    {/* Dropdown chọn lớp */}
-                                    <div className="class-filter">
+                                    {/* Ô tìm kiếm tên học sinh */}
+                                    <div className="search-filter">
                                         <label>
-                                            <b>Chọn lớp: </b>
-                                            <select
-                                                value={selectedClass}
-                                                onChange={e => setSelectedClass(e.target.value)}
-                                                className="class-select"
-                                            >
-                                                <option value="all">Tất cả</option>
-                                                <option value="Lớp 1A">Lớp 1A</option>
-                                                <option value="Lớp 1B">Lớp 1B</option>
-                                                <option value="Lớp 2A">Lớp 2A</option>
-                                                <option value="Lớp 2B">Lớp 2B</option>
-                                                <option value="Lớp 2C">Lớp 2C</option>
-                                                <option value="Lớp 3A">Lớp 3A</option>
-                                                <option value="Lớp 3B">Lớp 3B</option>
-                                                <option value="Lớp 3C">Lớp 3C</option>
-                                            </select>
+                                            <b>Tìm kiếm theo tên học sinh: </b>
+                                            <input
+                                                type="text"
+                                                placeholder="Nhập tên học sinh để tìm kiếm..."
+                                                value={searchTerm}
+                                                onChange={e => setSearchTerm(e.target.value)}
+                                                className="search-input"
+                                            />
                                         </label>
                                     </div>
 
@@ -528,20 +522,18 @@ const ManagerDashboard = ({ data }) => {
                                         </thead>
 
                                         <tbody>
-                                            {/*flatmap như map nhưng if phụ huynh nhiều con thì flatmap gom lại thành 1 mảng chứa các con  */}
                                             {data.parents.flatMap(parent => {
                                                 const children = data.students.filter(
                                                     s => s.parentPhone === parent.phone
                                                 );
 
-                                                const filteredChildren = children.filter(child => {
-                                                    if (selectedClass === 'all') return true;
-                                                    return (
-                                                        child.grade.trim().toLowerCase() ===
-                                                        selectedClass.trim().toLowerCase()
-                                                    );
-                                                });
+                                                // Lọc học sinh theo tên (tìm kiếm)
+                                                const filteredChildren = children.filter(child => 
+                                                    searchTerm === '' || 
+                                                    child.name.toLowerCase().includes(searchTerm.toLowerCase())
+                                                );
 
+                                                // Nếu không có học sinh nào khớp tìm kiếm, return rỗng
                                                 if (filteredChildren.length === 0) return [];
 
                                                 return filteredChildren.map((child, index) => (
