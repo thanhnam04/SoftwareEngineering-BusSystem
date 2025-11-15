@@ -118,13 +118,6 @@ const accounts = [
 //NGUYỄN THÀNH NAM - PHẠM KIM CHUNG
 const ManagerDashboard = ({ data }) => {
     const [activeTab, setActiveTab] = useState('overview');
-    const [message, setMessage] = useState('');
-    const [selectedRecipient, setSelectedRecipient] = useState('');
-    const [schedule, setSchedule] = useState(null);
-    const [savedSchedules, setSavedSchedules] = useState(() => {
-        const saved = localStorage.getItem('savedSchedules');
-        return saved ? JSON.parse(saved) : [];
-    });
 
     // Chung
 // <<<<<<< HEAD
@@ -132,6 +125,16 @@ const ManagerDashboard = ({ data }) => {
 // =======
     const days = ['Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy', 'Chủ Nhật'];
 // >>>>>>> d4c7cc2b543671353d8874d7f0a41ab429bde690
+    const [schedule, setSchedule] = useState(null);
+    
+    const [savedSchedules, setSavedSchedules] = useState(() => {
+        const saved = localStorage.getItem('savedSchedules');
+        return saved ? JSON.parse(saved) : [];
+    });
+    const [selectedRecipient, setSelectedRecipient] = useState('');
+
+    const [message, setMessage] = useState('');
+
     const [selectedClass, setSelectedClass] = useState('all');
 
     const [showTimetable, setShowTimetable] = useState(false);
