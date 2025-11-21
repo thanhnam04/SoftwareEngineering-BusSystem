@@ -16,6 +16,7 @@ class Parent{
     - contactNumber: String
     - email: String
     + trackBusLocation()
+    /'Vị trí xe theo thời gian thực'/
 }
 
 class Bus{
@@ -26,6 +27,7 @@ class Bus{
     - capacity: int
     - currentLocation: String
     + updateLocation()
+    /'Cập nhật vị trí xe liên tục'/
 }
 
 class Driver{
@@ -34,10 +36,15 @@ class Driver{
     - contactNumber: String
     - licenseNumber: String
     + viewDailySchedule()
+    /'Xem lịch làm việc hôm nay'/
     + viewStudentList()
+    /'Xem danh sách học sinh cần đón'/
     + reportPickupStatus()
+    /'Xem Báo cáo đón'/
     + reportDropoffStatus()
+    /'Xem Báo cáo trả'/
     + sendEmergencyAlert()
+    /'Gửi cảnh báo'/
 }
 
 class BusManager{
@@ -45,10 +52,15 @@ class BusManager{
     - name: String
     - contactNumber: String
     + createSchedule()
+    /'Tạo lịch làm việc cho Tài xế'/
     + updateSchedule()
+    /'Cập nhật lịch hàng tuần'/
     + assignDriver()
+    /'Phân công Tài xế'/
     + assignBus()
+    /'Phân công Xe, mã xe'/
     + sendMessage()
+    /'Gửi tin cho PH, TX'/
 }
 
 class Route{
