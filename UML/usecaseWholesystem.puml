@@ -7,11 +7,11 @@ actor "Quản lý xe buýt" as QL
 actor "Phụ huynh" as PH
 
 rectangle "Bus Schedule & Tracking" {
-  (Xem lịch làm việc) as UC1
+  (Xem lịch làm việc - Tuần/Tháng) as UC1
   (Xem danh sách điểm đón) as UC2
   (Báo cáo tình trạng đón/trả) as UC3
   (Gửi thông báo sự cố) as UC4
-  (Xem danh sách tổng quan) as UC5
+  (Xem danh sách tổng quan - Học sinh và phụ huynh) as UC5
   (Tạo và cập nhật lịch trình) as UC6
   (Phân công) as UC7
   (Gửi tin nhắn) as UC8
