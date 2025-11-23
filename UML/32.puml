@@ -1,7 +1,7 @@
 @startuml
 title Implementation Diagram - Bus Schedule & Tracking System (SSB 4.0)
 
-skinparam nodesep 50
+skinparam nodesep 40
 skinparam ranksep 50
 
 together {
