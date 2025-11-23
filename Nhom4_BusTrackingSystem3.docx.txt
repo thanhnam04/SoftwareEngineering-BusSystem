@@ -1,0 +1,268 @@
+﻿ỦY BAN NHÂN DÂN THÀNH PHỐ HỒ CHÍ MINH
+TRƯỜNG ĐẠI HỌC SÀI GÒN
+ A blue button with white text
+
+AI-generated content may be incorrect. 
+
+        BÁO CÁO ĐỒ ÁN MÔN HỌC
+CÔNG NGHỆ PHẦN MỀM
+SMART SCHOOL BUS TRACKING SYSTEM 
+Giảng viên hướng dẫn: Từ Lãng Phiêu
+
+
+
+
+
+
+Họ và Tên
+	MSSV
+	Nguyễn Thành Nam
+	3122480034
+	Trần Đức Anh
+	3122480001
+	Phạm Kim Chung
+	3122480006
+	Bùi Tấn Phát 
+	3122480042
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Contents
+3.1 Mô tả phương án kiến trúc bạn chọn. Dự kiến chia hệ thống SSB 1.0 thành bao nhiêu module? Mô tả input/output và chức năng của từng module        4
+3.2 Vẽ sơ đồ triển khai (implementation diagram) cho module Bus Schedule & Tracking        5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3.1 Mô tả phương án kiến trúc bạn chọn. Dự kiến chia hệ thống SSB 1.0 thành bao nhiêu module? Mô tả input/output và chức năng của từng module
+Hệ thống được thiết kế theo hệ thống hai tầng , gồm: 
+* Tầng 1: Giao diện (Presentation Layer): 
+Bao gồm WebDashboard cho bộ phận quản lý cho tài xế, phụ huynh.
+Tầng này cho phép người dùng thao tác, xem thông tin, nhận thông báo và gửi yêu cầu đến máy chủ.
+* Tầng 2: Ứng dụng (Application Layer):
+Là nơi xử lý toàn bộ nghiệp vụ của hệ thống như phân công xe, tạo lịch trình, tọa độ xe buýt đang chạy, gửi thông báo.
+Tầng này chịu trách nhiệm cho việc lưu trữ dữ liệu tạm thời và cung cấp API để ta có thể đẩy lên trên bản đồ của giao diện Frontend của web BusSystem.
+        Kiến trúc này giúp hệ thống phát triển, triển khai nhanh, giảm độ trễ trong xử lý thời gian thực tầm 3-4s. Đồng thời vẫn đảm bảo tách biệt giữa giao diện và nghiệp vụ.
+        Chúng em dự kiến chia hệ thống SSB 1.0 thành 5 module. Mỗi module có nhiệm vụ và luồng dữ liệu riêng nhưng kết nối với nhau thông qua server ứng dụng.
+Tên module
+	Chức năng chính
+	Input
+	Output
+	1. User Management
+	Quản lý thông tin người dùng ( PH, học sinh, tài xế, quản lý xe buýt)
+
+
+Xác thực đăng nhập và phân quyền
+	Thông tin đăng nhập, vai trò người dùng
+	Danh sách người dùng, quyền truy cập, phiên đăng nhập hợp lệ
+(tạm thời, có sẵn)
+	2. Bus & Driver Management
+	
+
+Quản lý thông tin xe buýt và tài xế. 
+	Dữ liệu xe buýt, tài xế (id, tên, sdt ,...)
+	Thông tin xe, trạng thái rảnh/bận, tài xế được gán
+	3. Route & Schedule
+	Lập tuyến đường và tạo lịch trình đưa đón học sinh; gán xe và tài xế cho từng tuyến
+	
+
+Điểm đón, trả, thời gian bắt đầu, số học sinh
+	
+
+Lịch trình hoàn chỉnh, đã phân công xe và tài xế
+	4. Notification & Alert Module
+	
+
+Gửi thông báo cho phụ huynh và quản lý khi xe được phân công, khi chuyến bắt đầu hoặc kết thúc
+	Sự kiện thay đổi trạng thái chuyến đi
+	Tin nhắn hoặc thông báo đến người dùng
+	5. Report Module
+	Tổng hợp và hiển thị báo cáo về các chuyến đi (thời gian, số lượng học sinh, tình trạng chuyến)
+	Dữ liệu lịch trình và trạng thái chuyến đã hoàn thành
+	Báo cáo, bản đồ hiển thị trên dashboard
+	
+
+
+
+3.2 Vẽ sơ đồ triển khai (implementation diagram) cho module Bus Schedule & Tracking
+  
+  
+  
+  
+
+
+
+
+
+Bus Schedule & Tracking
+	Use cases 
+	Users/Actors
+	Component Triển Khai
+	Node
+	Mô Tả Triển Khai
+	Hiển thị danh sách tuyến đường 
+	Quản lý xe buýt
+	RouteUI → RouteMgr → RouteTbl 
+	ManagerPC → WebServer → DBServer 
+	Giao diện Route Management truy xuất Route Table
+	Hiển thị danh sách xe buýt 
+	Quản lý xe buýt 
+	ScheduleUI → ScheduleMgr → BusTbl 
+	ManagerPC → WebServer → DBServer
+	Schedule Interface hiển thị dữ liệu từ Bus Table 
+	Hiển thị danh sách tài xế
+	Quản lý xe buýt 
+	DriverUI → DriverMgr → DriverTbl 
+	ManagerPC → WebServer → DBServer 
+	Driver Management truy xuất Driver Table
+	Hiển thị danh sách học sinh
+	Quản lý xe buýt
+	ScheduleUI → ScheduleMgr → StudentTbl 
+	ManagerPC → WebServer → DBServer 
+	Schedule Interface hiển thị Student Table
+	Cập nhật lịch trình
+	Quản lý xe buýt
+	ScheduleUI → ScheduleMgr → ScheduleTbl
+	ManagerPC → WebServer → DBServer 
+	Thao tác CRUD trên Schedule Table
+	Tạo lịch trình tháng
+	Quản lý xe buýt
+	ScheduleUI → ScheduleMgr → ScheduleTbl 
+	ManagerPC → WebServer → DBServer
+	Schedule Manager tạo monthly schedule
+	Tạo lịch trình tuần
+	Quản lý xe buýt
+	ScheduleUI → ScheduleMgr → ScheduleTbl 
+	ManagerPC → WebServer → DBServer 
+	Schedule Manager tạo weekly schedule
+	Phân công xe buýt cho tuyến
+	Quản lý xe buýt
+	ScheduleUI → ScheduleMgr → BusTbl + ScheduleTbl 
+	ManagerPC → WebServer → DBServer
+	Cập nhật assignment trong Bus và Schedule
+	Phân công tài xế cho tuyến
+	Quản lý xe buýt
+	DriverUI → DriverMgr → DriverTbl + ScheduleTbl 
+	ManagerPC → WebServer → DBServer 
+	Driver Manager gán driver vào Schedule
+	Gửi tin nhắn cho phụ huynh
+	Quản lý xe buýt
+	MessageUI → MsgService → ParentTbl 
+	ManagerPC → WebServer → DBServer 
+	Message Service gửi notification đến Parent
+	Gửi tin nhắn cho tài xế
+	Quản lý xe buýt
+	MessageUI → MsgService → DriverTbl 
+	ManagerPC → WebServer → DBServer | Message Service gửi thông báo Driver
+	Message Service gửi thông báo Driver
+	Theo dõi vị trị real-time
+	Quản lý xe buýt
+	ScheduleUI → LocationSvc → BusTbl 
+	ManagerPC → WebServer → DBServer 
+	Location Service cập nhật vị trí Bus
+	
+
+Xem lịch làm việc hàng ngày 
+	Tài xế 
+	ScheduleView → ScheduleMgr → ScheduleTbl 
+	DriverPC → WebServer → DBServer 
+	Driver Portal hiển thị schedule cá nhân
+	Xem danh sách học sinh cần đón
+	Tài xế 
+	StudentUI → ScheduleMgr → StudentTbl 
+	DriverPC → WebServer → DBServer 
+	Student List hiển thị học sinh theo route
+	Báo cáo tình trạng đón/trả học sinh
+	Tài xế 
+	StatusUI → StatusMgr → StatusTbl 
+	DriverPC → WebServer → DBServer 
+	Status Reporter cập nhật PickupStatus
+	Gửi cảnh báo sự cố 
+	Tài xế 
+	StatusUI → MsgService → ParentTbl
+	DriverPC → WebServer → DBServer 
+	Gửi emergency alert qua Message Service
+	
+
+Theo dõi vị trí xe buýt con 
+	Phụ huynh
+	TrackingUI → LocationSvc → BusTbl
+	ParentPC → WebServer → DBServer
+	Bus Tracker hiển thị real-time location
+	Nhận thông báo khi xe đến gần
+	Phụ huynh 
+	NotifUI → MsgService → ParentTbl 
+	ParentPC → WebServer → DBServer 
+	Notification Viewer nhận proximity alert
+	Nhận cảnh báo xe bị trễ nhận delay warning
+	Phụ huynh
+	NotifUI → MsgService → ParentTbl 
+	ParentPC → WebServer → DBServer 
+	Notification Viewer nhận delay warning
