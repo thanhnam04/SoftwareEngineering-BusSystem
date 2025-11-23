@@ -755,7 +755,7 @@ const ManagerDashboard = ({ data }) => {
                                                         <td className="timetable-time">16:20</td>
                                                         {schedule.data?.map((daySchedule, dayIndex) => (
                                                             <td key={dayIndex}>
-                                                                {daySchedule.buses.filter(bus => bus.name === 'Xe 03' || bus.name === 'Xe 04').map((bus, busIndex) => (
+                                                                {daySchedule.buses.map((bus, busIndex) => (
                                                                     <div key={busIndex} className="timetable-subject-info">
                                                                         <strong>Xe:</strong> {bus.name}<br/>
                                                                         <strong>Tài xế:</strong> {bus.driver}<br/>
