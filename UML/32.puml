@@ -1,89 +1,106 @@
 @startuml
-title Implementation Diagram - Bus Schedule & Tracking System
+title Implementation Diagram - Bus Schedule & Tracking System (SSB 4.0)
 
 skinparam nodesep 50
 skinparam ranksep 50
 
 together {
 node "Manager Workstation" as ManagerPC {
-    artifact "BusManager.html" as ManagerWeb
-    component "Schedule Interface" as ScheduleUI
-    component "Driver Management" as DriverUI
-    component "Route Management" as RouteUI
-    component "Message Interface" as MessageUI
+    artifact "index-complete.html" as ManagerWeb
+    component "ManagerDashboard.js" as ManagerDash
+    component "Tab Navigation" as TabNav
+    component "Schedule Generator" as ScheduleGen
+    component "Message Sender" as MessageSend
+    component "Data Filter" as DataFilter
 }
 }
 
 together {
 node "Driver Workstation" as DriverPC {
-    artifact "DriverPortal.html" as DriverWeb
-    component "Schedule Viewer" as ScheduleView
-    component "Student List" as StudentUI
-    component "Status Reporter" as StatusUI
+    artifact "index-complete.html" as DriverWeb
+    component "DriverDashboard.js" as DriverDash
+    component "RouteMap Static" as RouteMap
+    component "Student Manager" as StudentMgr
+    component "Status Reporter" as StatusReport
 }
 }
 
 together {
 node "Parent Portal" as ParentPC {
-    artifact "ParentPortal.html" as ParentWeb
-    component "Bus Tracker" as TrackingUI
-    component "Notification Viewer" as NotifUI
+    artifact "index-complete.html" as ParentWeb
+    component "ParentDashboard.js" as ParentDash
+    component "Leaflet Map" as LeafletMap
+    component "Tab Controller" as TabCtrl
+    component "Notification Display" as NotifDisplay
 }
 }
 
 together {
-node "Web Server" as WebServer {
-    artifact "BusSystem.war" as WebApp
-    component "Schedule Manager" as ScheduleMgr
-    component "Route Manager" as RouteMgr
-    component "Driver Manager" as DriverMgr
-    component "Location Service" as LocationSvc
-    component "Message Service" as MsgService
-    component "Status Manager" as StatusMgr
+node "Static Web Server" as WebServer {
+    artifact "Static Files" as StaticFiles
+    component "React Runtime" as ReactRuntime
+    component "Babel Transpiler" as BabelTranspiler
+    component "Mock Data Service" as MockDataSvc
+    component "LocalStorage Manager" as LocalStorageMgr
+    note right : "Frontend-only\nNo backend implementation"
 }
 }
 
 together {
-node "Database Server" as DBServer {
-    artifact "BusDB.sql" as Database
-    component "Student Table" as StudentTbl
-    component "Parent Table" as ParentTbl
-    component "Bus Table" as BusTbl
-    component "Driver Table" as DriverTbl
-    component "Route Table" as RouteTbl
-    component "Schedule Table" as ScheduleTbl
-    component "PickupStatus Table" as StatusTbl
+node "Browser Storage" as BrowserStorage {
+    artifact "localStorage" as LocalStorage
+    component "Mock Students" as MockStudents
+    component "Mock Parents" as MockParents
+    component "Mock Buses" as MockBuses
+    component "Mock Drivers" as MockDrivers
+    component "Mock Routes" as MockRoutes
+    component "Saved Schedules" as SavedSchedules
+    component "Session Data" as SessionData
+    note right : "Client-side data\nNo database server"
 }
 }
 
 ' Connections
-ManagerPC --> WebServer : HTTP/HTTPS
-DriverPC --> WebServer : HTTP/HTTPS
-ParentPC --> WebServer : HTTP/HTTPS
-WebServer --> DBServer : JDBC
+ManagerPC --> WebServer : HTTP (Static Files)
+DriverPC --> WebServer : HTTP (Static Files)
+ParentPC --> WebServer : HTTP (Static Files)
+WebServer --> BrowserStorage : JavaScript Access
 
 ' Internal deployments
-ManagerWeb ..> ScheduleUI : <<deploy>>
-ManagerWeb ..> DriverUI : <<deploy>>
-ManagerWeb ..> RouteUI : <<deploy>>
-ManagerWeb ..> MessageUI : <<deploy>>
-DriverWeb ..> ScheduleView : <<deploy>>
-DriverWeb ..> StudentUI : <<deploy>>
-DriverWeb ..> StatusUI : <<deploy>>
-ParentWeb ..> TrackingUI : <<deploy>>
-ParentWeb ..> NotifUI : <<deploy>>
-WebApp ..> ScheduleMgr : <<deploy>>
-WebApp ..> RouteMgr : <<deploy>>
-WebApp ..> DriverMgr : <<deploy>>
-WebApp ..> LocationSvc : <<deploy>>
-WebApp ..> MsgService : <<deploy>>
-WebApp ..> StatusMgr : <<deploy>>
-Database ..> StudentTbl : <<deploy>>
-Database ..> ParentTbl : <<deploy>>
-Database ..> BusTbl : <<deploy>>
-Database ..> DriverTbl : <<deploy>>
-Database ..> RouteTbl : <<deploy>>
-Database ..> ScheduleTbl : <<deploy>>
-Database ..> StatusTbl : <<deploy>>
+ManagerWeb ..> ManagerDash : <<deploy>>
+ManagerWeb ..> TabNav : <<deploy>>
+ManagerWeb ..> ScheduleGen : <<deploy>>
+ManagerWeb ..> MessageSend : <<deploy>>
+ManagerWeb ..> DataFilter : <<deploy>>
+DriverWeb ..> DriverDash : <<deploy>>
+DriverWeb ..> RouteMap : <<deploy>>
+DriverWeb ..> StudentMgr : <<deploy>>
+DriverWeb ..> StatusReport : <<deploy>>
+ParentWeb ..> ParentDash : <<deploy>>
+ParentWeb ..> LeafletMap : <<deploy>>
+ParentWeb ..> TabCtrl : <<deploy>>
+ParentWeb ..> NotifDisplay : <<deploy>>
+StaticFiles ..> ReactRuntime : <<deploy>>
+StaticFiles ..> BabelTranspiler : <<deploy>>
+StaticFiles ..> MockDataSvc : <<deploy>>
+StaticFiles ..> LocalStorageMgr : <<deploy>>
+LocalStorage ..> MockStudents : <<deploy>>
+LocalStorage ..> MockParents : <<deploy>>
+LocalStorage ..> MockBuses : <<deploy>>
+LocalStorage ..> MockDrivers : <<deploy>>
+LocalStorage ..> MockRoutes : <<deploy>>
+LocalStorage ..> SavedSchedules : <<deploy>>
+LocalStorage ..> SessionData : <<deploy>>
+
+' External Services
+cloud "External APIs" as ExternalAPIs {
+    component "Leaflet Maps" as LeafletAPI
+    component "OpenStreetMap" as OSM
+    component "Bootstrap Icons" as BootstrapIcons
+}
+
+ParentPC --> ExternalAPIs : HTTPS
+LeafletMap --> LeafletAPI : API Calls
+LeafletAPI --> OSM : Tile Requests
 
 @enduml
