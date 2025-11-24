@@ -17,10 +17,20 @@
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script type="text/babel" src="js/phuluc.js"></script>
+    <script src="js/data.js"></script>
 </head>
 <body>
     <div id="root"></div>
+    <!-- Load component files in correct order before App-complete.js -->
+    <!-- RouteMap and StudentList must load first (they are used by DriverDashboard) -->
+    <script type="text/babel" src="js/RouteMap.js"></script>
+    <script type="text/babel" src="js/StudentList.js"></script>
+    <!-- DriverDashboard uses RouteMap and StudentList -->
+    <script type="text/babel" src="js/DriverDashboard.js"></script>
+    <!-- ManagerDashboard and ParentDashboard are independent -->
+    <script type="text/babel" src="js/ManagerDashboard.js"></script>
+    <script type="text/babel" src="js/ParentDashboard.js"></script>
+    <!-- App-complete.js uses all components above -->
     <script type="text/babel" src="js/App-complete.js"></script>
 </body>
 </html>
