@@ -19,7 +19,7 @@ together {
 node "Driver Workstation" as DriverPC {
     artifact "index-complete.html" as DriverWeb
     component "DriverDashboard.js" as DriverDash
-    component "RouteMap Static" as RouteMap
+    component "RouteMap.js" as RouteMap
     component "Student Manager" as StudentMgr
     component "Status Reporter" as StatusReport
 }
