@@ -27,6 +27,30 @@ Bùi Tấn Phát
 taixe.puml
 usecaseWholesystem.puml
 
+## Nhóm Phát triển
+
+- Nguyễn Thành Nam (3122480034)
+- Trần Đức Anh (3122480001)
+- Phạm Kim Chung (3122480006)
+- Bùi Tấn Phát (3122480042)
+
+Phiên bản: 1.0 | Năm: HK1 - Year4 - 2025
+
+## Phân chia Manager
+
+### Chung
+
+- lists (Quản lý học sinh )
+- listsParent ( Quản lý PH )
+- messages (Tin nhắn )
+- manage ( Lịch trình tài xế )
+
+### Nam
+
+- overview ( Tổng quan )
+- listsDriver ( Quản lý tài xế )
+- overviewparent ( Phụ huynh )
+
 ## Tổng quan Dự án
 
 Dự án **Smart School Bus Tracking System (SSB 1.0)** là một hệ thống theo dõi xe buýt trường học thông minh được xây dựng bằng React. Hệ thống hỗ trợ ba vai trò chính: Quản lý, Tài xế và Phụ huynh, với các chức năng như theo dõi vị trí xe buýt thời gian thực, quản lý lịch trình, gửi thông báo và cảnh báo.
@@ -224,27 +248,3 @@ public/
    - Tài xế: driver / 123
    - Phụ huynh: parent / 123
 4. Tính năng theo vai trò.
-
-## Nhóm Phát triển
-
-- Nguyễn Thành Nam (3122480034)
-- Trần Đức Anh (3122480001)
-- Phạm Kim Chung (3122480006)
-- Bùi Tấn Phát (3122480042)
-
-Phiên bản: 4.0 | Năm: HK1 - Year4 - 2025
-
-## Phân chia Manager
-
-### Chung
-
-- lists (Quản lý học sinh )
-- listsParent ( Quản lý PH )
-- messages (Tin nhắn )
-- manage ( Lịch trình tài xế )
-
-### Nam
-
-- overview ( Tổng quan )
-- listsDriver ( Quản lý tài xế )
-- overviewparent ( Phụ huynh )
