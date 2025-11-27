@@ -304,7 +304,7 @@ Danh sách học sinh hiển thị
 */
 .table th,
 .table td {
-  padding: 1px 24px !important; /* ép đồng nhất toàn bảng */
+  padding: 6px 10px !important; /* ép đồng nhất toàn bảng */
   vertical-align: middle;        /* căn giữa theo chiều dọc */
   font-family: 'Nunito', sans-serif;
   font-size: 15px;
