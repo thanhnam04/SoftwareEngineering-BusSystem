@@ -45,10 +45,10 @@ window.mockData = {
         { id: 37, name: 'Phạm Hải Minh',        grade: 'Lớp 1B', bus: 'Xe 01', pickup: 'Điểm A1', status: 'Đã đón',   parentPhone: '0901-777-888' },
     ],
     drivers: [
-        { id: 1, name: 'Nguyễn Thành Nam', phone: '0123456789', bus: 'Xe 01', status: 'Đang làm việc', plate: '51B-123.45'},
-        { id: 2, name: 'Trần Đức Anh', phone: '0987654321', bus: 'Xe 02', status: 'Đang làm việc', plate:'53B-678.90' },
-        { id: 3, name: 'Bùi Tấn Phát', phone: '0912345678', bus: 'Xe 03', status: 'Nghỉ phép',plate:'56B-012.34' },
-        { id: 4, name: 'Phạm Kim Chung', phone: '0912345953', bus: 'Xe 04', status: 'Đang làm việc', plate:'59B-556.77' }
+        { id: 1, name: 'Nguyễn Thành Nam', phone: '0123456789', bus: 'Xe 01', status: 'Đang làm việc', plate: '51B-123.45', seat: '45'},
+        { id: 2, name: 'Trần Đức Anh', phone: '0987654321', bus: 'Xe 02', status: 'Đang làm việc', plate:'53B-678.90', seat: '45' },
+        { id: 3, name: 'Bùi Tấn Phát', phone: '0912345678', bus: 'Xe 03', status: 'Nghỉ phép',plate:'56B-012.34', seat: '45' },
+        { id: 4, name: 'Phạm Kim Chung', phone: '0912345953', bus: 'Xe 04', status: 'Đang làm việc', plate:'59B-556.77', seat: '45' }
     ],
     routes: [
         { id: 1, name: 'Tuyến A', stops: ['Điểm A1', 'Điểm A2', 'Điểm A3'], distance: '15km', duration: '45 phút' },

@@ -411,6 +411,7 @@ window.ManagerDashboard = ({ data }) => {
                                         <th>Xe buýt</th>
                                         <th>Trạng thái</th>
                                         <th>Biển số</th>
+                                        <th>Số lượng ghế</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -425,6 +426,7 @@ window.ManagerDashboard = ({ data }) => {
                                                 </span>
                                             </td>
                                             <td>{driver.plate}</td>
+                                            <td style={{ textAlign: 'center'}}>{driver.seat}</td>
                                         </tr>
                                     ))}
                                 </tbody>
