@@ -34,9 +34,9 @@ usecaseWholesystem.puml
 - Phạm Kim Chung (3122480006)
 - Bùi Tấn Phát (3122480042)
 
-Phiên bản: 1.0 | Năm: HK1 - Year4 - 2025
+Phiên bản: 4.0 | Năm: HK1 - Year4 - 2025
 
-## Phân chia Manager
+## Phân chia Manager Dashboard
 
 ### Chung
 
@@ -51,200 +51,284 @@ Phiên bản: 1.0 | Năm: HK1 - Year4 - 2025
 - listsDriver ( Quản lý tài xế )
 - overviewparent ( Phụ huynh )
 
+## Phân chia Parent Dashboard
+
+### Đức Anh
+
+- COMPONENT PARENTDASHBOARD - Làm giao diện thân thiện dễ dùng và tiện lợi
+- Phụ trách toàn bộ Parent Dashboard với 3 tabs (overview, map, notifications)
+
+## Phân chia Driver Dashboard
+
+### Phát
+
+- COMPONENT DRIVERDASHBOARD - Làm giao diện thân thiện dễ dùng và tiện lợi
+- Phụ trách toàn bộ Driver Dashboard (work schedule, route map, student management, emergency alerts)
+
 ## Tổng quan Dự án
 
-Dự án **Smart School Bus Tracking System (SSB 1.0)** là một hệ thống theo dõi xe buýt trường học thông minh được xây dựng bằng React. Hệ thống hỗ trợ ba vai trò chính: Quản lý, Tài xế và Phụ huynh, với các chức năng như theo dõi vị trí xe buýt thời gian thực, quản lý lịch trình, gửi thông báo và cảnh báo.
+Dự án **Smart School Bus Tracking System (SSB 4.0)** là một hệ thống theo dõi xe buýt trường học thông minh được xây dựng bằng React với kiến trúc Single Page Application (SPA). Hệ thống hỗ trợ ba vai trò chính: Quản lý, Tài xế và Phụ huynh, với các chức năng như theo dõi vị trí xe buýt thời gian thực bằng Leaflet Maps, quản lý lịch trình với tab navigation, gửi thông báo và cảnh báo.
 
-Thư mục `public` chứa các tệp tĩnh và mã nguồn frontend của ứng dụng web. Có React và dùng text/babel để biên dịch JSX sang JS
+Hệ thống sử dụng frontend-only architecture với mock data, localStorage để lưu trữ dữ liệu tạm thời, và React hooks để quản lý state. Babel transpiler được sử dụng để biên dịch JSX sang JavaScript trong browser.
 
 ## Cấu trúc Thư mục
 
 ```
-public/
-├── index-complete.html          # Tệp HTML chính (phiên bản hoàn chỉnh)
-├── index.html                   # Tệp HTML đơn giản (phiên bản cơ bản)
-├── component/
-│   └── frontend.tsx             # Component React bằng TypeScript
-├── css/
-│   ├── index-complete.css       # CSS cho phiên bản hoàn chỉnh
-│   └── style.css                # CSS cho phiên bản cơ bản
-├── js/
-│   ├── App-complete.js          # Ứng dụng React chính (hoàn chỉnh)
-│   ├── DriverDashboard.js       # Component bảng điều khiển Tài xế
-│   ├── ManagerDashboard.js      # Component bảng điều khiển Quản lý
-│   ├── ParentDashboard.js       # Component bảng điều khiển Phụ huynh
-│   └── phuluc.js                # Tệp JavaScript bổ sung
-├── img/
-│   └── BackgroundSSB.png        # Hình nền cho hệ thống
-└── src/
-    └── components/              # Thư mục components (trống, có thể mở rộng)
+SoftwareEngineering-BusSystem/
+├── public/                      # Thư mục chứa frontend application
+│   ├── index-complete.html      # Tệp HTML chính với Leaflet Maps integration
+│   ├── css/
+│   │   └── index-complete.css   # Stylesheet chính với responsive design
+│   └── js/
+│       ├── App-complete.js      # Ứng dụng React chính với 3 dashboards
+│       ├── data.js              # Mock data cho hệ thống
+│       ├── DriverDashboard.js   # Component dashboard Tài xế (standalone)
+│       ├── ManagerDashboard.js  # Component dashboard Quản lý (standalone)
+│       ├── ParentDashboard.js   # Component dashboard Phụ huynh (standalone)
+│       ├── RouteMap.js          # Component bản đồ tuyến đường tĩnh
+│       └── StudentList.js       # Component danh sách học sinh
+├── UML/                         # Thư mục chứa các file PlantUML diagrams
+│   ├── 21.puml                  # Use case diagram (Nguyễn Thành Nam)
+│   ├── 21a-copy.puml           # Use case diagram backup
+│   ├── 22.puml                  # Class diagram (Phạm Kim Chung)
+│   ├── 23.puml                  # Sequence diagram (Phạm Kim Chung)
+│   ├── 32.puml                  # Implementation diagram (Trần Đức Anh)
+│   ├── phuhuynh.puml           # Parent use case diagram
+│   ├── quanlixebuyt(1).puml    # Bus management diagram
+│   ├── taixe.puml              # Driver use case diagram (Bùi Tấn Phát)
+│   └── usecaseWholesystem.puml # System-wide use case diagram
+├── .gitattributes              # Git configuration
+├── LICENSE                     # Project license
+├── luutru.txt                  # Archive/backup notes
+├── package-lock.json           # NPM dependencies lock file
+├── README.md                   # Project documentation
+└── ReportOutline.docx          # Project report outline
 ```
 
 ## Mô tả Chi tiết Các Tệp
 
 ### 1. Tệp HTML
 
-#### `index-complete.html`
+#### `public/index-complete.html`
 
-- **Mục đích**: Tệp HTML chính cho phiên bản hoàn chỉnh của ứng dụng.
+- **Mục đích**: Tệp HTML chính cho ứng dụng SSB 4.0.
 - **Nội dung chính**:
-  - Tiêu đề: "Smart School Bus Tracking System - SSB 1.0"
-  - Tích hợp Google Maps API với khóa API: `AIzaSyA2H0JVrZ5ibNBR4OHd4xOV_KqjbMxFrDY`
+  - Tiêu đề: "Smart School Bus Tracking System - SSB 4.0"
+  - Tích hợp Leaflet Maps API cho real-time tracking
+  - Bootstrap Icons cho UI components
   - Nạp React 17 và Babel từ CDN
   - Liên kết CSS: `css/index-complete.css`
   - Script chính: `js/App-complete.js`
-- **Điểm nổi bật**: Sử dụng React để render toàn bộ ứng dụng vào div có id="root".
-
-#### `index-completed.html`
-
-- **Mục đích**: Tệp HTML đơn giản hơn, chứa mã React inline.
-- **Nội dung chính**:
-  - Tiêu đề tương tự
-  - Nạp React và Babel từ CDN
-  - Liên kết CSS: `css/index-completed.css`
-  - Chứa mã React inline cho App component
-- **Điểm nổi bật**: Phiên bản cơ bản với mã nguồn inline, dễ chỉnh sửa nhưng ít tổ chức.
+- **Điểm nổi bật**: Single Page Application với React rendering vào div có id="root", tích hợp Leaflet thay vì Google Maps.
 
 ### 2. Tệp CSS
 
-#### `css/index-complete.css`
+#### `public/css/index-complete.css`
 
-- **Mục đích**: Stylesheet cho phiên bản hoàn chỉnh.
+- **Mục đích**: Stylesheet chính cho SSB 4.0 với responsive design.
 - **Các phần chính**:
-  - Reset CSS và font chữ (Nunito từ Google Fonts)
-  - Styles cho header, container, panel-title
-  - Grid layout cho panel-content
-  - Styles cho buttons (phụ huynh, tài xế, quản lí)
-  - Responsive design với media queries
-  - Styles đặc biệt cho Description-PH, Description-TX, Description-QL (mô tả vai trò)
+  - Reset CSS và font chữ (system fonts)
+  - Styles cho landing page với gradient backgrounds
+  - Tab-based navigation styles cho Manager và Parent dashboards
+  - Grid layout cho panel-content với flexbox
+  - Button styles với hover effects
+  - Leaflet map container styles
+  - Timetable styles cho schedule management
 - **Lớp CSS quan trọng**:
-
-  - `.info-card`: Card chứa thông tin từ quản lí và đăng nhập tư cách quản lí
-  - `.tab-buttons`: Nút chuyển tab
-  - `.student-item`: Item học sinh
-  - `.notification-item`, `.alert-item`: Thông báo và cảnh báo
-
-- **Lớp CSS quan trọng**:
-  - `.bus-map`: Container cho bản đồ
-  - `.user-btn`: Nút chọn vai trò
-  - `.panel-content`: Layout grid cho nội dung panel
+  - `.info-card`: Card container cho thông tin
+  - `.tab-buttons`: Sidebar navigation buttons
+  - `.panel-content`: Main content area với flex layout
+  - `.student-item`: Student list item với action buttons
+  - `.notification-item`, `.alert-item`: Notification displays
+  - `.bus-map`: Leaflet map container
+  - `.timetable`: Schedule table với responsive design
+  - `.driver-table`: Data tables cho management
 
 ### 3. Tệp JavaScript (React Components)
 
-#### `js/App-complete.js`
+#### `public/js/App-complete.js`
 
-- **Mục đích**: Ứng dụng React chính cho phiên bản hoàn chỉnh.
+- **Mục đích**: Ứng dụng React chính với SPA architecture.
 - **Cấu trúc**:
-  - Import React hooks: `useState`
-  - Dữ liệu mẫu: `mockData` với buses, students, drivers, routes, notifications, alerts
-  - Tài khoản mẫu: manager/123, driver/123, parent/123
-- **Components chính**:
-  - `ManagerDashboard`: Bảng điều khiển Quản lý
-  - `DriverDashboard`: Bảng điều khiển Tài xế
-  - `ParentDashboard`: Bảng điều khiển Phụ huynh
-- **Hàm chính**:
-  - `App()`: Component chính, xử lý login và render dashboard theo vai trò
-  - `handleLogin()`: Xử lý đăng nhập
-  - `handleAboutClick()`, `handleBackToLanding()`, `handleRoleSelect()`: Điều hướng
-- **Tính năng**:
-  - Landing page với lựa chọn vai trò
-  - Trang đăng nhập
-  - Trang "Về chúng tôi" với thông tin nhóm phát triển
-  - Dashboard theo vai trò sau đăng nhập
+  - React hooks: `useState`, `useEffect`
+  - Mock data: 37 học sinh, 4 xe buýt, 4 tài xế, 20 phụ huynh
+  - Authentication: manager/123, driver/123, parent/123
+- **Components tích hợp**:
+  - `ManagerDashboard`: 7 tabs (overview, lists, listsParent, listsDriver, manage, messages, overviewparent)
+  - `DriverDashboard`: Work schedule, RouteMap, student management, emergency alerts
+  - `ParentDashboard`: 3 tabs (overview, map, notifications) với Leaflet integration
+  - `RouteMap`: Static route visualization component
+- **Tính năng chính**:
+  - Role-based authentication và routing
+  - Tab-based navigation cho Manager và Parent
+  - localStorage persistence cho schedules
+  - Real-time map tracking với Leaflet
+  - Mock data simulation cho demo
 
-#### `js/DriverDashboard.js`
+#### `public/js/data.js`
 
-- **Mục đích**: Component riêng cho bảng điều khiển Tài xế.
-- **Nội dung**: (Tệp này có thể là phiên bản tách riêng, nhưng trong App-complete.js đã tích hợp)
+- **Mục đích**: Centralized mock data management.
+- **Nội dung**: Students, drivers, buses, routes, parents data objects.
 
-#### `js/ManagerDashboard.js`
+#### `public/js/DriverDashboard.js`
 
-- **Mục đích**: Component riêng cho bảng điều khiển Quản lý.
-- **Nội dung**: (Tương tự, có thể là phiên bản tách)
+- **Mục đích**: Standalone Driver dashboard component.
+- **Nội dung**: Separated version của driver functionality.
 
-#### `js/ParentDashboard.js`
+#### `public/js/ManagerDashboard.js`
 
-- **Mục đích**: Component riêng cho bảng điều khiển Phụ huynh.
-- **Nội dung**: (Tương tự)
+- **Mục đích**: Standalone Manager dashboard component.
+- **Nội dung**: Separated version của manager functionality.
 
-### 4. Thư mục Khác
+#### `public/js/ParentDashboard.js`
 
-#### `component/frontend.tsx`
+- **Mục đích**: Standalone Parent dashboard component.
+- **Nội dung**: Separated version với Leaflet map integration.
 
-- **Mục đích**: Component React được viết bằng TypeScript.
-- **Nội dung**: Có thể là phiên bản TypeScript của một component frontend.
+#### `public/js/RouteMap.js`
 
-#### `img/BackgroundSSB.png`
+- **Mục đích**: Static route map visualization component.
+- **Nội dung**: CSS-based route display với pickup points.
 
-- **Mục đích**: Hình nền cho hệ thống SSB.
-- **Sử dụng**: Có thể dùng trong CSS hoặc làm background.
+#### `public/js/StudentList.js`
 
-#### `js/phuluc.js`
+- **Mục đích**: Student management component.
+- **Nội dung**: Student data display và filtering functionality.
 
-- **Mục đích**: Tệp JavaScript bổ sung.
-- **Nội dung**: Có thể chứa các hàm hoặc mã hỗ trợ bổ sung cho ứng dụng.
+### 4. UML Diagrams
 
-#### `src/components/`
+#### `UML/32.puml`
 
-- **Mục đích**: Thư mục để chứa các React components tách riêng.
-- **Trạng thái**: Hiện tại trống, có thể mở rộng để tổ chức code tốt hơn.
+- **Mục đích**: Implementation diagram cho Bus Schedule & Tracking module.
+- **Nội dung**: PlantUML diagram với nodes, components, và deployment relationships.
+- **Tác giả**: Trần Đức Anh
+
+#### `UML/usecaseWholesystem.puml`
+
+- **Mục đích**: System-wide use case diagram.
+- **Nội dung**: Tổng quan use cases cho toàn hệ thống.
+- **Tác giả**: Bùi Tấn Phát
+
+#### `UML/21.puml`, `UML/21a.puml`, `UML/21a-copy.puml`
+
+- **Mục đích**: Use case diagrams cho các modules.
+- **Tác giả**: Nguyễn Thành Nam
+
+#### `UML/22.puml`, `UML/23.puml`
+
+- **Mục đích**: Class và sequence diagrams.
+- **Tác giả**: Phạm Kim Chung
+
+### 5. Project Files
+
+#### `package-lock.json`
+
+- **Mục đích**: NPM dependencies lock file.
+- **Nội dung**: Version locking cho project dependencies.
+
+#### `ReportOutline.docx`
+
+- **Mục đích**: Project report structure và outline.
+- **Nội dung**: Documentation template cho báo cáo đồ án.
+
+#### `luutru.txt`
+
+- **Mục đích**: Archive notes và backup information.
+- **Nội dung**: Development notes và version history.
 
 ## Các Component và Hàm Chính
 
 ### Component ManagerDashboard
 
 - **Vị trí**: Trong `js/App-complete.js`
-- **Tabs**:
-  - Tổng quan: Hiển thị số liệu thống kê, danh sách xe hoạt động
-  - Danh sách: Bảng học sinh, tài xế
-  - Quản lý: Tạo lịch trình tuần/tháng, lưu vào localStorage
-  - Tin nhắn: Gửi tin nhắn đến tài xế hoặc phụ huynh
-- **Hàm**:
-  - `sendMessage()`: Gửi tin nhắn
-  - `generateWeeklySchedule()`: Tạo lịch tuần - hiện tại nhóm em dùng tạo thủ công vì không liên kết BE
-  - `generateMonthlySchedule()`: Tạo lịch tháng - hiện tại nhóm em dùng tạo thủ công vì không liên kết BE
+- **Architecture**: Tab-based navigation với sidebar
+- **7 Tabs chính**:
+  - **overview**: Thống kê hệ thống (số xe, học sinh, tài xế, tuyến)
+  - **lists**: Quản lý học sinh với filter theo lớp
+  - **listsParent**: Quản lý phụ huynh với thông tin con và tài xế
+  - **listsDriver**: Quản lý tài xế với trạng thái làm việc
+  - **manage**: Tạo lịch trình tuần/tháng với timetable visualization
+  - **messages**: Gửi tin nhắn đến tài xế/phụ huynh
+  - **overviewparent**: Chi tiết thông tin phụ huynh
+- **State Management**: `activeTab`, `selectedClass`, `schedule`, `savedSchedules`
+- **Key Functions**:
+  - `generateWeeklySchedule()`: Tạo lịch tuần với timetable
+  - `generateMonthlySchedule()`: Tạo lịch tháng và lưu localStorage
+  - `sendMessage()`: Message sending với recipient selection
 
 ### Component DriverDashboard
 
 - **Vị trí**: Trong `js/App-complete.js`
-- **Nội dung**:
-  - Lịch làm việc hôm nay
-  - Danh sách học sinh cần đón/trả
-  - Nút báo cáo đón/trả
-  - Nút gửi cảnh báo sự cố
-- **Hàm**:
-  - Sử dụng `driverStudents` (lọc học sinh theo xe)
+- **Layout**: Single panel với multiple info cards
+- **Chức năng chính**:
+  - Work schedule display (tuyến, xe, thời gian)
+  - RouteMap component với static visualization
+  - Student management với filter theo xe (Xe 01)
+  - Status reporting (đón/trả học sinh)
+  - Emergency alert system
+- **Data Filtering**: `driverStudents` filter theo bus assignment
 
 ### Component ParentDashboard
 
 - **Vị trí**: Trong `js/App-complete.js`
-- **Nội dung**:
-  - Thông tin xe của bé
-  - Bản đồ Google Maps với marker và polyline
-  - Danh sách thông báo và cảnh báo
-- **Hàm**:
-  - `useEffect` để khởi tạo bản đồ sau render
+- **Architecture**: Tab-based navigation (3 tabs)
+- **Tabs**:
+  - **overview**: Thông tin xe của con
+  - **map**: Leaflet Maps với real-time tracking
+  - **notifications**: Thông báo và cảnh báo
+- **State Management**: `activeTab` với conditional rendering
+- **Map Integration**: 
+  - Leaflet Maps API với OpenStreetMap tiles
+  - `useEffect` với dependency `[activeTab]` cho performance
+  - Marker cho vị trí xe buýt
 
-### Component App (Chính)
+### Component RouteMap (Static)
 
-- **State**:
-  - `currentView`: 'landing', 'login', 'about'
-  - `selectedRole`: 'parent', 'driver', 'manager'
-  - `loggedIn`: boolean
-  - `username`, `password`, `role`
-  - `data`: mockData
-- **Hàm**:
-  - `handleAboutClick()`: Chuyển đến trang about
-  - `handleBackToLanding()`: Quay về landing
-  - `handleRoleSelect(role)`: Chọn vai trò
-  - `handleLogin(e)`: Xử lý form đăng nhập
+- **Vị trí**: Trong DriverDashboard
+- **Mục đích**: Visualization tuyến đường với CSS
+- **Features**: Điểm xuất phát, điểm đón (1,2,3), trường học
+- **Styling**: Absolute positioning với responsive design
+
+### Component App (Root)
+
+- **State Management**:
+  - `currentView`: 'landing' | 'login' | 'about'
+  - `selectedRole`: 'parent' | 'driver' | 'manager'
+  - `loggedIn`: boolean authentication state
+  - `data`: mockData với 37 students, 4 buses, 4 drivers, 20 parents
+- **Navigation Functions**:
+  - `handleRoleSelect()`: Role selection và routing
+  - `handleLogin()`: Authentication với mock accounts
+  - `handleAboutClick()`, `handleBackToLanding()`: Page navigation
+- **Rendering Logic**: Conditional rendering based on authentication state
 
 ## Cách Chạy Ứng dụng
 
-1. Mở `index-complete.html` trong trình duyệt web.
-2. Chọn vai trò (Phụ huynh, Tài xế, Quản lý).
-3. Đăng nhập với tài khoản mẫu:
-   - Quản lý: manager / 123
-   - Tài xế: driver / 123
-   - Phụ huynh: parent / 123
-4. Tính năng theo vai trò.
+### Development Setup
+1. Clone repository: `git clone <repo-url>`
+2. Navigate to project: `cd SoftwareEngineering-BusSystem`
+3. Start local server (port 5501 recommended)
+4. Mở `http://localhost:5501/public/index-complete.html`
+
+### Production Deployment
+1. Deploy `public/` folder to static web hosting
+2. Ensure HTTPS for external API calls (Leaflet, Bootstrap Icons)
+3. Configure CORS if needed
+
+### User Flow
+1. **Landing Page**: Chọn vai trò (Phụ huynh, Tài xế, Quản lý)
+2. **Authentication**: Đăng nhập với tài khoản demo:
+   - **Quản lý**: `manager` / `123`
+   - **Tài xế**: `driver` / `123` 
+   - **Phụ huynh**: `parent` / `123`
+3. **Dashboard Access**: Truy cập chức năng theo vai trò
+4. **Features**: 
+   - Manager: 7-tab management interface
+   - Driver: Work schedule và student management
+   - Parent: 3-tab tracking với real-time map
+
+### Technology Requirements
+- **Browser**: Modern browser với ES6+ support
+- **Internet**: Required cho CDN resources (React, Babel, Leaflet, Bootstrap Icons)
+- **Storage**: localStorage cho schedule persistence
+- **APIs**: Leaflet Maps, OpenStreetMap tiles
