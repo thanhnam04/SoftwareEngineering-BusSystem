@@ -96,7 +96,7 @@ function App() {
                             <button className="btn btn-link" style={{ fontSize: '1.2rem', padding: '0.25rem 0.5rem' }} onClick={() => alert('Nguyễn Thành Nam - nnam62673@gmail.com')}> <i className="bi bi-arrows-angle-contract"></i> Liên hệ</button>
                             <button className="btn btn-link" style={{ fontSize: '1.2rem', padding: '0.25rem 0.5rem' }} onClick={handleAboutClick}> <i className="bi bi-person-vcard"></i> Về chúng tôi</button>
                         </div>
-                        <h1 style={{ color: '#1e5799', marginBottom: '2rem', fontSize: '3rem' }}>SSB 4.0</h1>
+                        <h1 style={{ color: '#1e5799', marginBottom: '2rem', fontSize: '3rem' }}>SSB 1.0</h1>
                         <h1 style={{ marginBottom: '2rem', color: '#555', padding :'0.75rem 0rem', }}>Hệ thống theo dõi xe buýt trường học thông minh</h1>
 
                         <p style={{ marginBottom: '2rem', fontSize: '2rem' }}>Chọn vai trò của bạn để tiếp tục</p>
@@ -291,7 +291,7 @@ function App() {
         <div>
             <header>
                 <div className="container header-content">
-                    <div className="logo">SSB 4.0</div>
+                    <div className="logo">SSB 1.0</div>
                         <button
                         onClick={() => {
                             setLoggedIn(false);
