@@ -17,7 +17,7 @@ window.DriverDashboard = ({ data }) => {
                 <div className="tab-buttons" style={{ display: 'flex', flexDirection: 'column', width: '200px', padding: '1rem', borderRight: '1px solid #ddd' }}>
                     <button onClick={() => setActiveTab('schedule')} className={`btn d-flex align-items-center gap-2 ${activeTab === 'schedule' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem', textAlign: 'left' }}><i className="bi bi-house-door"></i> Lịch trình tài xế</button>
                     
-                    <button onClick={() => setActiveTab('map')} className={`btn d-flex align-items-center gap-2 ${activeTab === 'map' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem', textAlign: 'left' }}><i className="bi bi-geo-alt"></i> Bản đồ</button>
+                    <button onClick={() => setActiveTab('map')} className={`btn d-flex align-items-center gap-2 ${activeTab === 'map' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem', textAlign: 'left' }}><i className="bi bi-geo-alt"></i> Tuyến đường</button>
                     
                     <button onClick={() => setActiveTab('lists')} className={`btn d-flex align-items-center gap-2 ${activeTab === 'lists' ? 'btn-secondary' : ''}`} style={{ marginBottom: '0.5rem', textAlign: 'left' }}><i className="bbi bi-list-ul"></i> Danh sách học sinh</button>
                 
