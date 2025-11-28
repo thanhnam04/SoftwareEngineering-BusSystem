@@ -187,6 +187,7 @@ window.ManagerDashboard = ({ data }) => {
 
                     {/* 🔍 Thanh tìm kiếm */}
                     <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+                        <b>Tìm kiếm theo tên Phụ huynh</b>
                         <input
                             type="text"
                             placeholder=" Tìm tên phụ huynh..."
@@ -195,8 +196,8 @@ window.ManagerDashboard = ({ data }) => {
                             style={{
                                 padding: '8px 12px',
                                 width: '260px',
-                                borderRadius: '8px',
-                                border: '1px solid #ccc',
+                                borderRadius: '25px',
+                                border: '2.5px solid #ccc',
                                 outline: 'none',
                                 fontSize: '14px'
                             }}
