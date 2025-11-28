@@ -186,9 +186,20 @@ window.ManagerDashboard = ({ data }) => {
                     </h3>
 
                     {/* 🔍 Thanh tìm kiếm */}
-                    <div style={{ textAlign: 'center', marginBottom: '10px' }}>
-                        <b>Tìm kiếm theo tên Phụ huynh</b>
-                        <input
+                        <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            width: '100%',
+                            marginBottom: '10px',
+                            textAlign: 'center'
+                        }}
+                        >
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <b>Tìm kiếm theo tên Phụ huynh:</b>
+
+                            <input
                             type="text"
                             placeholder=" Tìm tên phụ huynh..."
                             value={searchTerm}
@@ -201,8 +212,10 @@ window.ManagerDashboard = ({ data }) => {
                                 outline: 'none',
                                 fontSize: '14px'
                             }}
-                        />
-                    </div>
+                            />
+                        </label>
+                        </div>
+
 
                     <div style={{
                         display: 'flex',
@@ -362,18 +375,37 @@ window.ManagerDashboard = ({ data }) => {
                         <div className="info-card driver-list-container">
                             <h4 className="driver-list-title">Danh sách Phụ huynh</h4>
 
-                            <div className="search-filter">
-                                <label>
-                                    <b>Tìm kiếm theo tên học sinh: </b>
+                                <div
+                                className="search-filter"
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',   
+                                    alignItems: 'center',       
+                                    width: '100%',
+                                    marginBottom: '10px',
+                                    textAlign: 'center'
+                                }}
+                                >
+                                <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                    <b>Tìm kiếm theo tên học sinh:</b>
                                     <input
-                                        type="text"
-                                        placeholder="Nhập tên học sinh để tìm kiếm..."
-                                        value={searchTerm}
-                                        onChange={e => setSearchTerm(e.target.value)}
-                                        className="search-input"
+                                    type="text"
+                                    placeholder="Nhập tên học sinh để tìm kiếm..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="search-input"
+                                    style={{
+                                        padding: '8px 12px',
+                                        width: '260px',
+                                        borderRadius: '25px',
+                                        border: '2.5px solid #ccc',
+                                        outline: 'none',
+                                        fontSize: '14px'
+                                    }}
                                     />
                                 </label>
-                            </div>
+                                </div>
+
 
                             <table className="driver-table">
                                 <thead>
