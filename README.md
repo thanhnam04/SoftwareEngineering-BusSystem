@@ -1,4 +1,4 @@
-# Smart School Bus Tracking System (SSB 1.0) - Public Folder Documentation
+# Smart School Bus Tracking System (SSB 4.0) - Public Folder Documentation
 
 NGUYỄN THÀNH NAM, PHẠM KIM CHUNG: COMPONENT MANAGERDASHBOARD - Làm giao diện thân thiện dễ dùng và tiện lợi.
 
