@@ -122,172 +122,189 @@ window.ManagerDashboard = ({ data }) => {
                         </div>
                     )}
 
-                    {activeTab === 'overviewparent' && (
-                        <div style={{ padding: '20px' }}>
-                            {(() => {
-                                const childrenByParentPhone = data.students.reduce((acc, s) => {
-                                    if (!acc[s.parentPhone]) acc[s.parentPhone] = [];
-                                    acc[s.parentPhone].push(s);
-                                    return acc;
-                                }, {});
+{activeTab === 'overviewparent' && (
+    <div style={{ padding: '20px' }}>
+        {(() => {
+            const childrenByParentPhone = data.students.reduce((acc, s) => {
+                if (!acc[s.parentPhone]) acc[s.parentPhone] = [];
+                acc[s.parentPhone].push(s);
+                return acc;
+            }, {});
 
-                                const driversByBus = data.drivers.reduce((acc, d) => {
-                                    const k = d.bus || 'unknown';
-                                    if (!acc[k]) acc[k] = [];
-                                    acc[k].push(d);
-                                    return acc;
-                                }, {});
+            const driversByBus = data.drivers.reduce((acc, d) => {
+                const k = d.bus || 'unknown';
+                if (!acc[k]) acc[k] = [];
+                acc[k].push(d);
+                return acc;
+            }, {});
 
-                                const parentsList = data.parents || [];
+            const parentsList = data.parents || [];
 
-                                const getDriversForParent = (parent) => {
-                                    const phone = parent?.phone;
-                                    const children = childrenByParentPhone[phone] || [];
-                                    const buses = Array.from(new Set(children.map(c => c.bus).filter(Boolean)));
-                                    return buses.map(busKey => ({
-                                        bus: busKey,
-                                        drivers: driversByBus[busKey] || []
-                                    }));
-                                };
+            // 🔍 FILTER ở đây
+            const filteredParents = parentsList.filter(p =>
+                (p.name || "").toLowerCase().includes(searchTerm.toLowerCase())
+            );
 
-                                const cardStyle = {
-                                    backgroundColor: '#ffffff',
-                                    border: '1px solid #e0e0e0',
-                                    borderRadius: '12px',
-                                    boxShadow: '0 2px 6px rgba(0,0,0,0.05)',
-                                    padding: '16px',
-                                    width: '340px',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    justifyContent: 'space-between'
-                                };
+            const getDriversForParent = (parent) => {
+                const phone = parent?.phone;
+                const children = childrenByParentPhone[phone] || [];
+                const buses = Array.from(new Set(children.map(c => c.bus).filter(Boolean)));
+                return buses.map(busKey => ({
+                    bus: busKey,
+                    drivers: driversByBus[busKey] || []
+                }));
+            };
 
-                                const tableStyle = {
-                                    width: '100%',
-                                    borderCollapse: 'collapse',
-                                    fontSize: '14px'
-                                };
+            const cardStyle = {
+                backgroundColor: '#ffffff',
+                border: '1px solid #e0e0e0',
+                borderRadius: '12px',
+                boxShadow: '0 2px 6px rgba(0,0,0,0.05)',
+                padding: '16px',
+                width: '340px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between'
+            };
 
-                                const tdStyle = {
-                                    border: '1px solid #ddd',
-                                    padding: '6px 8px',
-                                    verticalAlign: 'top'
-                                };
+            const tableStyle = {
+                width: '100%',
+                borderCollapse: 'collapse',
+                fontSize: '14px'
+            };
 
-                                return (
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                                        <h3 style={{ textAlign: 'center', color: '#333', marginBottom: '8px' }}>📋 Danh sách phụ huynh</h3>
+            const tdStyle = {
+                border: '1px solid #ddd',
+                padding: '6px 8px',
+                verticalAlign: 'top'
+            };
 
-                                        <div style={{
-                                            display: 'flex',
-                                            flexWrap: 'wrap',
-                                            justifyContent: 'center',
-                                            gap: '20px'
-                                        }}>
-                                            {parentsList.map(parent => (
-                                                <div key={parent.id} style={cardStyle}>
-                                                    <h4 style={{ margin: '0 0 10px 0', color: '#0077cc' }}>
-                                                        👤 {parent.name || 'Phụ huynh'}
-                                                    </h4>
+            return (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                    <h3 style={{ textAlign: 'center', color: '#333', marginBottom: '8px' }}>
+                        📋 Danh sách phụ huynh
+                    </h3>
 
-                                                    <table style={tableStyle}>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td style={tdStyle}>Tên phụ huynh</td>
-                                                                <td style={tdStyle}>{parent.name || '-'}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style={tdStyle}>Số con</td>
-                                                                <td style={tdStyle}>
-                                                                    {(childrenByParentPhone[parent.phone] || []).length}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style={tdStyle}>Tên của con</td>
-                                                                <td style={tdStyle}>
-                                                                    {(childrenByParentPhone[parent.phone] || []).length > 0
-                                                                    ? (childrenByParentPhone[parent.phone].map(c => c.name).join(', '))
-                                                                    : 'Không tìm thấy học sinh'}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style={tdStyle}>Số điện thoại</td>
-                                                                <td style={tdStyle}>{parent.phone || '-'}</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                    {/* 🔍 Thanh tìm kiếm */}
+                    <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+                        <input
+                            type="text"
+                            placeholder=" Tìm tên phụ huynh..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            style={{
+                                padding: '8px 12px',
+                                width: '260px',
+                                borderRadius: '8px',
+                                border: '1px solid #ccc',
+                                outline: 'none',
+                                fontSize: '14px'
+                            }}
+                        />
+                    </div>
 
-                                                    <div
-                                                        style={{
-                                                            marginTop: '12px',
-                                                            background: '#f9fafb',
-                                                            borderRadius: '8px',
-                                                            padding: '10px'
-                                                        }}
-                                                    >
-                                                        <strong style={{ color: '#444' }}>🚗 Tài xế liên quan</strong>
-                                                        <div style={{ marginTop: '6px' }}>
-                                                            {(() => {
-                                                                const driversForParent = getDriversForParent(parent);
-                                                                if (driversForParent.length === 0)
-                                                                    return (
-                                                                        <div style={{ color: '#777', marginTop: '4px' }}>
-                                                                            Không tìm thấy bus / tài xế cho phụ huynh này
-                                                                        </div>
-                                                                    );
+                    <div style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        justifyContent: 'center',
+                        gap: '20px'
+                    }}>
+                        {filteredParents.map(parent => (
+                            <div key={parent.id} style={cardStyle}>
+                                <h4 style={{ margin: '0 0 10px 0', color: '#0077cc' }}>
+                                    👤 {parent.name || 'Phụ huynh'}
+                                </h4>
 
-                                                                return driversForParent.map(item => (
-                                                                    <div
-                                                                        key={item.bus}
-                                                                        style={{
-                                                                            marginBottom: '8px',
-                                                                            padding: '6px 8px',
-                                                                            background: '#fff',
-                                                                            border: '1px solid #ddd',
-                                                                            borderRadius: '6px'
-                                                                        }}
-                                                                    >
-                                                                        <div>
-                                                                            <em>Bus:</em> <strong>{item.bus}</strong>
-                                                                        </div>
-                                                                        {item.drivers.length > 0 ? (
-                                                                            item.drivers.map(drv => (
-                                                                                <div key={drv.id} style={{ marginLeft: '8px', marginTop: '4px' }}>
-                                                                                    <div>Tên: {drv.name || '-'}</div>
-                                                                                    <div>Phone: {drv.phone || '-'}</div>
-                                                                                </div>
-                                                                            ))
-                                                                        ) : (
-                                                                            <div style={{ marginLeft: '8px', color: '#777' }}>
-                                                                                Không tìm thấy tài xế cho {item.bus}
-                                                                            </div>
-                                                                        )}
-                                                                    </div>
-                                                                ));
-                                                            })()}
-                                                        </div>
+                                <table style={tableStyle}>
+                                    <tbody>
+                                        <tr>
+                                            <td style={tdStyle}>Tên phụ huynh</td>
+                                            <td style={tdStyle}>{parent.name || '-'}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style={tdStyle}>Số con</td>
+                                            <td style={tdStyle}>
+                                                {(childrenByParentPhone[parent.phone] || []).length}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style={tdStyle}>Tên của con</td>
+                                            <td style={tdStyle}>
+                                                {(childrenByParentPhone[parent.phone] || []).length > 0
+                                                    ? (childrenByParentPhone[parent.phone].map(c => c.name).join(', '))
+                                                    : 'Không tìm thấy học sinh'}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style={tdStyle}>Số điện thoại</td>
+                                            <td style={tdStyle}>{parent.phone || '-'}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div
+                                    style={{
+                                        marginTop: '12px',
+                                        background: '#f9fafb',
+                                        borderRadius: '8px',
+                                        padding: '10px'
+                                    }}
+                                >
+                                    <strong style={{ color: '#444' }}>🚗 Tài xế liên quan</strong>
+                                    <div style={{ marginTop: '6px' }}>
+                                        {(() => {
+                                            const driversForParent = getDriversForParent(parent);
+                                            if (driversForParent.length === 0)
+                                                return (
+                                                    <div style={{ color: '#777', marginTop: '4px' }}>
+                                                        Không tìm thấy bus / tài xế cho phụ huynh này
                                                     </div>
+                                                );
+
+                                            return driversForParent.map(item => (
+                                                <div
+                                                    key={item.bus}
+                                                    style={{
+                                                        marginBottom: '8px',
+                                                        padding: '6px 8px',
+                                                        background: '#fff',
+                                                        border: '1px solid #ddd',
+                                                        borderRadius: '6px'
+                                                    }}
+                                                >
+                                                    <div>
+                                                        <em>Bus:</em> <strong>{item.bus}</strong>
+                                                    </div>
+                                                    {item.drivers.length > 0 ? (
+                                                        item.drivers.map(drv => (
+                                                            <div key={drv.id} style={{ marginLeft: '8px', marginTop: '4px' }}>
+                                                                <div>Tên: {drv.name || '-'}</div>
+                                                                <div>Phone: {drv.phone || '-'}</div>
+                                                            </div>
+                                                        ))
+                                                    ) : (
+                                                        <div style={{ marginLeft: '8px', color: '#777' }}>
+                                                            Không tìm thấy tài xế cho {item.bus}
+                                                        </div>
+                                                    )}
                                                 </div>
-                                            ))}
-
-                                            {parentsList.length === 0 && (
-                                                <div style={{ color: '#777' }}>Không có dữ liệu phụ huynh</div>
-                                            )}
-                                        </div>
-
-                                        <div
-                                            style={{
-                                                borderTop: '1px dashed #ccc',
-                                                paddingTop: '16px',
-                                                marginTop: '20px'
-                                            }}
-                                        >
-                                        </div>
+                                            ));
+                                        })()}
                                     </div>
-                                );
-                            })()}
-                        </div>
-                    )}
+                                </div>
+                            </div>
+                        ))}
+
+                        {filteredParents.length === 0 && (
+                            <div style={{ color: '#777' }}>Không tìm thấy phụ huynh phù hợp</div>
+                        )}
+                    </div>
+                </div>
+            );
+        })()}
+    </div>
+)}
+
 
                     {activeTab === 'lists' && (
                         <div className="driver-list-container">
